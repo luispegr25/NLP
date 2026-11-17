@@ -146,6 +146,23 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 .captura { border-radius: 12px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 18px 40px rgba(20, 33, 61, 0.18); }
 .captura img { display: block; width: 100%; }
 
+/* Tablas compactas y celdas de valor */
+table.chica { font-size: 15px; }
+table.chica th { font-size: 11px; padding: 7px 10px; }
+table.chica td { padding: 8px 10px; }
+td.neg { color: var(--coral); font-weight: 700; }
+td.pos { color: var(--teal); font-weight: 700; }
+.formula { font-family: var(--font-display); font-size: 26px; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; text-align: center; }
+.formula small { display: block; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px; }
+.kpi-fila { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.kpi-p { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; display: grid; gap: 2px; }
+.kpi-p b { font-family: var(--font-display); font-size: 30px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.kpi-p span { font-size: 13px; color: var(--muted); }
+.aporte { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+.aporte .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--teal-soft); color: var(--teal); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 20px; }
+.aporte b { font-size: 18px; display: block; margin-bottom: 2px; }
+.aporte p { font-size: 15px; color: var(--muted); line-height: 1.4; }
+
 /* Controles */
 .barra-progreso { position: fixed; left: 0; bottom: 0; height: 4px; z-index: 5; transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
   background: linear-gradient(90deg, var(--mint), #5B7CD6, var(--coral)); box-shadow: 0 0 12px rgba(127, 214, 203, 0.7); }
@@ -222,6 +239,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .dibuja { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
 }
 </style>
 
@@ -240,10 +258,10 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 <section class="slide">
   <div class="eyebrow">El problema</div>
   <h2>Las estrellas dicen <em>cuánto</em> molesta algo. El texto dice <em>qué</em> molesta.</h2>
-  <div class="cuerpo dos" style="grid-template-rows:auto 1fr">
+  <div class="cuerpo dos" style="grid-template-rows:auto 1fr;padding-bottom:18px">
     <div class="caja">
       <span class="etiqueta muted">Usuario</span>
-      <p class="destacado">Gerente de categorías / equipo de experiencia del cliente de una tienda en línea.</p>
+      <p class="destacado">Gerente de experiencia del cliente de una tienda en línea grande: decide el presupuesto de mejora por categoría y atiende ~10,000 mensajes de clientes al mes.</p>
       <span class="etiqueta muted" style="margin-top:6px">Por qué NLP</span>
       <p class="destacado">Hay millones de reseñas y nadie puede leerlas a mano. La causa de cada queja está escrita en el texto.</p>
     </div>
@@ -261,9 +279,23 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </div>
 </section>
 
+<!-- Aportes propios -->
+<section class="slide">
+  <div class="eyebrow">Qué hicimos distinto</div>
+  <h2>No es "un modelo sobre un dataset": seis decisiones propias</h2>
+  <div class="cuerpo dos" style="gap:18px 36px;align-content:start">
+    <div class="aporte"><span class="ico">1</span><div><b>Captura propia sobre 200 GB</b><p>Muestreo aleatorio por rangos de bytes de 15 archivos originales, respetando el límite de la API. Sin CSV de Kaggle.</p></div></div>
+    <div class="aporte"><span class="ico">2</span><div><b>Métrica de prioridad propia</b><p>Gravedad (% de quejas) × alcance (volumen real estimado con los totales oficiales).</p></div></div>
+    <div class="aporte"><span class="ico">3</span><div><b>Pérdida pensada para el caso</b><p>Entropía cruzada ponderada por clase: una queja o una neutra pesan más que una reseña positiva.</p></div></div>
+    <div class="aporte"><span class="ico">4</span><div><b>Umbral elegido por dinero, no por F1</b><p>Función de valor con fuentes, curva de valor y sensibilidad ±20 % y ±50 %.</p></div></div>
+    <div class="aporte"><span class="ico">5</span><div><b>Validación "sin estrellas"</b><p>Prueba de que el modelo sirve en canales que no traen etiqueta: correos, chats, redes.</p></div></div>
+    <div class="aporte"><span class="ico">6</span><div><b>Inferencia en el navegador</b><p>El modelo se exporta a la página: sin servidor de inferencia, costo US$ 0 y el texto del cliente no sale de la computadora.</p></div></div>
+  </div>
+</section>
+
 <!-- 3. Datos -->
 <section class="slide">
-  <div class="eyebrow">1 · Los datos</div>
+  <div class="eyebrow">Los datos</div>
   <h2>Amazon Reviews 2023: reseñas reales con su distribución natural</h2>
   <div class="cuerpo dos-a">
     <div style="display:grid;gap:16px;align-content:start">
@@ -283,92 +315,37 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </div>
 </section>
 
-<!-- 4. Captura -->
-<section class="slide">
-  <div class="eyebrow">1 · Captura</div>
-  <h2>Cómo sacar una muestra representativa de 200 GB sin descargarlos</h2>
-  <div class="cuerpo" style="grid-template-rows:auto 1fr">
-    <div class="flujo" style="grid-template-columns:repeat(4,1fr)">
-      <div class="paso"><span class="n">200 GB</span><b>15 archivos originales</b><p>Uno por categoría, ordenado por cliente. Solo Electrónica pesa 22 GB.</p></div>
-      <div class="paso"><span class="n">1,000</span><b>trozos al azar por archivo</b><p>Se leen posiciones aleatorias con solicitudes por rango de bytes.</p></div>
-      <div class="paso"><span class="n">20,000</span><b>reseñas al azar por categoría</b><p>Solo de 2019 en adelante. 300,000 en total.</p></div>
-      <div class="paso"><span class="n">× vol.</span><b>Volumen real estimado</b><p>Total oficial de la categoría × proporción de reseñas desde 2019.</p></div>
-    </div>
-    <div class="cuerpo tres" style="gap:16px">
-      <div class="caja"><h3>¿Por qué al azar?</h3><p class="destacado" style="font-size:18px">Los archivos vienen agrupados por cliente. Tomar las primeras filas daría una muestra de pocos clientes. Resultado: 239,139 clientes distintos en 300,000 reseñas.</p></div>
-      <div class="caja"><h3>¿Por qué 20,000?</h3><p class="destacado" style="font-size:18px">Con 20,000 reseñas, el % de quejas de cada categoría tiene un margen de error de solo ±0.5 puntos.</p></div>
-      <div class="caja"><h3>Datos crudos guardados</h3><p class="destacado" style="font-size:18px">Un extracto de cada archivo original se guardó sin modificar, para poder revisar el formato tal como viene de la fuente.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. Exploración -->
-<section class="slide">
-  <div class="eyebrow">2 · Exploración</div>
-  <h2>1 de cada 6 reseñas es una queja, y cada año son más</h2>
-  <div class="cuerpo dos-a">
-    <div class="caja">
-      <h3>% de reseñas negativas (1-2★) por categoría</h3>
-      <div class="barras" id="g-pct" style="--etq:250px"></div>
-    </div>
-    <div style="display:grid;gap:14px;align-content:start">
-      <div class="caja coral"><span class="grande" style="color:var(--coral)" data-contar="17.8" data-dec="1" data-suf="%">17.8%</span><span id="t-rango">de las reseñas son negativas.</span></div>
-      <div class="caja"><span class="grande">26 <span style="font-size:22px;color:var(--muted)">vs</span> 17</span><span>palabras: mediana de una queja contra un elogio. El cliente molesto explica qué falló.</span></div>
-      <div class="caja"><span class="grande">14.1% → 20.5%</span><span>de reseñas negativas entre 2019 y 2022, en el total de categorías.</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 6. Limpieza -->
-<section class="slide">
-  <div class="eyebrow">3 · Limpieza y transformación</div>
-  <h2>Ocho decisiones, cada una documentada</h2>
-  <div class="cuerpo dos">
-    <ul class="lista" style="font-size:18px">
-      <li><span><b>Unir título y texto:</b> el título resume la opinión.</span></li>
-      <li><span><b>Quitar ruido:</b> HTML (<code>&lt;br /&gt;</code>), marcadores de video, enlaces y números.</span></li>
-      <li><span><b>Expandir negaciones:</b> "don't" → "do not".</span></li>
-      <li><span><b>Minúsculas y sin signos.</b></span></li>
-      <li><span><b>Stopwords, pero se conservan las negaciones:</b> "not good" ≠ "good".</span></li>
-      <li><span><b>Eliminar vacías y duplicadas:</b> 4,550 y 11 → quedan 295,439.</span></li>
-      <li><span><b>Etiquetar:</b> 1-2★ negativa · 3★ neutra · 4-5★ positiva.</span></li>
-      <li><span><b>TF-IDF</b> con palabras y pares de palabras (50,000 términos).</span></li>
-    </ul>
-    <div style="display:grid;gap:12px;align-content:start">
-      <span class="etiqueta muted">Antes</span>
-      <div class="texto-ej">keeping windshield&nbsp; Clear. The magnets <b style="color:var(--coral)">don't</b> hold on and wind justs flaps away. Have trouble when I take it off hard to fold during<b style="color:var(--coral)">&lt;br /&gt;</b>cold weather.<b style="color:var(--coral)">&lt;br /&gt;</b>Summer hoping will keep the inside cooler. Fits well.</div>
-      <span class="etiqueta" style="color:var(--teal)">Después</span>
-      <div class="texto-ej">keeping windshield clear the magnets <b style="color:var(--teal)">do not</b> hold on and wind justs flaps away have trouble when i take it off hard to fold during cold weather summer hoping will keep the inside cooler fits well</div>
-    </div>
-  </div>
-</section>
-
 <!-- 7. Modelado -->
 <section class="slide">
-  <div class="eyebrow">4 · Modelado</div>
-  <h2>Naive Bayes contra Regresión Logística</h2>
+  <div class="eyebrow">Modelado</div>
+  <h2>TF-IDF + Regresión Logística, con la pérdida ajustada al caso</h2>
   <div class="cuerpo dos-a">
     <div style="display:grid;gap:14px;align-content:start">
+      <div class="flujo" style="grid-template-columns:repeat(3,1fr)">
+        <div class="paso"><b>Limpieza</b><p>Minúsculas, sin HTML ni números, "don't" → "do not", stopwords <b>sin quitar negaciones</b></p></div>
+        <div class="paso"><b>TF-IDF</b><p>50,000 términos, palabras y pares de palabras, tf sublineal, min_df 5</p></div>
+        <div class="paso"><b>Softmax</b><p>Regresión Logística multinomial: P(negativa), P(neutra), P(positiva)</p></div>
+      </div>
       <table>
-        <thead><tr><th>Modelo</th><th>Accuracy</th><th>F1 macro</th><th>F1 quejas</th></tr></thead>
+        <thead><tr><th>Modelo (prueba, 44,316)</th><th>Accuracy</th><th>F1 macro</th><th>F1 quejas</th></tr></thead>
         <tbody>
           <tr><td>Línea base (siempre "positiva")</td><td>0.75</td><td>0.29</td><td>0.00</td></tr>
-          <tr><td>Naive Bayes</td><td>0.88</td><td>0.63</td><td>0.78</td></tr>
-          <tr class="gana"><td>Regresión Logística ✓</td><td>0.85</td><td>0.69</td><td>0.78</td></tr>
+          <tr><td>Naive Bayes (α = 0.1)</td><td>0.88</td><td>0.63</td><td>0.78</td></tr>
+          <tr class="gana"><td>Regresión Logística (C = 1) ✓</td><td>0.85</td><td>0.69</td><td>0.78</td></tr>
         </tbody>
       </table>
-      <p class="muted" style="font-size:16px">Entrenamiento 206,807 · validación 44,316 · prueba 44,316 reseñas (70/15/15). Hiperparámetros elegidos con validación; resultado final medido una sola vez en prueba.</p>
     </div>
-    <div style="display:grid;gap:14px;align-content:start">
-      <div class="caja coral"><h3>La accuracy engaña</h3><p style="font-size:17px;line-height:1.45">Decir siempre "positiva" acierta el 75% y no detecta ni una queja. Por eso la métrica principal es el <b>F1 macro</b>.</p></div>
-      <div class="caja teal"><h3>Por qué gana la Regresión Logística</h3><p style="font-size:17px;line-height:1.45">Naive Bayes casi nunca predice "neutra" (F1 0.17). La Regresión Logística, con pesos balanceados, reconoce las tres clases.</p></div>
+    <div style="display:grid;gap:12px;align-content:start">
+      <div class="caja teal"><h3>Pérdida</h3><p style="font-size:16px;line-height:1.45">Entropía cruzada <b>ponderada por clase</b> (1 / frecuencia): una neutra pesa 5.0, una queja 1.9 y una positiva 0.4. Sin eso, el modelo ignora las clases chicas. Más regularización L2 (C = 1).</p></div>
+      <div class="caja"><h3>Hiperparámetros</h3><p style="font-size:16px;line-height:1.45">C ∈ {0.25, 0.5, 1, 2} y α ∈ {0.1, 0.3, 1} elegidos en <b>validación</b> por F1 macro. Datos 70 / 15 / 15; la prueba se usa una sola vez.</p></div>
+      <div class="caja coral"><h3>Por qué F1 macro</h3><p style="font-size:16px;line-height:1.45">Decir siempre "positiva" acierta el 75 % y no detecta ninguna queja. Naive Bayes casi nunca predice "neutra" (F1 0.17).</p></div>
     </div>
   </div>
 </section>
 
 <!-- 8. Qué aprendió -->
 <section class="slide">
-  <div class="eyebrow">4 · Interpretación</div>
+  <div class="eyebrow">Interpretación</div>
   <h2>Lo que aprendió el modelo tiene sentido</h2>
   <div class="cuerpo" style="grid-template-rows:auto 1fr">
     <div class="cuerpo tres" style="gap:16px">
@@ -376,14 +353,18 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
       <div class="caja"><h3 style="color:var(--muted)">Empujan hacia neutra</h3><div class="palabras" id="w-neu"></div></div>
       <div class="caja"><h3 style="color:var(--teal)">Empujan hacia positiva</h3><div class="palabras" id="w-pos"></div></div>
     </div>
-    <div class="caja" style="flex-direction:row;align-items:center;gap:36px">
-      <div style="display:grid;gap:8px;flex:1">
-        <span class="etiqueta muted">Prueba de la decisión de conservar negaciones</span>
-        <p class="destacado">"<b>disappointed</b>" es de los términos más negativos, pero "<b>not disappointed</b>" es de los más positivos. Si se hubiera quitado "not" como stopword, el modelo leería esas reseñas al revés.</p>
+    <div class="cuerpo dos" style="gap:16px">
+      <div class="caja">
+        <span class="etiqueta muted">Por qué conservamos las negaciones</span>
+        <p style="font-size:17px;line-height:1.45">"<b>disappointed</b>" empuja hacia negativa, pero "<b>not disappointed</b>" es de los términos más positivos. Si "not" fuera stopword, el modelo leería esas reseñas al revés.</p>
       </div>
-      <div style="display:grid;gap:10px;min-width:330px">
-        <div class="barra" style="--etq:150px"><span>disappointed</span><div class="pista"><div class="relleno coral" style="width:100%"></div></div><span>negativa</span></div>
-        <div class="barra" style="--etq:150px"><span>not disappointed</span><div class="pista"><div class="relleno teal" style="width:100%"></div></div><span>positiva</span></div>
+      <div class="caja coral">
+        <span class="etiqueta" style="color:var(--coral)">Dónde falla y por qué</span>
+        <ul class="lista" style="font-size:15px;gap:6px">
+          <li><span><b>Neutras (F1 0.36):</b> una reseña de 3★ mezcla elogios y quejas.</span></li>
+          <li><span><b>Negaciones largas:</b> "worried… but not disappointed" sale negativa; los bigramas no ven tan lejos.</span></li>
+          <li><span><b>Sarcasmo y quejas ajenas</b> ("pedí el color equivocado"). Solo entiende inglés.</span></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -391,7 +372,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 <!-- 9. ¿Aporta? -->
 <section class="slide">
-  <div class="eyebrow">4 · Validación</div>
+  <div class="eyebrow">Validación</div>
   <h2>¿El modelo aporta, o cualquiera podría adivinarlo?</h2>
   <div class="cuerpo tres" style="gap:16px">
     <div class="caja">
@@ -417,7 +398,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 <!-- 10. Hallazgo -->
 <section class="slide">
-  <div class="eyebrow">5 · Hallazgo clave</div>
+  <div class="eyebrow">Hallazgo clave</div>
   <h2>El porcentaje solo no alcanza: hay que mirar cuántos clientes se quejan</h2>
   <div class="cuerpo" style="grid-template-columns:1fr 1fr 0.9fr;gap:20px">
     <div style="display:grid;gap:10px;align-content:start">
@@ -436,17 +417,9 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </div>
 </section>
 
-<!-- 11. Causas -->
-<section class="slide">
-  <div class="eyebrow">5 · Causas</div>
-  <h2>Cada categoría falla por una razón distinta</h2>
-  <div class="cuerpo tres" style="gap:16px" id="causas"></div>
-  <p class="muted" style="font-size:14px">% de reseñas negativas que mencionan cada tema (diccionario de expresiones) y frases distintivas por categoría (TF-IDF por clase). "Devolución o atención" se excluye porque es la consecuencia de los otros problemas.</p>
-</section>
-
 <!-- 12. Tendencia -->
 <section class="slide">
-  <div class="eyebrow">5 · Evolución por año</div>
+  <div class="eyebrow">Evolución por año</div>
   <h2>Todas empeoran, y las 3 prioridades se repiten cada año</h2>
   <div class="cuerpo dos-a">
     <div class="caja">
@@ -462,10 +435,46 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 <!-- 13. Recomendación -->
 <section class="slide">
-  <div class="eyebrow">6 · Recomendación</div>
+  <div class="eyebrow">Recomendación</div>
   <h2>Dónde invertir el presupuesto de mejora este trimestre</h2>
   <div class="cuerpo tres" style="gap:16px" id="recomendacion"></div>
   <p class="destacado" style="font-size:19px"><b>Juntas concentran 18.5 millones de reseñas negativas: el 45% de todas las quejas</b> de las 15 categorías. Empeoraron entre 4 y 5 puntos desde 2019.</p>
+</section>
+
+<!-- Función de valor -->
+<section class="slide">
+  <div class="eyebrow">Métrica técnica → dinero</div>
+  <h2>La función de valor: cuánto vale cada acierto y cada error</h2>
+  <div class="cuerpo dos-a" style="gap:22px">
+    <div style="display:grid;gap:12px;align-content:start">
+      <p style="font-size:16px;line-height:1.45">Si el modelo marca un mensaje como queja, un agente contacta al cliente y le ofrece un cupón. ¿Cuándo conviene actuar?</p>
+      <table class="chica">
+        <thead><tr><th>Resultado</th><th>Qué pasa</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Verdadero positivo</td><td>Se recupera al cliente con cierta probabilidad</td><td class="pos">B − C</td></tr>
+          <tr><td>Falso positivo</td><td>Cupón y tiempo gastados en un cliente contento</td><td class="neg">− C</td></tr>
+          <tr><td>Falso negativo / verdadero negativo</td><td>Igual que sin el sistema</td><td>0</td></tr>
+        </tbody>
+      </table>
+      <div class="formula">Valor = VP × B − (VP + FP) × C<small>B = recuperación × gasto anual × margen · C = cupón + minutos × salario</small></div>
+      <div class="kpi-fila">
+        <div class="kpi-p"><b style="color:var(--teal)">US$ 28.50</b><span>B: valor de recuperar a un cliente</span></div>
+        <div class="kpi-p"><b style="color:var(--coral)">US$ 13.43</b><span>C: costo de cada acción</span></div>
+        <div class="kpi-p"><b>47 %</b><span>actuar solo si P(queja) &gt; C / B</span></div>
+      </div>
+    </div>
+    <table class="chica" style="align-self:start">
+      <thead><tr><th>Supuesto</th><th>Valor</th><th>Fuente</th></tr></thead>
+      <tbody>
+        <tr><td>Gasto anual del cliente</td><td>US$ 570</td><td>CIRP 2024 (cliente sin Prime; con Prime, US$ 1,170)</td></tr>
+        <tr><td>Margen</td><td>25 %</td><td>Supuesto conservador</td></tr>
+        <tr><td>Recuperación por contactar</td><td>+20 pts</td><td>Kotler: 54-70 % de quienes se quejan vuelven si se resuelve</td></tr>
+        <tr><td>Cupón</td><td>US$ 10</td><td>Supuesto</td></tr>
+        <tr><td>Tiempo del agente</td><td>10 min</td><td>Supuesto</td></tr>
+        <tr><td>Salario del agente</td><td>US$ 20.59/h</td><td>BLS, mayo 2024 (mediana EE. UU.)</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- 14. Demo en vivo -->
@@ -474,7 +483,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   <div class="demo-grid">
     <div class="demo-texto">
       <div class="en-vivo"><span class="punto"></span>EN VIVO</div>
-      <div class="eyebrow">7 · Producto</div>
+      <div class="eyebrow">Producto</div>
       <h2>Demo en vivo del dashboard</h2>
       <p class="demo-sub">Ahora les muestro cómo se ve y cómo funciona SAR con los datos reales.</p>
       <ol class="demo-pasos">
@@ -495,7 +504,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   <div class="eyebrow">Conclusión</div>
   <h2 class="final-titulo">Invertir primero donde <em>más clientes se quejan</em>, atacando la causa que ellos mismos escriben.</h2>
   <div class="final-tarjetas" id="final-tarjetas"></div>
-  <p class="final-frase">El texto dice <b>qué</b> arreglar. El volumen dice <b>dónde</b>. Y el modelo permite repetirlo en cualquier canal, aunque no tenga estrellas.</p>
+  <p class="final-frase">El texto dice <b>qué</b> arreglar. El volumen dice <b>dónde</b>. Y con el umbral elegido por valor, el modelo convierte cada 10,000 mensajes al mes en <b>~US$ 194,000 al año</b> recuperados.</p>
   <div class="gracias"><strong>Gracias</strong><span>¿Preguntas?</span></div>
 </section>
 
@@ -534,12 +543,6 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
       <text x="${x + bw / 2}" y="${base + 26}" text-anchor="middle" font-size="17" fill="var(--muted)">${i + 1}★</text>`;
   }).join("")}<line x1="20" x2="${W - 20}" y1="${base}" y2="${base}" stroke="var(--line)"/></svg>`;
 
-  // % negativas por categoría
-  const porPct = [...cats].sort((a, b) => b.pct_neg - a.pct_neg);
-  const maxP = porPct[0].pct_neg;
-  $("g-pct").innerHTML = porPct.map((c) => barra(c.nombre, c.pct_neg, maxP, "coral", fmt(c.pct_neg) + "%")).join("");
-  $("t-rango").textContent = `de las reseñas son negativas. Por categoría van de ${fmt(porPct[porPct.length - 1].pct_neg)}% a ${fmt(maxP)}%.`;
-
   // Palabras del modelo
   for (const [id, clase, lista] of [["w-neg", "neg", D.palabras.negativa], ["w-neu", "neu", D.palabras.neutra], ["w-pos", "pos", D.palabras.positiva]])
     $(id).innerHTML = lista.map((w) => `<span class="palabra ${clase}">${esc(w)}</span>`).join("");
@@ -562,6 +565,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </svg>`;
 
   // Hallazgo: dos rankings
+  const porPct = [...cats].sort((a, b) => b.pct_neg - a.pct_neg);
   const millones = (m) => m >= 1 ? `${fmt(m, 1)} M` : `${fmt(m * 1000, 0)} mil`;
   const filaRk = (c, i, v) => `<div class="rk${top.has(c.id) ? " top" : ""}"><b>${i + 1}</b><span>${esc(c.nombre)}</span><b class="num">${v}</b></div>`;
   $("rk-pct").innerHTML = porPct.slice(0, 5).map((c, i) => filaRk(c, i, fmt(c.pct_neg) + "%")).join("") +
@@ -569,17 +573,6 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   const porVol = [...cats].sort((a, b) => b.negativas_m - a.negativas_m);
   $("rk-vol").innerHTML = porVol.slice(0, 5).map((c, i) => filaRk(c, i, millones(c.negativas_m))).join("") +
     `<div class="rk" style="opacity:.85"><b>${porVol.findIndex((c) => c.id === "Video_Games") + 1}</b><span>Videojuegos</span><b class="num">${millones(porId.Video_Games.negativas_m)}</b></div>`;
-
-  // Causas
-  $("causas").innerHTML = D.recomendacion.map((r) => {
-    const c = porId[r.id];
-    const temas = Object.entries(c.temas).filter(([t]) => t !== "Devolución o atención").sort((a, b) => b[1] - a[1]).slice(0, 4);
-    const mx = temas[0][1];
-    return `<div class="caja"><h3 style="font-family:var(--font-display);font-size:24px">${esc(c.nombre)}</h3>
-      <div class="barras" style="--etq:175px">${temas.map(([t, v], i) => barra(t, v, mx, i === 0 ? "coral" : "", fmt(v, 0) + "%")).join("")}</div>
-      <span class="etiqueta muted" style="margin-top:6px">Frases más propias</span>
-      <div class="palabras">${c.frases.slice(0, 4).map((f) => `<span class="palabra neu">${esc(f.es)}</span>`).join("")}</div></div>`;
-  }).join("");
 
   // Años
   const anios = D.anios, aw = 640, ah = 360, x0 = 60, x1 = aw - 150, y0 = 30, y1 = ah - 40, lo = 10, hi = 25;

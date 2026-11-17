@@ -151,6 +151,23 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 .captura { border-radius: 12px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 18px 40px rgba(20, 33, 61, 0.18); }
 .captura img { display: block; width: 100%; }
 
+/* Tablas compactas y celdas de valor */
+table.chica { font-size: 15px; }
+table.chica th { font-size: 11px; padding: 7px 10px; }
+table.chica td { padding: 8px 10px; }
+td.neg { color: var(--coral); font-weight: 700; }
+td.pos { color: var(--teal); font-weight: 700; }
+.formula { font-family: var(--font-display); font-size: 26px; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; text-align: center; }
+.formula small { display: block; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px; }
+.kpi-fila { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.kpi-p { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; display: grid; gap: 2px; }
+.kpi-p b { font-family: var(--font-display); font-size: 30px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.kpi-p span { font-size: 13px; color: var(--muted); }
+.aporte { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+.aporte .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--teal-soft); color: var(--teal); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 20px; }
+.aporte b { font-size: 18px; display: block; margin-bottom: 2px; }
+.aporte p { font-size: 15px; color: var(--muted); line-height: 1.4; }
+
 /* Controles */
 .barra-progreso { position: fixed; left: 0; bottom: 0; height: 4px; z-index: 5; transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
   background: linear-gradient(90deg, var(--mint), #5B7CD6, var(--coral)); box-shadow: 0 0 12px rgba(127, 214, 203, 0.7); }
@@ -227,6 +244,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .dibuja { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
 }
 </style>
 
@@ -247,10 +265,10 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 <section class="slide">
   <div class="eyebrow">El problema</div>
   <h2>Las estrellas dicen <em>cuánto</em> molesta algo. El texto dice <em>qué</em> molesta.</h2>
-  <div class="cuerpo dos" style="grid-template-rows:auto 1fr">
+  <div class="cuerpo dos" style="grid-template-rows:auto 1fr;padding-bottom:18px">
     <div class="caja">
       <span class="etiqueta muted">Usuario</span>
-      <p class="destacado">Gerente de categorías / equipo de experiencia del cliente de una tienda en línea.</p>
+      <p class="destacado">Gerente de experiencia del cliente de una tienda en línea grande: decide el presupuesto de mejora por categoría y atiende ~10,000 mensajes de clientes al mes.</p>
       <span class="etiqueta muted" style="margin-top:6px">Por qué NLP</span>
       <p class="destacado">Hay millones de reseñas y nadie puede leerlas a mano. La causa de cada queja está escrita en el texto.</p>
     </div>
@@ -268,9 +286,23 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </div>
 </section>
 
+<!-- Aportes propios -->
+<section class="slide">
+  <div class="eyebrow">Qué hicimos distinto</div>
+  <h2>No es "un modelo sobre un dataset": seis decisiones propias</h2>
+  <div class="cuerpo dos" style="gap:18px 36px;align-content:start">
+    <div class="aporte"><span class="ico">1</span><div><b>Captura propia sobre 200 GB</b><p>Muestreo aleatorio por rangos de bytes de 15 archivos originales, respetando el límite de la API. Sin CSV de Kaggle.</p></div></div>
+    <div class="aporte"><span class="ico">2</span><div><b>Métrica de prioridad propia</b><p>Gravedad (% de quejas) × alcance (volumen real estimado con los totales oficiales).</p></div></div>
+    <div class="aporte"><span class="ico">3</span><div><b>Pérdida pensada para el caso</b><p>Entropía cruzada ponderada por clase: una queja o una neutra pesan más que una reseña positiva.</p></div></div>
+    <div class="aporte"><span class="ico">4</span><div><b>Umbral elegido por dinero, no por F1</b><p>Función de valor con fuentes, curva de valor y sensibilidad ±20 % y ±50 %.</p></div></div>
+    <div class="aporte"><span class="ico">5</span><div><b>Validación "sin estrellas"</b><p>Prueba de que el modelo sirve en canales que no traen etiqueta: correos, chats, redes.</p></div></div>
+    <div class="aporte"><span class="ico">6</span><div><b>Inferencia en el navegador</b><p>El modelo se exporta a la página: sin servidor de inferencia, costo US$ 0 y el texto del cliente no sale de la computadora.</p></div></div>
+  </div>
+</section>
+
 <!-- 3. Datos -->
 <section class="slide">
-  <div class="eyebrow">1 · Los datos</div>
+  <div class="eyebrow">Los datos</div>
   <h2>Amazon Reviews 2023: reseñas reales con su distribución natural</h2>
   <div class="cuerpo dos-a">
     <div style="display:grid;gap:16px;align-content:start">
@@ -290,92 +322,37 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </div>
 </section>
 
-<!-- 4. Captura -->
-<section class="slide">
-  <div class="eyebrow">1 · Captura</div>
-  <h2>Cómo sacar una muestra representativa de 200 GB sin descargarlos</h2>
-  <div class="cuerpo" style="grid-template-rows:auto 1fr">
-    <div class="flujo" style="grid-template-columns:repeat(4,1fr)">
-      <div class="paso"><span class="n">200 GB</span><b>15 archivos originales</b><p>Uno por categoría, ordenado por cliente. Solo Electrónica pesa 22 GB.</p></div>
-      <div class="paso"><span class="n">1,000</span><b>trozos al azar por archivo</b><p>Se leen posiciones aleatorias con solicitudes por rango de bytes.</p></div>
-      <div class="paso"><span class="n">20,000</span><b>reseñas al azar por categoría</b><p>Solo de 2019 en adelante. 300,000 en total.</p></div>
-      <div class="paso"><span class="n">× vol.</span><b>Volumen real estimado</b><p>Total oficial de la categoría × proporción de reseñas desde 2019.</p></div>
-    </div>
-    <div class="cuerpo tres" style="gap:16px">
-      <div class="caja"><h3>¿Por qué al azar?</h3><p class="destacado" style="font-size:18px">Los archivos vienen agrupados por cliente. Tomar las primeras filas daría una muestra de pocos clientes. Resultado: 239,139 clientes distintos en 300,000 reseñas.</p></div>
-      <div class="caja"><h3>¿Por qué 20,000?</h3><p class="destacado" style="font-size:18px">Con 20,000 reseñas, el % de quejas de cada categoría tiene un margen de error de solo ±0.5 puntos.</p></div>
-      <div class="caja"><h3>Datos crudos guardados</h3><p class="destacado" style="font-size:18px">Un extracto de cada archivo original se guardó sin modificar, para poder revisar el formato tal como viene de la fuente.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. Exploración -->
-<section class="slide">
-  <div class="eyebrow">2 · Exploración</div>
-  <h2>1 de cada 6 reseñas es una queja, y cada año son más</h2>
-  <div class="cuerpo dos-a">
-    <div class="caja">
-      <h3>% de reseñas negativas (1-2★) por categoría</h3>
-      <div class="barras" id="g-pct" style="--etq:250px"></div>
-    </div>
-    <div style="display:grid;gap:14px;align-content:start">
-      <div class="caja coral"><span class="grande" style="color:var(--coral)" data-contar="17.8" data-dec="1" data-suf="%">17.8%</span><span id="t-rango">de las reseñas son negativas.</span></div>
-      <div class="caja"><span class="grande">26 <span style="font-size:22px;color:var(--muted)">vs</span> 17</span><span>palabras: mediana de una queja contra un elogio. El cliente molesto explica qué falló.</span></div>
-      <div class="caja"><span class="grande">14.1% → 20.5%</span><span>de reseñas negativas entre 2019 y 2022, en el total de categorías.</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 6. Limpieza -->
-<section class="slide">
-  <div class="eyebrow">3 · Limpieza y transformación</div>
-  <h2>Ocho decisiones, cada una documentada</h2>
-  <div class="cuerpo dos">
-    <ul class="lista" style="font-size:18px">
-      <li><span><b>Unir título y texto:</b> el título resume la opinión.</span></li>
-      <li><span><b>Quitar ruido:</b> HTML (<code>&lt;br /&gt;</code>), marcadores de video, enlaces y números.</span></li>
-      <li><span><b>Expandir negaciones:</b> "don't" → "do not".</span></li>
-      <li><span><b>Minúsculas y sin signos.</b></span></li>
-      <li><span><b>Stopwords, pero se conservan las negaciones:</b> "not good" ≠ "good".</span></li>
-      <li><span><b>Eliminar vacías y duplicadas:</b> 4,550 y 11 → quedan 295,439.</span></li>
-      <li><span><b>Etiquetar:</b> 1-2★ negativa · 3★ neutra · 4-5★ positiva.</span></li>
-      <li><span><b>TF-IDF</b> con palabras y pares de palabras (50,000 términos).</span></li>
-    </ul>
-    <div style="display:grid;gap:12px;align-content:start">
-      <span class="etiqueta muted">Antes</span>
-      <div class="texto-ej">keeping windshield&nbsp; Clear. The magnets <b style="color:var(--coral)">don't</b> hold on and wind justs flaps away. Have trouble when I take it off hard to fold during<b style="color:var(--coral)">&lt;br /&gt;</b>cold weather.<b style="color:var(--coral)">&lt;br /&gt;</b>Summer hoping will keep the inside cooler. Fits well.</div>
-      <span class="etiqueta" style="color:var(--teal)">Después</span>
-      <div class="texto-ej">keeping windshield clear the magnets <b style="color:var(--teal)">do not</b> hold on and wind justs flaps away have trouble when i take it off hard to fold during cold weather summer hoping will keep the inside cooler fits well</div>
-    </div>
-  </div>
-</section>
-
 <!-- 7. Modelado -->
 <section class="slide">
-  <div class="eyebrow">4 · Modelado</div>
-  <h2>Naive Bayes contra Regresión Logística</h2>
+  <div class="eyebrow">Modelado</div>
+  <h2>TF-IDF + Regresión Logística, con la pérdida ajustada al caso</h2>
   <div class="cuerpo dos-a">
     <div style="display:grid;gap:14px;align-content:start">
+      <div class="flujo" style="grid-template-columns:repeat(3,1fr)">
+        <div class="paso"><b>Limpieza</b><p>Minúsculas, sin HTML ni números, "don't" → "do not", stopwords <b>sin quitar negaciones</b></p></div>
+        <div class="paso"><b>TF-IDF</b><p>50,000 términos, palabras y pares de palabras, tf sublineal, min_df 5</p></div>
+        <div class="paso"><b>Softmax</b><p>Regresión Logística multinomial: P(negativa), P(neutra), P(positiva)</p></div>
+      </div>
       <table>
-        <thead><tr><th>Modelo</th><th>Accuracy</th><th>F1 macro</th><th>F1 quejas</th></tr></thead>
+        <thead><tr><th>Modelo (prueba, 44,316)</th><th>Accuracy</th><th>F1 macro</th><th>F1 quejas</th></tr></thead>
         <tbody>
           <tr><td>Línea base (siempre "positiva")</td><td>0.75</td><td>0.29</td><td>0.00</td></tr>
-          <tr><td>Naive Bayes</td><td>0.88</td><td>0.63</td><td>0.78</td></tr>
-          <tr class="gana"><td>Regresión Logística ✓</td><td>0.85</td><td>0.69</td><td>0.78</td></tr>
+          <tr><td>Naive Bayes (α = 0.1)</td><td>0.88</td><td>0.63</td><td>0.78</td></tr>
+          <tr class="gana"><td>Regresión Logística (C = 1) ✓</td><td>0.85</td><td>0.69</td><td>0.78</td></tr>
         </tbody>
       </table>
-      <p class="muted" style="font-size:16px">Entrenamiento 206,807 · validación 44,316 · prueba 44,316 reseñas (70/15/15). Hiperparámetros elegidos con validación; resultado final medido una sola vez en prueba.</p>
     </div>
-    <div style="display:grid;gap:14px;align-content:start">
-      <div class="caja coral"><h3>La accuracy engaña</h3><p style="font-size:17px;line-height:1.45">Decir siempre "positiva" acierta el 75% y no detecta ni una queja. Por eso la métrica principal es el <b>F1 macro</b>.</p></div>
-      <div class="caja teal"><h3>Por qué gana la Regresión Logística</h3><p style="font-size:17px;line-height:1.45">Naive Bayes casi nunca predice "neutra" (F1 0.17). La Regresión Logística, con pesos balanceados, reconoce las tres clases.</p></div>
+    <div style="display:grid;gap:12px;align-content:start">
+      <div class="caja teal"><h3>Pérdida</h3><p style="font-size:16px;line-height:1.45">Entropía cruzada <b>ponderada por clase</b> (1 / frecuencia): una neutra pesa 5.0, una queja 1.9 y una positiva 0.4. Sin eso, el modelo ignora las clases chicas. Más regularización L2 (C = 1).</p></div>
+      <div class="caja"><h3>Hiperparámetros</h3><p style="font-size:16px;line-height:1.45">C ∈ {0.25, 0.5, 1, 2} y α ∈ {0.1, 0.3, 1} elegidos en <b>validación</b> por F1 macro. Datos 70 / 15 / 15; la prueba se usa una sola vez.</p></div>
+      <div class="caja coral"><h3>Por qué F1 macro</h3><p style="font-size:16px;line-height:1.45">Decir siempre "positiva" acierta el 75 % y no detecta ninguna queja. Naive Bayes casi nunca predice "neutra" (F1 0.17).</p></div>
     </div>
   </div>
 </section>
 
 <!-- 8. Qué aprendió -->
 <section class="slide">
-  <div class="eyebrow">4 · Interpretación</div>
+  <div class="eyebrow">Interpretación</div>
   <h2>Lo que aprendió el modelo tiene sentido</h2>
   <div class="cuerpo" style="grid-template-rows:auto 1fr">
     <div class="cuerpo tres" style="gap:16px">
@@ -383,14 +360,18 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
       <div class="caja"><h3 style="color:var(--muted)">Empujan hacia neutra</h3><div class="palabras" id="w-neu"></div></div>
       <div class="caja"><h3 style="color:var(--teal)">Empujan hacia positiva</h3><div class="palabras" id="w-pos"></div></div>
     </div>
-    <div class="caja" style="flex-direction:row;align-items:center;gap:36px">
-      <div style="display:grid;gap:8px;flex:1">
-        <span class="etiqueta muted">Prueba de la decisión de conservar negaciones</span>
-        <p class="destacado">"<b>disappointed</b>" es de los términos más negativos, pero "<b>not disappointed</b>" es de los más positivos. Si se hubiera quitado "not" como stopword, el modelo leería esas reseñas al revés.</p>
+    <div class="cuerpo dos" style="gap:16px">
+      <div class="caja">
+        <span class="etiqueta muted">Por qué conservamos las negaciones</span>
+        <p style="font-size:17px;line-height:1.45">"<b>disappointed</b>" empuja hacia negativa, pero "<b>not disappointed</b>" es de los términos más positivos. Si "not" fuera stopword, el modelo leería esas reseñas al revés.</p>
       </div>
-      <div style="display:grid;gap:10px;min-width:330px">
-        <div class="barra" style="--etq:150px"><span>disappointed</span><div class="pista"><div class="relleno coral" style="width:100%"></div></div><span>negativa</span></div>
-        <div class="barra" style="--etq:150px"><span>not disappointed</span><div class="pista"><div class="relleno teal" style="width:100%"></div></div><span>positiva</span></div>
+      <div class="caja coral">
+        <span class="etiqueta" style="color:var(--coral)">Dónde falla y por qué</span>
+        <ul class="lista" style="font-size:15px;gap:6px">
+          <li><span><b>Neutras (F1 0.36):</b> una reseña de 3★ mezcla elogios y quejas.</span></li>
+          <li><span><b>Negaciones largas:</b> "worried… but not disappointed" sale negativa; los bigramas no ven tan lejos.</span></li>
+          <li><span><b>Sarcasmo y quejas ajenas</b> ("pedí el color equivocado"). Solo entiende inglés.</span></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -398,7 +379,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 <!-- 9. ¿Aporta? -->
 <section class="slide">
-  <div class="eyebrow">4 · Validación</div>
+  <div class="eyebrow">Validación</div>
   <h2>¿El modelo aporta, o cualquiera podría adivinarlo?</h2>
   <div class="cuerpo tres" style="gap:16px">
     <div class="caja">
@@ -424,7 +405,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 <!-- 10. Hallazgo -->
 <section class="slide">
-  <div class="eyebrow">5 · Hallazgo clave</div>
+  <div class="eyebrow">Hallazgo clave</div>
   <h2>El porcentaje solo no alcanza: hay que mirar cuántos clientes se quejan</h2>
   <div class="cuerpo" style="grid-template-columns:1fr 1fr 0.9fr;gap:20px">
     <div style="display:grid;gap:10px;align-content:start">
@@ -443,17 +424,9 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </div>
 </section>
 
-<!-- 11. Causas -->
-<section class="slide">
-  <div class="eyebrow">5 · Causas</div>
-  <h2>Cada categoría falla por una razón distinta</h2>
-  <div class="cuerpo tres" style="gap:16px" id="causas"></div>
-  <p class="muted" style="font-size:14px">% de reseñas negativas que mencionan cada tema (diccionario de expresiones) y frases distintivas por categoría (TF-IDF por clase). "Devolución o atención" se excluye porque es la consecuencia de los otros problemas.</p>
-</section>
-
 <!-- 12. Tendencia -->
 <section class="slide">
-  <div class="eyebrow">5 · Evolución por año</div>
+  <div class="eyebrow">Evolución por año</div>
   <h2>Todas empeoran, y las 3 prioridades se repiten cada año</h2>
   <div class="cuerpo dos-a">
     <div class="caja">
@@ -469,10 +442,46 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 
 <!-- 13. Recomendación -->
 <section class="slide">
-  <div class="eyebrow">6 · Recomendación</div>
+  <div class="eyebrow">Recomendación</div>
   <h2>Dónde invertir el presupuesto de mejora este trimestre</h2>
   <div class="cuerpo tres" style="gap:16px" id="recomendacion"></div>
   <p class="destacado" style="font-size:19px"><b>Juntas concentran 18.5 millones de reseñas negativas: el 45% de todas las quejas</b> de las 15 categorías. Empeoraron entre 4 y 5 puntos desde 2019.</p>
+</section>
+
+<!-- Función de valor -->
+<section class="slide">
+  <div class="eyebrow">Métrica técnica → dinero</div>
+  <h2>La función de valor: cuánto vale cada acierto y cada error</h2>
+  <div class="cuerpo dos-a" style="gap:22px">
+    <div style="display:grid;gap:12px;align-content:start">
+      <p style="font-size:16px;line-height:1.45">Si el modelo marca un mensaje como queja, un agente contacta al cliente y le ofrece un cupón. ¿Cuándo conviene actuar?</p>
+      <table class="chica">
+        <thead><tr><th>Resultado</th><th>Qué pasa</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Verdadero positivo</td><td>Se recupera al cliente con cierta probabilidad</td><td class="pos">B − C</td></tr>
+          <tr><td>Falso positivo</td><td>Cupón y tiempo gastados en un cliente contento</td><td class="neg">− C</td></tr>
+          <tr><td>Falso negativo / verdadero negativo</td><td>Igual que sin el sistema</td><td>0</td></tr>
+        </tbody>
+      </table>
+      <div class="formula">Valor = VP × B − (VP + FP) × C<small>B = recuperación × gasto anual × margen · C = cupón + minutos × salario</small></div>
+      <div class="kpi-fila">
+        <div class="kpi-p"><b style="color:var(--teal)">US$ 28.50</b><span>B: valor de recuperar a un cliente</span></div>
+        <div class="kpi-p"><b style="color:var(--coral)">US$ 13.43</b><span>C: costo de cada acción</span></div>
+        <div class="kpi-p"><b>47 %</b><span>actuar solo si P(queja) &gt; C / B</span></div>
+      </div>
+    </div>
+    <table class="chica" style="align-self:start">
+      <thead><tr><th>Supuesto</th><th>Valor</th><th>Fuente</th></tr></thead>
+      <tbody>
+        <tr><td>Gasto anual del cliente</td><td>US$ 570</td><td>CIRP 2024 (cliente sin Prime; con Prime, US$ 1,170)</td></tr>
+        <tr><td>Margen</td><td>25 %</td><td>Supuesto conservador</td></tr>
+        <tr><td>Recuperación por contactar</td><td>+20 pts</td><td>Kotler: 54-70 % de quienes se quejan vuelven si se resuelve</td></tr>
+        <tr><td>Cupón</td><td>US$ 10</td><td>Supuesto</td></tr>
+        <tr><td>Tiempo del agente</td><td>10 min</td><td>Supuesto</td></tr>
+        <tr><td>Salario del agente</td><td>US$ 20.59/h</td><td>BLS, mayo 2024 (mediana EE. UU.)</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- 14. Demo en vivo -->
@@ -481,7 +490,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   <div class="demo-grid">
     <div class="demo-texto">
       <div class="en-vivo"><span class="punto"></span>EN VIVO</div>
-      <div class="eyebrow">7 · Producto</div>
+      <div class="eyebrow">Producto</div>
       <h2>Demo en vivo del dashboard</h2>
       <p class="demo-sub">Ahora les muestro cómo se ve y cómo funciona SAR con los datos reales.</p>
       <ol class="demo-pasos">
@@ -502,7 +511,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   <div class="eyebrow">Conclusión</div>
   <h2 class="final-titulo">Invertir primero donde <em>más clientes se quejan</em>, atacando la causa que ellos mismos escriben.</h2>
   <div class="final-tarjetas" id="final-tarjetas"></div>
-  <p class="final-frase">El texto dice <b>qué</b> arreglar. El volumen dice <b>dónde</b>. Y el modelo permite repetirlo en cualquier canal, aunque no tenga estrellas.</p>
+  <p class="final-frase">El texto dice <b>qué</b> arreglar. El volumen dice <b>dónde</b>. Y con el umbral elegido por valor, el modelo convierte cada 10,000 mensajes al mes en <b>~US$ 194,000 al año</b> recuperados.</p>
   <div class="gracias"><strong>Gracias</strong><span>¿Preguntas?</span></div>
 </section>
 
@@ -519,7 +528,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
 <div class="aviso" id="aviso">Presioná <kbd>F</kbd> para pantalla completa · <kbd>←</kbd> <kbd>→</kbd> para avanzar · <kbd>I</kbd> para el índice</div>
 <div class="indice" id="indice" role="dialog" aria-label="Índice de diapositivas"><div class="indice-grid" id="indice-grid"></div></div>
 
-<script id="datos" type="application/json">{"meta":{"resenas":295439,"categorias":15,"periodo":"2019 - 2023","accuracy":0.85,"f1_macro":0.691},"categorias":[{"id":"Home_and_Kitchen","nombre":"Hogar y cocina","pct_neg":16.93,"margen":0.52,"volumen_m":44.42,"negativas_m":7.521,"cambio_pp":5.28,"temas":{"Dejó de funcionar / defectuoso":7.2,"Se rompe / mala calidad":28.0,"Talla o medidas":11.1,"No es lo que se anunciaba":2.9,"Envío, empaque o piezas faltantes":12.2,"Batería o carga":2.0,"Devolución o atención":18.4,"Precio / no vale lo que cuesta":7.7,"Olor, sabor o reacción":5.8},"causa":"Se rompe / mala calidad","frases":[{"en":"king size","es":"tamaño king"},{"en":"fitted sheet","es":"sábana ajustable"},{"en":"air fryer","es":"freidora de aire"},{"en":"coffee pot","es":"cafetera"},{"en":"bed frame","es":"base de cama"},{"en":"mattress topper","es":"colchoneta"}],"anios":[{"anio":2019,"pct":13.65,"negativas_m":1.125},{"anio":2020,"pct":16.06,"negativas_m":1.634},{"anio":2021,"pct":17.33,"negativas_m":2.099},{"anio":2022,"pct":19.04,"negativas_m":1.905},{"anio":2023,"pct":19.53,"negativas_m":0.758}]},{"id":"Clothing_Shoes_and_Jewelry","nombre":"Ropa, zapatos y joyería","pct_neg":16.15,"margen":0.51,"volumen_m":41.79,"negativas_m":6.75,"cambio_pp":4.03,"temas":{"Dejó de funcionar / defectuoso":1.7,"Se rompe / mala calidad":24.1,"Talla o medidas":35.9,"No es lo que se anunciaba":3.6,"Envío, empaque o piezas faltantes":6.1,"Batería o carga":0.7,"Devolución o atención":16.8,"Precio / no vale lo que cuesta":4.8,"Olor, sabor o reacción":3.2},"causa":"Talla o medidas","frases":[{"en":"plus size","es":"tallas grandes"},{"en":"normally wear","es":"talla que uso normalmente"},{"en":"arch support","es":"soporte del arco"},{"en":"wear size","es":"uso talla"},{"en":"order size up","es":"pedir una talla más"},{"en":"size not true","es":"la talla no es real"}],"anios":[{"anio":2019,"pct":13.5,"negativas_m":1.249},{"anio":2020,"pct":14.65,"negativas_m":1.332},{"anio":2021,"pct":17.63,"negativas_m":1.846},{"anio":2022,"pct":18.25,"negativas_m":1.681},{"anio":2023,"pct":17.06,"negativas_m":0.642}]},{"id":"Electronics","nombre":"Electrónica","pct_neg":19.51,"margen":0.55,"volumen_m":21.63,"negativas_m":4.22,"cambio_pp":4.4,"temas":{"Dejó de funcionar / defectuoso":20.3,"Se rompe / mala calidad":17.9,"Talla o medidas":8.6,"No es lo que se anunciaba":1.9,"Envío, empaque o piezas faltantes":6.7,"Batería o carga":15.8,"Devolución o atención":20.5,"Precio / no vale lo que cuesta":6.8,"Olor, sabor o reacción":3.3},"causa":"Dejó de funcionar / defectuoso","frases":[{"en":"macbook pro","es":"MacBook Pro"},{"en":"sound quality","es":"calidad de sonido"},{"en":"apple pencil","es":"Apple Pencil"},{"en":"screen protector","es":"protector de pantalla"},{"en":"hard drive","es":"disco duro"},{"en":"macbook air","es":"MacBook Air"}],"anios":[{"anio":2019,"pct":16.47,"negativas_m":0.787},{"anio":2020,"pct":18.07,"negativas_m":0.998},{"anio":2021,"pct":21.29,"negativas_m":1.088},{"anio":2022,"pct":22.08,"negativas_m":0.959},{"anio":2023,"pct":20.67,"negativas_m":0.388}]},{"id":"Tools_and_Home_Improvement","nombre":"Herramientas y mejoras del hogar","pct_neg":17.95,"margen":0.54,"volumen_m":17.67,"negativas_m":3.173,"cambio_pp":4.59,"temas":{"Dejó de funcionar / defectuoso":14.5,"Se rompe / mala calidad":22.9,"Talla o medidas":8.9,"No es lo que se anunciaba":2.2,"Envío, empaque o piezas faltantes":8.7,"Batería o carga":7.4,"Devolución o atención":17.7,"Precio / no vale lo que cuesta":7.1,"Olor, sabor o reacción":4.1},"causa":"Se rompe / mala calidad","frases":[{"en":"shower head","es":"regadera"},{"en":"light bulbs","es":"bombillas"},{"en":"motion sensor","es":"sensor de movimiento"},{"en":"string lights","es":"luces de cadena"},{"en":"garage door","es":"puerta de garaje"},{"en":"smart home","es":"casa inteligente"}],"anios":[{"anio":2019,"pct":14.29,"negativas_m":0.476},{"anio":2020,"pct":17.23,"negativas_m":0.734},{"anio":2021,"pct":18.9,"negativas_m":0.846},{"anio":2022,"pct":20.77,"negativas_m":0.839},{"anio":2023,"pct":17.76,"negativas_m":0.277}]},{"id":"Health_and_Household","nombre":"Salud y hogar","pct_neg":17.89,"margen":0.54,"volumen_m":16.05,"negativas_m":2.871,"cambio_pp":7.14,"temas":{"Dejó de funcionar / defectuoso":8.2,"Se rompe / mala calidad":15.2,"Talla o medidas":7.3,"No es lo que se anunciaba":2.6,"Envío, empaque o piezas faltantes":9.0,"Batería o carga":5.9,"Devolución o atención":14.3,"Precio / no vale lo que cuesta":8.5,"Olor, sabor o reacción":15.6},"causa":"Olor, sabor o reacción","frases":[{"en":"heating pad","es":"almohadilla térmica"},{"en":"pain relief","es":"alivio del dolor"},{"en":"essential oil","es":"aceite esencial"},{"en":"car key","es":"llave del carro"},{"en":"mop head","es":"cabeza del trapeador"},{"en":"taste terrible","es":"sabe terrible"}],"anios":[{"anio":2019,"pct":13.83,"negativas_m":0.367},{"anio":2020,"pct":15.55,"negativas_m":0.612},{"anio":2021,"pct":19.12,"negativas_m":0.8},{"anio":2022,"pct":20.85,"negativas_m":0.788},{"anio":2023,"pct":20.28,"negativas_m":0.303}]},{"id":"Beauty_and_Personal_Care","nombre":"Belleza y cuidado personal","pct_neg":18.66,"margen":0.54,"volumen_m":14.7,"negativas_m":2.742,"cambio_pp":4.93,"temas":{"Dejó de funcionar / defectuoso":6.5,"Se rompe / mala calidad":16.7,"Talla o medidas":5.2,"No es lo que se anunciaba":4.2,"Envío, empaque o piezas faltantes":8.0,"Batería o carga":2.0,"Devolución o atención":11.5,"Precio / no vale lo que cuesta":7.7,"Olor, sabor o reacción":15.2},"causa":"Se rompe / mala calidad","frases":[{"en":"makes hair","es":"deja el cabello"},{"en":"hair hair","es":"cabello"},{"en":"dry hair","es":"cabello seco"},{"en":"face wash","es":"limpiador facial"},{"en":"work hair","es":"funciona en el cabello"},{"en":"hair color","es":"tinte de cabello"}],"anios":[{"anio":2019,"pct":14.91,"negativas_m":0.361},{"anio":2020,"pct":16.9,"negativas_m":0.584},{"anio":2021,"pct":21.01,"negativas_m":0.747},{"anio":2022,"pct":20.2,"negativas_m":0.729},{"anio":2023,"pct":19.35,"negativas_m":0.322}]},{"id":"Patio_Lawn_and_Garden","nombre":"Patio y jardín","pct_neg":21.22,"margen":0.57,"volumen_m":11.26,"negativas_m":2.389,"cambio_pp":6.66,"temas":{"Dejó de funcionar / defectuoso":10.4,"Se rompe / mala calidad":24.8,"Talla o medidas":8.9,"No es lo que se anunciaba":2.6,"Envío, empaque o piezas faltantes":10.8,"Batería o carga":3.1,"Devolución o atención":16.3,"Precio / no vale lo que cuesta":8.1,"Olor, sabor o reacción":3.9},"causa":"Se rompe / mala calidad","frases":[{"en":"pressure washer","es":"hidrolavadora"},{"en":"plants arrived","es":"las plantas llegaron"},{"en":"plant arrived","es":"la planta llegó"},{"en":"water plants","es":"regar plantas"},{"en":"hot tub","es":"jacuzzi"},{"en":"did not kill","es":"no mató (plagas)"}],"anios":[{"anio":2019,"pct":16.73,"negativas_m":0.312},{"anio":2020,"pct":19.88,"negativas_m":0.493},{"anio":2021,"pct":21.68,"negativas_m":0.651},{"anio":2022,"pct":23.77,"negativas_m":0.688},{"anio":2023,"pct":24.1,"negativas_m":0.244}]},{"id":"Cell_Phones_and_Accessories","nombre":"Celulares y accesorios","pct_neg":20.26,"margen":0.56,"volumen_m":11.71,"negativas_m":2.372,"cambio_pp":5.36,"temas":{"Dejó de funcionar / defectuoso":10.2,"Se rompe / mala calidad":27.4,"Talla o medidas":14.1,"No es lo que se anunciaba":2.0,"Envío, empaque o piezas faltantes":5.8,"Batería o carga":16.5,"Devolución o atención":13.1,"Precio / no vale lo que cuesta":7.2,"Olor, sabor o reacción":2.3},"causa":"Se rompe / mala calidad","frases":[{"en":"screen protector","es":"protector de pantalla"},{"en":"dropped phone","es":"se me cayó el teléfono"},{"en":"protect phone","es":"proteger el teléfono"},{"en":"finger print","es":"huella digital"},{"en":"fingerprint reader","es":"lector de huella"},{"en":"fit phone","es":"le queda al teléfono"}],"anios":[{"anio":2019,"pct":17.21,"negativas_m":0.492},{"anio":2020,"pct":17.64,"negativas_m":0.488},{"anio":2021,"pct":22.24,"negativas_m":0.615},{"anio":2022,"pct":23.78,"negativas_m":0.569},{"anio":2023,"pct":22.49,"negativas_m":0.208}]},{"id":"Automotive","nombre":"Automotriz","pct_neg":17.84,"margen":0.54,"volumen_m":11.94,"negativas_m":2.13,"cambio_pp":7.35,"temas":{"Dejó de funcionar / defectuoso":8.7,"Se rompe / mala calidad":20.6,"Talla o medidas":22.6,"No es lo que se anunciaba":2.6,"Envío, empaque o piezas faltantes":7.5,"Batería o carga":3.5,"Devolución o atención":16.7,"Precio / no vale lo que cuesta":6.0,"Olor, sabor o reacción":4.3},"causa":"Talla o medidas","frases":[{"en":"fit vehicle","es":"le queda al vehículo"},{"en":"seat covers","es":"fundas de asiento"},{"en":"fit jeep","es":"le queda al Jeep"},{"en":"fit car","es":"le queda al carro"},{"en":"parts store","es":"tienda de repuestos"},{"en":"tail light","es":"luz trasera"}],"anios":[{"anio":2019,"pct":14.42,"negativas_m":0.404},{"anio":2020,"pct":16.11,"negativas_m":0.417},{"anio":2021,"pct":19.28,"negativas_m":0.556},{"anio":2022,"pct":20.01,"negativas_m":0.537},{"anio":2023,"pct":21.99,"negativas_m":0.217}]},{"id":"Pet_Supplies","nombre":"Mascotas","pct_neg":19.38,"margen":0.55,"volumen_m":10.59,"negativas_m":2.052,"cambio_pp":4.64,"temas":{"Dejó de funcionar / defectuoso":9.4,"Se rompe / mala calidad":20.8,"Talla o medidas":12.0,"No es lo que se anunciaba":2.8,"Envío, empaque o piezas faltantes":8.3,"Batería o carga":1.9,"Devolución o atención":12.5,"Precio / no vale lo que cuesta":8.8,"Olor, sabor o reacción":8.6},"causa":"Se rompe / mala calidad","frases":[{"en":"cat food","es":"comida para gato"},{"en":"aggressive chewers","es":"perros que muerden fuerte"},{"en":"litter box","es":"arenero"},{"en":"dog food","es":"comida para perro"},{"en":"dog loves","es":"al perro le encanta"},{"en":"dog destroyed","es":"el perro lo destruyó"}],"anios":[{"anio":2019,"pct":16.13,"negativas_m":0.32},{"anio":2020,"pct":17.75,"negativas_m":0.448},{"anio":2021,"pct":21.76,"negativas_m":0.587},{"anio":2022,"pct":20.73,"negativas_m":0.496},{"anio":2023,"pct":20.3,"negativas_m":0.201}]},{"id":"Sports_and_Outdoors","nombre":"Deportes y aire libre","pct_neg":15.88,"margen":0.51,"volumen_m":10.33,"negativas_m":1.64,"cambio_pp":5.97,"temas":{"Dejó de funcionar / defectuoso":6.5,"Se rompe / mala calidad":30.5,"Talla o medidas":14.6,"No es lo que se anunciaba":2.9,"Envío, empaque o piezas faltantes":9.4,"Batería o carga":4.9,"Devolución o atención":17.5,"Precio / no vale lo que cuesta":7.5,"Olor, sabor o reacción":3.6},"causa":"Se rompe / mala calidad","frases":[{"en":"heart rate","es":"ritmo cardíaco"},{"en":"yoga mat","es":"tapete de yoga"},{"en":"hula hoop","es":"hula hula"},{"en":"bike shop","es":"taller de bicicletas"},{"en":"goes flat","es":"se desinfla"},{"en":"fit bike","es":"le queda a la bicicleta"}],"anios":[{"anio":2019,"pct":12.24,"negativas_m":0.292},{"anio":2020,"pct":14.67,"negativas_m":0.376},{"anio":2021,"pct":17.19,"negativas_m":0.423},{"anio":2022,"pct":18.82,"negativas_m":0.391},{"anio":2023,"pct":18.77,"negativas_m":0.158}]},{"id":"Toys_and_Games","nombre":"Juguetes y juegos","pct_neg":17.21,"margen":0.53,"volumen_m":9.51,"negativas_m":1.637,"cambio_pp":5.34,"temas":{"Dejó de funcionar / defectuoso":7.2,"Se rompe / mala calidad":30.4,"Talla o medidas":8.1,"No es lo que se anunciaba":3.7,"Envío, empaque o piezas faltantes":15.8,"Batería o carga":6.1,"Devolución o atención":14.5,"Precio / no vale lo que cuesta":10.2,"Olor, sabor o reacción":2.8},"causa":"Se rompe / mala calidad","frases":[{"en":"puzzle missing","es":"al rompecabezas le faltan"},{"en":"did not float","es":"no flotaba"},{"en":"pok mon","es":"Pokémon"},{"en":"older kids","es":"niños más grandes"},{"en":"blow bubbles","es":"hacer burbujas"},{"en":"kids disappointed","es":"niños decepcionados"}],"anios":[{"anio":2019,"pct":13.35,"negativas_m":0.265},{"anio":2020,"pct":15.91,"negativas_m":0.388},{"anio":2021,"pct":19.1,"negativas_m":0.409},{"anio":2022,"pct":20.51,"negativas_m":0.417},{"anio":2023,"pct":17.28,"negativas_m":0.158}]},{"id":"Office_Products","nombre":"Oficina","pct_neg":15.47,"margen":0.5,"volumen_m":7.55,"negativas_m":1.168,"cambio_pp":4.88,"temas":{"Dejó de funcionar / defectuoso":9.1,"Se rompe / mala calidad":22.2,"Talla o medidas":8.4,"No es lo que se anunciaba":2.8,"Envío, empaque o piezas faltantes":11.8,"Batería o carga":1.5,"Devolución o atención":16.6,"Precio / no vale lo que cuesta":8.4,"Olor, sabor o reacción":2.8},"causa":"Se rompe / mala calidad","frases":[{"en":"hp printer","es":"impresora HP"},{"en":"black cartridge","es":"cartucho negro"},{"en":"black ink","es":"tinta negra"},{"en":"work hp","es":"funciona con HP"},{"en":"does not write","es":"no escribe"},{"en":"print quality","es":"calidad de impresión"}],"anios":[{"anio":2019,"pct":12.59,"negativas_m":0.201},{"anio":2020,"pct":13.73,"negativas_m":0.26},{"anio":2021,"pct":16.53,"negativas_m":0.31},{"anio":2022,"pct":18.94,"negativas_m":0.288},{"anio":2023,"pct":16.43,"negativas_m":0.108}]},{"id":"Baby_Products","nombre":"Bebés","pct_neg":16.12,"margen":0.51,"volumen_m":3.04,"negativas_m":0.49,"cambio_pp":7.15,"temas":{"Dejó de funcionar / defectuoso":7.6,"Se rompe / mala calidad":22.5,"Talla o medidas":10.8,"No es lo que se anunciaba":2.9,"Envío, empaque o piezas faltantes":8.0,"Batería o carga":4.2,"Devolución o atención":14.3,"Precio / no vale lo que cuesta":8.3,"Olor, sabor o reacción":7.4},"causa":"Se rompe / mala calidad","frases":[{"en":"car seat","es":"silla para carro"},{"en":"diaper bag","es":"pañalera"},{"en":"diaper rash","es":"rozadura de pañal"},{"en":"car seats","es":"sillas para carro"},{"en":"high chair","es":"silla alta para comer"},{"en":"sound machine","es":"máquina de sonido"}],"anios":[{"anio":2019,"pct":11.38,"negativas_m":0.086},{"anio":2020,"pct":16.72,"negativas_m":0.13},{"anio":2021,"pct":18.5,"negativas_m":0.128},{"anio":2022,"pct":17.75,"negativas_m":0.099},{"anio":2023,"pct":18.26,"negativas_m":0.047}]},{"id":"Video_Games","nombre":"Videojuegos","pct_neg":20.39,"margen":0.56,"volumen_m":1.9,"negativas_m":0.387,"cambio_pp":6.97,"temas":{"Dejó de funcionar / defectuoso":19.2,"Se rompe / mala calidad":21.6,"Talla o medidas":7.4,"No es lo que se anunciaba":2.2,"Envío, empaque o piezas faltantes":6.9,"Batería o carga":11.3,"Devolución o atención":18.0,"Precio / no vale lo que cuesta":7.6,"Olor, sabor o reacción":3.9},"causa":"Se rompe / mala calidad","frases":[{"en":"nintendo switch","es":"Nintendo Switch"},{"en":"xbox controller","es":"control de Xbox"},{"en":"scroll wheel","es":"rueda del mouse"},{"en":"mouse button","es":"botón del mouse"},{"en":"game play","es":"jugabilidad"},{"en":"double click","es":"doble clic"}],"anios":[{"anio":2019,"pct":15.94,"negativas_m":0.068},{"anio":2020,"pct":19.49,"negativas_m":0.099},{"anio":2021,"pct":22.86,"negativas_m":0.102},{"anio":2022,"pct":23.6,"negativas_m":0.086},{"anio":2023,"pct":20.99,"negativas_m":0.032}]}],"anios":[2019,2020,2021,2022,2023],"experimentos":{"comparacion":[{"método":"Regla de sentido común","accuracy":0.625,"F1 macro":0.503,"F1 negativa":0.632},{"método":"Regresión Logística","accuracy":0.85,"F1 macro":0.691,"F1 negativa":0.776}],"curva":[{"reseñas de entrenamiento":10340,"F1 macro":0.66},{"reseñas de entrenamiento":20680,"F1 macro":0.67},{"reseñas de entrenamiento":51701,"F1 macro":0.68},{"reseñas de entrenamiento":103403,"F1 macro":0.686},{"reseñas de entrenamiento":206807,"F1 macro":0.691}],"sin_estrellas":{"real (estrellas)":{"top3":["Home_and_Kitchen","Clothing_Shoes_and_Jewelry","Electronics"],"total_m":41.69},"modelo (solo texto)":{"top3":["Home_and_Kitchen","Clothing_Shoes_and_Jewelry","Electronics"],"total_m":42.12},"regla (solo texto)":{"top3":["Home_and_Kitchen","Clothing_Shoes_and_Jewelry","Electronics"],"total_m":59.71}}},"recomendacion":[{"id":"Home_and_Kitchen","problema":"Productos que se rompen o son de mala calidad: 28 % de las quejas.","accion":"Auditar a los proveedores con más quejas de calidad en ropa de cama y pequeños electrodomésticos (sábanas, freidoras de aire, cafeteras)."},{"id":"Clothing_Shoes_and_Jewelry","problema":"La talla no corresponde: 36 % de las quejas.","accion":"Guías de talla por marca y un aviso de “esta marca talla pequeño” calculado con las reseñas. Menos devoluciones."},{"id":"Electronics","problema":"Deja de funcionar (20 %) y fallas de batería o carga (16 %).","accion":"Control de calidad y garantía visible en accesorios de computadora y almacenamiento (discos duros, tarjetas SD, accesorios de MacBook)."}],"estrellas":[12.7,5.2,6.6,10.1,65.5],"palabras":{"negativa":["not","terrible","not worth","not buy","disappointed","junk","horrible","not good","worst","not recommend"],"neutra":["but","okay","ok","star rating","mediocre","average","not","little disappointed","alright","eh"],"positiva":["great","love","perfect","best","amazing","loves","excellent","awesome","easy","not disappointed"]}}</script>
+<script id="datos" type="application/json">{"meta":{"resenas":295439,"categorias":15,"periodo":"2019 - 2023","accuracy":0.85,"f1_macro":0.691},"categorias":[{"id":"Home_and_Kitchen","nombre":"Hogar y cocina","pct_neg":16.93,"margen":0.52,"volumen_m":44.42,"negativas_m":7.521,"cambio_pp":5.28,"temas":{"Dejó de funcionar / defectuoso":7.2,"Se rompe / mala calidad":28.0,"Talla o medidas":11.1,"No es lo que se anunciaba":2.9,"Envío, empaque o piezas faltantes":12.2,"Batería o carga":2.0,"Devolución o atención":18.4,"Precio / no vale lo que cuesta":7.7,"Olor, sabor o reacción":5.8},"causa":"Se rompe / mala calidad","frases":[{"en":"king size","es":"tamaño king"},{"en":"fitted sheet","es":"sábana ajustable"},{"en":"air fryer","es":"freidora de aire"},{"en":"coffee pot","es":"cafetera"},{"en":"bed frame","es":"base de cama"},{"en":"mattress topper","es":"colchoneta"}],"anios":[{"anio":2019,"pct":13.65,"negativas_m":1.125},{"anio":2020,"pct":16.06,"negativas_m":1.634},{"anio":2021,"pct":17.33,"negativas_m":2.099},{"anio":2022,"pct":19.04,"negativas_m":1.905},{"anio":2023,"pct":19.53,"negativas_m":0.758}]},{"id":"Clothing_Shoes_and_Jewelry","nombre":"Ropa, zapatos y joyería","pct_neg":16.15,"margen":0.51,"volumen_m":41.79,"negativas_m":6.75,"cambio_pp":4.03,"temas":{"Dejó de funcionar / defectuoso":1.7,"Se rompe / mala calidad":24.1,"Talla o medidas":35.9,"No es lo que se anunciaba":3.6,"Envío, empaque o piezas faltantes":6.1,"Batería o carga":0.7,"Devolución o atención":16.8,"Precio / no vale lo que cuesta":4.8,"Olor, sabor o reacción":3.2},"causa":"Talla o medidas","frases":[{"en":"plus size","es":"tallas grandes"},{"en":"normally wear","es":"talla que uso normalmente"},{"en":"arch support","es":"soporte del arco"},{"en":"wear size","es":"uso talla"},{"en":"order size up","es":"pedir una talla más"},{"en":"size not true","es":"la talla no es real"}],"anios":[{"anio":2019,"pct":13.5,"negativas_m":1.249},{"anio":2020,"pct":14.65,"negativas_m":1.332},{"anio":2021,"pct":17.63,"negativas_m":1.846},{"anio":2022,"pct":18.25,"negativas_m":1.681},{"anio":2023,"pct":17.06,"negativas_m":0.642}]},{"id":"Electronics","nombre":"Electrónica","pct_neg":19.51,"margen":0.55,"volumen_m":21.63,"negativas_m":4.22,"cambio_pp":4.4,"temas":{"Dejó de funcionar / defectuoso":20.3,"Se rompe / mala calidad":17.9,"Talla o medidas":8.6,"No es lo que se anunciaba":1.9,"Envío, empaque o piezas faltantes":6.7,"Batería o carga":15.8,"Devolución o atención":20.5,"Precio / no vale lo que cuesta":6.8,"Olor, sabor o reacción":3.3},"causa":"Dejó de funcionar / defectuoso","frases":[{"en":"macbook pro","es":"MacBook Pro"},{"en":"sound quality","es":"calidad de sonido"},{"en":"apple pencil","es":"Apple Pencil"},{"en":"screen protector","es":"protector de pantalla"},{"en":"hard drive","es":"disco duro"},{"en":"macbook air","es":"MacBook Air"}],"anios":[{"anio":2019,"pct":16.47,"negativas_m":0.787},{"anio":2020,"pct":18.07,"negativas_m":0.998},{"anio":2021,"pct":21.29,"negativas_m":1.088},{"anio":2022,"pct":22.08,"negativas_m":0.959},{"anio":2023,"pct":20.67,"negativas_m":0.388}]},{"id":"Tools_and_Home_Improvement","nombre":"Herramientas y mejoras del hogar","pct_neg":17.95,"margen":0.54,"volumen_m":17.67,"negativas_m":3.173,"cambio_pp":4.59,"temas":{"Dejó de funcionar / defectuoso":14.5,"Se rompe / mala calidad":22.9,"Talla o medidas":8.9,"No es lo que se anunciaba":2.2,"Envío, empaque o piezas faltantes":8.7,"Batería o carga":7.4,"Devolución o atención":17.7,"Precio / no vale lo que cuesta":7.1,"Olor, sabor o reacción":4.1},"causa":"Se rompe / mala calidad","frases":[{"en":"shower head","es":"regadera"},{"en":"light bulbs","es":"bombillas"},{"en":"motion sensor","es":"sensor de movimiento"},{"en":"string lights","es":"luces de cadena"},{"en":"garage door","es":"puerta de garaje"},{"en":"smart home","es":"casa inteligente"}],"anios":[{"anio":2019,"pct":14.29,"negativas_m":0.476},{"anio":2020,"pct":17.23,"negativas_m":0.734},{"anio":2021,"pct":18.9,"negativas_m":0.846},{"anio":2022,"pct":20.77,"negativas_m":0.839},{"anio":2023,"pct":17.76,"negativas_m":0.277}]},{"id":"Health_and_Household","nombre":"Salud y hogar","pct_neg":17.89,"margen":0.54,"volumen_m":16.05,"negativas_m":2.871,"cambio_pp":7.14,"temas":{"Dejó de funcionar / defectuoso":8.2,"Se rompe / mala calidad":15.2,"Talla o medidas":7.3,"No es lo que se anunciaba":2.6,"Envío, empaque o piezas faltantes":9.0,"Batería o carga":5.9,"Devolución o atención":14.3,"Precio / no vale lo que cuesta":8.5,"Olor, sabor o reacción":15.6},"causa":"Olor, sabor o reacción","frases":[{"en":"heating pad","es":"almohadilla térmica"},{"en":"pain relief","es":"alivio del dolor"},{"en":"essential oil","es":"aceite esencial"},{"en":"car key","es":"llave del carro"},{"en":"mop head","es":"cabeza del trapeador"},{"en":"taste terrible","es":"sabe terrible"}],"anios":[{"anio":2019,"pct":13.83,"negativas_m":0.367},{"anio":2020,"pct":15.55,"negativas_m":0.612},{"anio":2021,"pct":19.12,"negativas_m":0.8},{"anio":2022,"pct":20.85,"negativas_m":0.788},{"anio":2023,"pct":20.28,"negativas_m":0.303}]},{"id":"Beauty_and_Personal_Care","nombre":"Belleza y cuidado personal","pct_neg":18.66,"margen":0.54,"volumen_m":14.7,"negativas_m":2.742,"cambio_pp":4.93,"temas":{"Dejó de funcionar / defectuoso":6.5,"Se rompe / mala calidad":16.7,"Talla o medidas":5.2,"No es lo que se anunciaba":4.2,"Envío, empaque o piezas faltantes":8.0,"Batería o carga":2.0,"Devolución o atención":11.5,"Precio / no vale lo que cuesta":7.7,"Olor, sabor o reacción":15.2},"causa":"Se rompe / mala calidad","frases":[{"en":"makes hair","es":"deja el cabello"},{"en":"hair hair","es":"cabello"},{"en":"dry hair","es":"cabello seco"},{"en":"face wash","es":"limpiador facial"},{"en":"work hair","es":"funciona en el cabello"},{"en":"hair color","es":"tinte de cabello"}],"anios":[{"anio":2019,"pct":14.91,"negativas_m":0.361},{"anio":2020,"pct":16.9,"negativas_m":0.584},{"anio":2021,"pct":21.01,"negativas_m":0.747},{"anio":2022,"pct":20.2,"negativas_m":0.729},{"anio":2023,"pct":19.35,"negativas_m":0.322}]},{"id":"Patio_Lawn_and_Garden","nombre":"Patio y jardín","pct_neg":21.22,"margen":0.57,"volumen_m":11.26,"negativas_m":2.389,"cambio_pp":6.66,"temas":{"Dejó de funcionar / defectuoso":10.4,"Se rompe / mala calidad":24.8,"Talla o medidas":8.9,"No es lo que se anunciaba":2.6,"Envío, empaque o piezas faltantes":10.8,"Batería o carga":3.1,"Devolución o atención":16.3,"Precio / no vale lo que cuesta":8.1,"Olor, sabor o reacción":3.9},"causa":"Se rompe / mala calidad","frases":[{"en":"pressure washer","es":"hidrolavadora"},{"en":"plants arrived","es":"las plantas llegaron"},{"en":"plant arrived","es":"la planta llegó"},{"en":"water plants","es":"regar plantas"},{"en":"hot tub","es":"jacuzzi"},{"en":"did not kill","es":"no mató (plagas)"}],"anios":[{"anio":2019,"pct":16.73,"negativas_m":0.312},{"anio":2020,"pct":19.88,"negativas_m":0.493},{"anio":2021,"pct":21.68,"negativas_m":0.651},{"anio":2022,"pct":23.77,"negativas_m":0.688},{"anio":2023,"pct":24.1,"negativas_m":0.244}]},{"id":"Cell_Phones_and_Accessories","nombre":"Celulares y accesorios","pct_neg":20.26,"margen":0.56,"volumen_m":11.71,"negativas_m":2.372,"cambio_pp":5.36,"temas":{"Dejó de funcionar / defectuoso":10.2,"Se rompe / mala calidad":27.4,"Talla o medidas":14.1,"No es lo que se anunciaba":2.0,"Envío, empaque o piezas faltantes":5.8,"Batería o carga":16.5,"Devolución o atención":13.1,"Precio / no vale lo que cuesta":7.2,"Olor, sabor o reacción":2.3},"causa":"Se rompe / mala calidad","frases":[{"en":"screen protector","es":"protector de pantalla"},{"en":"dropped phone","es":"se me cayó el teléfono"},{"en":"protect phone","es":"proteger el teléfono"},{"en":"finger print","es":"huella digital"},{"en":"fingerprint reader","es":"lector de huella"},{"en":"fit phone","es":"le queda al teléfono"}],"anios":[{"anio":2019,"pct":17.21,"negativas_m":0.492},{"anio":2020,"pct":17.64,"negativas_m":0.488},{"anio":2021,"pct":22.24,"negativas_m":0.615},{"anio":2022,"pct":23.78,"negativas_m":0.569},{"anio":2023,"pct":22.49,"negativas_m":0.208}]},{"id":"Automotive","nombre":"Automotriz","pct_neg":17.84,"margen":0.54,"volumen_m":11.94,"negativas_m":2.13,"cambio_pp":7.35,"temas":{"Dejó de funcionar / defectuoso":8.7,"Se rompe / mala calidad":20.6,"Talla o medidas":22.6,"No es lo que se anunciaba":2.6,"Envío, empaque o piezas faltantes":7.5,"Batería o carga":3.5,"Devolución o atención":16.7,"Precio / no vale lo que cuesta":6.0,"Olor, sabor o reacción":4.3},"causa":"Talla o medidas","frases":[{"en":"fit vehicle","es":"le queda al vehículo"},{"en":"seat covers","es":"fundas de asiento"},{"en":"fit jeep","es":"le queda al Jeep"},{"en":"fit car","es":"le queda al carro"},{"en":"parts store","es":"tienda de repuestos"},{"en":"tail light","es":"luz trasera"}],"anios":[{"anio":2019,"pct":14.42,"negativas_m":0.404},{"anio":2020,"pct":16.11,"negativas_m":0.417},{"anio":2021,"pct":19.28,"negativas_m":0.556},{"anio":2022,"pct":20.01,"negativas_m":0.537},{"anio":2023,"pct":21.99,"negativas_m":0.217}]},{"id":"Pet_Supplies","nombre":"Mascotas","pct_neg":19.38,"margen":0.55,"volumen_m":10.59,"negativas_m":2.052,"cambio_pp":4.64,"temas":{"Dejó de funcionar / defectuoso":9.4,"Se rompe / mala calidad":20.8,"Talla o medidas":12.0,"No es lo que se anunciaba":2.8,"Envío, empaque o piezas faltantes":8.3,"Batería o carga":1.9,"Devolución o atención":12.5,"Precio / no vale lo que cuesta":8.8,"Olor, sabor o reacción":8.6},"causa":"Se rompe / mala calidad","frases":[{"en":"cat food","es":"comida para gato"},{"en":"aggressive chewers","es":"perros que muerden fuerte"},{"en":"litter box","es":"arenero"},{"en":"dog food","es":"comida para perro"},{"en":"dog loves","es":"al perro le encanta"},{"en":"dog destroyed","es":"el perro lo destruyó"}],"anios":[{"anio":2019,"pct":16.13,"negativas_m":0.32},{"anio":2020,"pct":17.75,"negativas_m":0.448},{"anio":2021,"pct":21.76,"negativas_m":0.587},{"anio":2022,"pct":20.73,"negativas_m":0.496},{"anio":2023,"pct":20.3,"negativas_m":0.201}]},{"id":"Sports_and_Outdoors","nombre":"Deportes y aire libre","pct_neg":15.88,"margen":0.51,"volumen_m":10.33,"negativas_m":1.64,"cambio_pp":5.97,"temas":{"Dejó de funcionar / defectuoso":6.5,"Se rompe / mala calidad":30.5,"Talla o medidas":14.6,"No es lo que se anunciaba":2.9,"Envío, empaque o piezas faltantes":9.4,"Batería o carga":4.9,"Devolución o atención":17.5,"Precio / no vale lo que cuesta":7.5,"Olor, sabor o reacción":3.6},"causa":"Se rompe / mala calidad","frases":[{"en":"heart rate","es":"ritmo cardíaco"},{"en":"yoga mat","es":"tapete de yoga"},{"en":"hula hoop","es":"hula hula"},{"en":"bike shop","es":"taller de bicicletas"},{"en":"goes flat","es":"se desinfla"},{"en":"fit bike","es":"le queda a la bicicleta"}],"anios":[{"anio":2019,"pct":12.24,"negativas_m":0.292},{"anio":2020,"pct":14.67,"negativas_m":0.376},{"anio":2021,"pct":17.19,"negativas_m":0.423},{"anio":2022,"pct":18.82,"negativas_m":0.391},{"anio":2023,"pct":18.77,"negativas_m":0.158}]},{"id":"Toys_and_Games","nombre":"Juguetes y juegos","pct_neg":17.21,"margen":0.53,"volumen_m":9.51,"negativas_m":1.637,"cambio_pp":5.34,"temas":{"Dejó de funcionar / defectuoso":7.2,"Se rompe / mala calidad":30.4,"Talla o medidas":8.1,"No es lo que se anunciaba":3.7,"Envío, empaque o piezas faltantes":15.8,"Batería o carga":6.1,"Devolución o atención":14.5,"Precio / no vale lo que cuesta":10.2,"Olor, sabor o reacción":2.8},"causa":"Se rompe / mala calidad","frases":[{"en":"puzzle missing","es":"al rompecabezas le faltan"},{"en":"did not float","es":"no flotaba"},{"en":"pok mon","es":"Pokémon"},{"en":"older kids","es":"niños más grandes"},{"en":"blow bubbles","es":"hacer burbujas"},{"en":"kids disappointed","es":"niños decepcionados"}],"anios":[{"anio":2019,"pct":13.35,"negativas_m":0.265},{"anio":2020,"pct":15.91,"negativas_m":0.388},{"anio":2021,"pct":19.1,"negativas_m":0.409},{"anio":2022,"pct":20.51,"negativas_m":0.417},{"anio":2023,"pct":17.28,"negativas_m":0.158}]},{"id":"Office_Products","nombre":"Oficina","pct_neg":15.47,"margen":0.5,"volumen_m":7.55,"negativas_m":1.168,"cambio_pp":4.88,"temas":{"Dejó de funcionar / defectuoso":9.1,"Se rompe / mala calidad":22.2,"Talla o medidas":8.4,"No es lo que se anunciaba":2.8,"Envío, empaque o piezas faltantes":11.8,"Batería o carga":1.5,"Devolución o atención":16.6,"Precio / no vale lo que cuesta":8.4,"Olor, sabor o reacción":2.8},"causa":"Se rompe / mala calidad","frases":[{"en":"hp printer","es":"impresora HP"},{"en":"black cartridge","es":"cartucho negro"},{"en":"black ink","es":"tinta negra"},{"en":"work hp","es":"funciona con HP"},{"en":"does not write","es":"no escribe"},{"en":"print quality","es":"calidad de impresión"}],"anios":[{"anio":2019,"pct":12.59,"negativas_m":0.201},{"anio":2020,"pct":13.73,"negativas_m":0.26},{"anio":2021,"pct":16.53,"negativas_m":0.31},{"anio":2022,"pct":18.94,"negativas_m":0.288},{"anio":2023,"pct":16.43,"negativas_m":0.108}]},{"id":"Baby_Products","nombre":"Bebés","pct_neg":16.12,"margen":0.51,"volumen_m":3.04,"negativas_m":0.49,"cambio_pp":7.15,"temas":{"Dejó de funcionar / defectuoso":7.6,"Se rompe / mala calidad":22.5,"Talla o medidas":10.8,"No es lo que se anunciaba":2.9,"Envío, empaque o piezas faltantes":8.0,"Batería o carga":4.2,"Devolución o atención":14.3,"Precio / no vale lo que cuesta":8.3,"Olor, sabor o reacción":7.4},"causa":"Se rompe / mala calidad","frases":[{"en":"car seat","es":"silla para carro"},{"en":"diaper bag","es":"pañalera"},{"en":"diaper rash","es":"rozadura de pañal"},{"en":"car seats","es":"sillas para carro"},{"en":"high chair","es":"silla alta para comer"},{"en":"sound machine","es":"máquina de sonido"}],"anios":[{"anio":2019,"pct":11.38,"negativas_m":0.086},{"anio":2020,"pct":16.72,"negativas_m":0.13},{"anio":2021,"pct":18.5,"negativas_m":0.128},{"anio":2022,"pct":17.75,"negativas_m":0.099},{"anio":2023,"pct":18.26,"negativas_m":0.047}]},{"id":"Video_Games","nombre":"Videojuegos","pct_neg":20.39,"margen":0.56,"volumen_m":1.9,"negativas_m":0.387,"cambio_pp":6.97,"temas":{"Dejó de funcionar / defectuoso":19.2,"Se rompe / mala calidad":21.6,"Talla o medidas":7.4,"No es lo que se anunciaba":2.2,"Envío, empaque o piezas faltantes":6.9,"Batería o carga":11.3,"Devolución o atención":18.0,"Precio / no vale lo que cuesta":7.6,"Olor, sabor o reacción":3.9},"causa":"Se rompe / mala calidad","frases":[{"en":"nintendo switch","es":"Nintendo Switch"},{"en":"xbox controller","es":"control de Xbox"},{"en":"scroll wheel","es":"rueda del mouse"},{"en":"mouse button","es":"botón del mouse"},{"en":"game play","es":"jugabilidad"},{"en":"double click","es":"doble clic"}],"anios":[{"anio":2019,"pct":15.94,"negativas_m":0.068},{"anio":2020,"pct":19.49,"negativas_m":0.099},{"anio":2021,"pct":22.86,"negativas_m":0.102},{"anio":2022,"pct":23.6,"negativas_m":0.086},{"anio":2023,"pct":20.99,"negativas_m":0.032}]}],"anios":[2019,2020,2021,2022,2023],"valor":{"supuestos":{"gasto_anual":570.0,"margen":0.25,"recuperacion":0.2,"cupon":10.0,"minutos_agente":10.0,"salario_hora":20.59},"beneficio":28.5,"costo":13.43,"umbral_valor":0.51,"umbral_f1":0.37,"curva":[{"u":0.02,"lr":-20198.9,"nb":-20084.2},{"u":0.03,"lr":-13637.6,"nb":-12479.9},{"u":0.04,"lr":-9006.6,"nb":-7323.4},{"u":0.05,"lr":-5519.8,"nb":-3765.3},{"u":0.06,"lr":-2789.8,"nb":-810.3},{"u":0.07,"lr":-497.1,"nb":1390.1},{"u":0.08,"lr":1407.3,"nb":3305.0},{"u":0.09,"lr":3105.3,"nb":4947.2},{"u":0.1,"lr":4507.4,"nb":6461.5},{"u":0.11,"lr":5697.7,"nb":7629.1},{"u":0.12,"lr":6700.1,"nb":8641.7},{"u":0.13,"lr":7806.2,"nb":9476.6},{"u":0.14,"lr":8704.8,"nb":10270.2},{"u":0.15,"lr":9465.5,"nb":10919.6},{"u":0.16,"lr":10169.7,"nb":11348.3},{"u":0.17,"lr":10695.6,"nb":11859.7},{"u":0.18,"lr":11227.9,"nb":12423.1},{"u":0.19,"lr":11645.4,"nb":12964.8},{"u":0.2,"lr":12094.7,"nb":13312.7},{"u":0.21,"lr":12495.6,"nb":13720.4},{"u":0.22,"lr":12882.0,"nb":14062.1},{"u":0.23,"lr":13235.9,"nb":14358.4},{"u":0.24,"lr":13439.8,"nb":14597.9},{"u":0.25,"lr":13828.8,"nb":14759.8},{"u":0.26,"lr":14120.2,"nb":14944.4},{"u":0.27,"lr":14450.9,"nb":15139.6},{"u":0.28,"lr":14647.3,"nb":15322.2},{"u":0.29,"lr":14783.4,"nb":15512.8},{"u":0.3,"lr":14936.6,"nb":15588.7},{"u":0.31,"lr":15126.4,"nb":15656.0},{"u":0.32,"lr":15332.5,"nb":15794.7},{"u":0.33,"lr":15464.0,"nb":15939.8},{"u":0.34,"lr":15603.9,"nb":16014.3},{"u":0.35,"lr":15698.7,"nb":16039.9},{"u":0.36,"lr":15843.4,"nb":16044.2},{"u":0.37,"lr":15926.4,"nb":16087.9},{"u":0.38,"lr":15971.2,"nb":16095.1},{"u":0.39,"lr":16003.5,"nb":16086.1},{"u":0.4,"lr":16057.7,"nb":16109.7},{"u":0.41,"lr":16058.6,"nb":16125.5},{"u":0.42,"lr":16056.6,"nb":16103.3},{"u":0.43,"lr":16097.5,"nb":16066.0},{"u":0.44,"lr":16092.7,"nb":16022.7},{"u":0.45,"lr":16106.8,"nb":16020.6},{"u":0.46,"lr":16136.8,"nb":15977.6},{"u":0.47,"lr":16185.0,"nb":15930.5},{"u":0.48,"lr":16154.5,"nb":15834.2},{"u":0.49,"lr":16184.9,"nb":15725.4},{"u":0.5,"lr":16189.2,"nb":15669.6},{"u":0.51,"lr":16204.4,"nb":15672.8},{"u":0.52,"lr":16155.6,"nb":15550.7},{"u":0.53,"lr":16103.5,"nb":15487.7},{"u":0.54,"lr":16097.9,"nb":15381.9},{"u":0.55,"lr":16037.1,"nb":15207.0},{"u":0.56,"lr":15981.2,"nb":15093.6},{"u":0.57,"lr":15902.3,"nb":14998.4},{"u":0.58,"lr":15790.8,"nb":14820.7},{"u":0.59,"lr":15647.2,"nb":14706.9},{"u":0.6,"lr":15542.2,"nb":14581.5},{"u":0.61,"lr":15406.1,"nb":14428.0},{"u":0.62,"lr":15270.0,"nb":14266.6},{"u":0.63,"lr":15091.9,"nb":14058.2},{"u":0.64,"lr":14909.0,"nb":13915.0},{"u":0.65,"lr":14720.0,"nb":13739.9},{"u":0.66,"lr":14550.2,"nb":13563.8},{"u":0.67,"lr":14457.6,"nb":13341.1},{"u":0.68,"lr":14298.8,"nb":13146.4},{"u":0.69,"lr":14152.9,"nb":12910.4},{"u":0.7,"lr":13958.3,"nb":12688.9},{"u":0.71,"lr":13794.7,"nb":12486.7},{"u":0.72,"lr":13599.6,"nb":12252.6},{"u":0.73,"lr":13423.8,"nb":12092.6},{"u":0.74,"lr":13234.7,"nb":11894.1},{"u":0.75,"lr":13078.1,"nb":11675.1},{"u":0.76,"lr":12780.9,"nb":11486.1},{"u":0.77,"lr":12530.3,"nb":11276.6},{"u":0.78,"lr":12317.4,"nb":10959.8},{"u":0.79,"lr":12054.3,"nb":10742.4},{"u":0.8,"lr":11742.8,"nb":10463.0},{"u":0.81,"lr":11412.5,"nb":10044.9},{"u":0.82,"lr":11106.2,"nb":9757.3},{"u":0.83,"lr":10790.2,"nb":9423.8},{"u":0.84,"lr":10452.3,"nb":9115.0},{"u":0.85,"lr":9987.7,"nb":8740.0},{"u":0.86,"lr":9662.3,"nb":8303.0},{"u":0.87,"lr":9337.2,"nb":7902.6},{"u":0.88,"lr":8882.8,"nb":7478.9},{"u":0.89,"lr":8429.3,"nb":7055.1},{"u":0.9,"lr":7947.3,"nb":6601.1},{"u":0.91,"lr":7421.9,"nb":6165.2},{"u":0.92,"lr":6866.4,"nb":5729.4},{"u":0.93,"lr":6418.1,"nb":5178.3},{"u":0.94,"lr":5851.5,"nb":4636.3},{"u":0.95,"lr":5158.8,"nb":3925.7},{"u":0.96,"lr":4455.8,"nb":3235.2},{"u":0.97,"lr":3566.2,"nb":2603.6},{"u":0.98,"lr":2598.7,"nb":1762.7}],"estrategias":[{"estrategia":"No hacer nada","mensajes marcados":0,"precisión":0.0,"recall":0.0,"valor por 10,000 mensajes (US$)":0.0},{"estrategia":"Contactar a todos","mensajes marcados":10000,"precisión":0.181,"recall":1.0,"valor por 10,000 mensajes (US$)":-82855.118},{"estrategia":"Regla de sentido común","mensajes marcados":2622,"precisión":0.534,"recall":0.775,"valor por 10,000 mensajes (US$)":4673.15},{"estrategia":"Naive Bayes, umbral óptimo (0.41)","mensajes marcados":1818,"precisión":0.782,"recall":0.788,"valor por 10,000 mensajes (US$)":16125.5},{"estrategia":"Regresión Logística, clase más probable","mensajes marcados":1837,"precisión":0.77,"recall":0.783,"valor por 10,000 mensajes (US$)":15622.755},{"estrategia":"Regresión Logística, umbral por F1 (0.37)","mensajes marcados":2015,"precisión":0.749,"recall":0.836,"valor por 10,000 mensajes (US$)":15926.382},{"estrategia":"Regresión Logística, umbral por valor (0.51)","mensajes marcados":1655,"precisión":0.815,"recall":0.747,"valor por 10,000 mensajes (US$)":16204.402}],"sensibilidad":[{"supuesto":"Beneficio por cliente recuperado (gasto, margen o recuperación)","cambio":"-50%","umbral óptimo":0.96,"valor óptimo (US$)":124.47,"valor con el umbral base (US$)":-3018.11},{"supuesto":"Beneficio por cliente recuperado (gasto, margen o recuperación)","cambio":"-20%","umbral óptimo":0.57,"valor óptimo (US$)":8653.18,"valor con el umbral base (US$)":8515.4},{"supuesto":"Beneficio por cliente recuperado (gasto, margen o recuperación)","cambio":"+20%","umbral óptimo":0.37,"valor óptimo (US$)":24526.03,"valor con el umbral base (US$)":23893.41},{"supuesto":"Beneficio por cliente recuperado (gasto, margen o recuperación)","cambio":"+50%","umbral óptimo":0.32,"valor óptimo (US$)":37545.45,"valor con el umbral base (US$)":35426.92},{"supuesto":"Cupón","cambio":"-50%","umbral óptimo":0.28,"valor óptimo (US$)":26163.46,"valor con el umbral base (US$)":24483.58},{"supuesto":"Cupón","cambio":"-20%","umbral óptimo":0.37,"valor óptimo (US$)":19957.43,"valor con el umbral base (US$)":19516.07},{"supuesto":"Cupón","cambio":"+20%","umbral óptimo":0.54,"valor óptimo (US$)":12920.74,"valor con el umbral base (US$)":12892.73},{"supuesto":"Cupón","cambio":"+50%","umbral óptimo":0.6,"valor óptimo (US$)":8361.96,"valor con el umbral base (US$)":7925.23},{"supuesto":"Tiempo del agente (minutos o salario)","cambio":"-50%","umbral óptimo":0.37,"valor óptimo (US$)":19384.69,"valor con el umbral base (US$)":19045.54},{"supuesto":"Tiempo del agente (minutos o salario)","cambio":"-20%","umbral óptimo":0.47,"valor óptimo (US$)":17388.87,"valor con el umbral base (US$)":17340.86},{"supuesto":"Tiempo del agente (minutos o salario)","cambio":"+20%","umbral óptimo":0.51,"valor óptimo (US$)":15067.95,"valor con el umbral base (US$)":15067.95},{"supuesto":"Tiempo del agente (minutos o salario)","cambio":"+50%","umbral óptimo":0.54,"valor óptimo (US$)":13372.17,"valor con el umbral base (US$)":13363.26}],"n_prueba":44316,"n_quejas":8002,"conteos":[{"u":0.02,"vp":7974,"fp":15610},{"u":0.03,"vp":7956,"fp":13425},{"u":0.04,"vp":7939,"fp":11878},{"u":0.05,"vp":7918,"fp":10704},{"u":0.06,"vp":7891,"fp":9773},{"u":0.07,"vp":7862,"fp":8984},{"u":0.08,"vp":7840,"fp":8331},{"u":0.09,"vp":7809,"fp":7736},{"u":0.1,"vp":7773,"fp":7233},{"u":0.11,"vp":7738,"fp":6801},{"u":0.12,"vp":7711,"fp":6440},{"u":0.13,"vp":7686,"fp":6047},{"u":0.14,"vp":7649,"fp":5709},{"u":0.15,"vp":7616,"fp":5421},{"u":0.16,"vp":7586,"fp":5155},{"u":0.17,"vp":7541,"fp":4931},{"u":0.18,"vp":7505,"fp":4715},{"u":0.19,"vp":7470,"fp":4538},{"u":0.2,"vp":7431,"fp":4346},{"u":0.21,"vp":7384,"fp":4161},{"u":0.22,"vp":7347,"fp":3992},{"u":0.23,"vp":7304,"fp":3827},{"u":0.24,"vp":7257,"fp":3707},{"u":0.25,"vp":7227,"fp":3545},{"u":0.26,"vp":7179,"fp":3395},{"u":0.27,"vp":7139,"fp":3241},{"u":0.28,"vp":7088,"fp":3119},{"u":0.29,"vp":7038,"fp":3018},{"u":0.3,"vp":6985,"fp":2908},{"u":0.31,"vp":6941,"fp":2796},{"u":0.32,"vp":6908,"fp":2691},{"u":0.33,"vp":6862,"fp":2596},{"u":0.34,"vp":6814,"fp":2496},{"u":0.35,"vp":6767,"fp":2412},{"u":0.36,"vp":6732,"fp":2325},{"u":0.37,"vp":6686,"fp":2246},{"u":0.38,"vp":6635,"fp":2174},{"u":0.39,"vp":6583,"fp":2105},{"u":0.4,"vp":6541,"fp":2040},{"u":0.41,"vp":6486,"fp":1978},{"u":0.42,"vp":6423,"fp":1908},{"u":0.43,"vp":6378,"fp":1844},{"u":0.44,"vp":6324,"fp":1785},{"u":0.45,"vp":6280,"fp":1731},{"u":0.46,"vp":6230,"fp":1665},{"u":0.47,"vp":6180,"fp":1593},{"u":0.48,"vp":6122,"fp":1538},{"u":0.49,"vp":6081,"fp":1482},{"u":0.5,"vp":6027,"fp":1420},{"u":0.51,"vp":5978,"fp":1360},{"u":0.52,"vp":5928,"fp":1320},{"u":0.53,"vp":5869,"fp":1271},{"u":0.54,"vp":5821,"fp":1219},{"u":0.55,"vp":5763,"fp":1174},{"u":0.56,"vp":5710,"fp":1133},{"u":0.57,"vp":5636,"fp":1076},{"u":0.58,"vp":5572,"fp":1041},{"u":0.59,"vp":5487,"fp":993},{"u":0.6,"vp":5416,"fp":948},{"u":0.61,"vp":5343,"fp":911},{"u":0.62,"vp":5278,"fp":883},{"u":0.63,"vp":5198,"fp":852},{"u":0.64,"vp":5113,"fp":817},{"u":0.65,"vp":5028,"fp":784},{"u":0.66,"vp":4954,"fp":757},{"u":0.67,"vp":4892,"fp":718},{"u":0.68,"vp":4815,"fp":684},{"u":0.69,"vp":4740,"fp":648},{"u":0.7,"vp":4656,"fp":618},{"u":0.71,"vp":4566,"fp":571},{"u":0.72,"vp":4481,"fp":540},{"u":0.73,"vp":4407,"fp":515},{"u":0.74,"vp":4330,"fp":491},{"u":0.75,"vp":4267,"fp":472},{"u":0.76,"vp":4160,"fp":450},{"u":0.77,"vp":4064,"fp":425},{"u":0.78,"vp":3980,"fp":401},{"u":0.79,"vp":3883,"fp":379},{"u":0.8,"vp":3770,"fp":355},{"u":0.81,"vp":3647,"fp":326},{"u":0.82,"vp":3540,"fp":307},{"u":0.83,"vp":3423,"fp":280},{"u":0.84,"vp":3304,"fp":258},{"u":0.85,"vp":3154,"fp":243},{"u":0.86,"vp":3036,"fp":218},{"u":0.87,"vp":2919,"fp":194},{"u":0.88,"vp":2772,"fp":179},{"u":0.89,"vp":2619,"fp":157},{"u":0.9,"vp":2463,"fp":141},{"u":0.91,"vp":2296,"fp":127},{"u":0.92,"vp":2113,"fp":105},{"u":0.93,"vp":1966,"fp":88},{"u":0.94,"vp":1786,"fp":73},{"u":0.95,"vp":1568,"fp":57},{"u":0.96,"vp":1347,"fp":41},{"u":0.97,"vp":1072,"fp":26},{"u":0.98,"vp":783,"fp":21}]},"experimentos":{"comparacion":[{"método":"Regla de sentido común","accuracy":0.625,"F1 macro":0.503,"F1 negativa":0.632},{"método":"Regresión Logística","accuracy":0.85,"F1 macro":0.691,"F1 negativa":0.776}],"curva":[{"reseñas de entrenamiento":10340,"F1 macro":0.66},{"reseñas de entrenamiento":20680,"F1 macro":0.67},{"reseñas de entrenamiento":51701,"F1 macro":0.68},{"reseñas de entrenamiento":103403,"F1 macro":0.686},{"reseñas de entrenamiento":206807,"F1 macro":0.691}],"sin_estrellas":{"real (estrellas)":{"top3":["Home_and_Kitchen","Clothing_Shoes_and_Jewelry","Electronics"],"total_m":41.69},"modelo (solo texto)":{"top3":["Home_and_Kitchen","Clothing_Shoes_and_Jewelry","Electronics"],"total_m":42.12},"regla (solo texto)":{"top3":["Home_and_Kitchen","Clothing_Shoes_and_Jewelry","Electronics"],"total_m":59.71}}},"recomendacion":[{"id":"Home_and_Kitchen","problema":"Productos que se rompen o son de mala calidad: 28 % de las quejas.","accion":"Auditar a los proveedores con más quejas de calidad en ropa de cama y pequeños electrodomésticos (sábanas, freidoras de aire, cafeteras)."},{"id":"Clothing_Shoes_and_Jewelry","problema":"La talla no corresponde: 36 % de las quejas.","accion":"Guías de talla por marca y un aviso de “esta marca talla pequeño” calculado con las reseñas. Menos devoluciones."},{"id":"Electronics","problema":"Deja de funcionar (20 %) y fallas de batería o carga (16 %).","accion":"Control de calidad y garantía visible en accesorios de computadora y almacenamiento (discos duros, tarjetas SD, accesorios de MacBook)."}],"viabilidad":{"entrenamiento_segundos":5.1,"latencia_ms_por_mensaje":0.16,"mensajes_por_segundo_en_lote":53876,"tamano_modelo_mb":2.2,"terminos_vocabulario":50000},"estrellas":[12.7,5.2,6.6,10.1,65.5],"palabras":{"negativa":["not","terrible","not worth","not buy","disappointed","junk","horrible","not good","worst","not recommend"],"neutra":["but","okay","ok","star rating","mediocre","average","not","little disappointed","alright","eh"],"positiva":["great","love","perfect","best","amazing","loves","excellent","awesome","easy","not disappointed"]}}</script>
 <script>
 (function () {
   const D = JSON.parse(document.getElementById("datos").textContent);
@@ -540,12 +549,6 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
       <text class="aparece" x="${x + bw / 2}" y="${base - h - 10}" text-anchor="middle" font-size="19" font-weight="700" fill="var(--ink)">${fmt(v)}%</text>
       <text x="${x + bw / 2}" y="${base + 26}" text-anchor="middle" font-size="17" fill="var(--muted)">${i + 1}★</text>`;
   }).join("")}<line x1="20" x2="${W - 20}" y1="${base}" y2="${base}" stroke="var(--line)"/></svg>`;
-
-  // % negativas por categoría
-  const porPct = [...cats].sort((a, b) => b.pct_neg - a.pct_neg);
-  const maxP = porPct[0].pct_neg;
-  $("g-pct").innerHTML = porPct.map((c) => barra(c.nombre, c.pct_neg, maxP, "coral", fmt(c.pct_neg) + "%")).join("");
-  $("t-rango").textContent = `de las reseñas son negativas. Por categoría van de ${fmt(porPct[porPct.length - 1].pct_neg)}% a ${fmt(maxP)}%.`;
 
   // Palabras del modelo
   for (const [id, clase, lista] of [["w-neg", "neg", D.palabras.negativa], ["w-neu", "neu", D.palabras.neutra], ["w-pos", "pos", D.palabras.positiva]])
@@ -569,6 +572,7 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   </svg>`;
 
   // Hallazgo: dos rankings
+  const porPct = [...cats].sort((a, b) => b.pct_neg - a.pct_neg);
   const millones = (m) => m >= 1 ? `${fmt(m, 1)} M` : `${fmt(m * 1000, 0)} mil`;
   const filaRk = (c, i, v) => `<div class="rk${top.has(c.id) ? " top" : ""}"><b>${i + 1}</b><span>${esc(c.nombre)}</span><b class="num">${v}</b></div>`;
   $("rk-pct").innerHTML = porPct.slice(0, 5).map((c, i) => filaRk(c, i, fmt(c.pct_neg) + "%")).join("") +
@@ -576,17 +580,6 @@ tr.gana td { background: var(--teal-soft); font-weight: 700; }
   const porVol = [...cats].sort((a, b) => b.negativas_m - a.negativas_m);
   $("rk-vol").innerHTML = porVol.slice(0, 5).map((c, i) => filaRk(c, i, millones(c.negativas_m))).join("") +
     `<div class="rk" style="opacity:.85"><b>${porVol.findIndex((c) => c.id === "Video_Games") + 1}</b><span>Videojuegos</span><b class="num">${millones(porId.Video_Games.negativas_m)}</b></div>`;
-
-  // Causas
-  $("causas").innerHTML = D.recomendacion.map((r) => {
-    const c = porId[r.id];
-    const temas = Object.entries(c.temas).filter(([t]) => t !== "Devolución o atención").sort((a, b) => b[1] - a[1]).slice(0, 4);
-    const mx = temas[0][1];
-    return `<div class="caja"><h3 style="font-family:var(--font-display);font-size:24px">${esc(c.nombre)}</h3>
-      <div class="barras" style="--etq:175px">${temas.map(([t, v], i) => barra(t, v, mx, i === 0 ? "coral" : "", fmt(v, 0) + "%")).join("")}</div>
-      <span class="etiqueta muted" style="margin-top:6px">Frases más propias</span>
-      <div class="palabras">${c.frases.slice(0, 4).map((f) => `<span class="palabra neu">${esc(f.es)}</span>`).join("")}</div></div>`;
-  }).join("");
 
   // Años
   const anios = D.anios, aw = 640, ah = 360, x0 = 60, x1 = aw - 150, y0 = 30, y1 = ah - 40, lo = 10, hi = 25;

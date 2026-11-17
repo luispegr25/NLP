@@ -26,6 +26,7 @@ for cat in datos["categorias"]:
     cat.pop("ejemplos", None)
     cat.pop("tendencia", None)
 datos["recomendacion"] = textos["recomendacion"]
+datos["viabilidad"] = json.loads((DASH / "viabilidad.json").read_text())
 
 # distribución de estrellas de la muestra completa
 muestra = pd.concat([pd.read_parquet(p, columns=["rating"]) for p in sorted((RAIZ / "datos").glob("*.parquet"))])

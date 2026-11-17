@@ -30,6 +30,8 @@ for cat in datos["categorias"]:
     cat.pop("margen", None)
 
 datos.update({k: textos[k] for k in ["recomendacion", "hallazgo", "metodo", "ejemplos_modelo"]})
+if (DASH / "viabilidad.json").exists():
+    datos["viabilidad"] = json.loads((DASH / "viabilidad.json").read_text())
 datos_txt = json.dumps(datos, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 cuerpo = ((DASH / "plantilla.html").read_text()

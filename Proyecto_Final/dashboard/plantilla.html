@@ -120,6 +120,21 @@ select { font: inherit; padding: 8px 12px; border-radius: 8px; border: 1px solid
 svg text { fill: var(--muted); font-family: var(--font-body); font-size: 11px; }
 
 /* Clasificador */
+.calc { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr); gap: 16px; }
+.supuestos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
+.supuestos label { display: grid; gap: 4px; font-size: 0.8rem; color: var(--muted); }
+.supuestos input { font: inherit; font-size: 0.95rem; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; font-variant-numeric: tabular-nums; }
+.supuestos .fuente-sup { font-size: 0.7rem; color: var(--muted); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.kpi { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; }
+.kpi b { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.kpi span { font-size: 0.75rem; color: var(--muted); }
+.kpi.destacado { border-color: var(--teal); background: var(--teal-soft); }
+.boton-sec { font: inherit; font-size: 0.82rem; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 14px; cursor: pointer; justify-self: start; }
+.boton-sec:hover { border-color: var(--teal); }
+.decision { border-radius: 8px; padding: 10px 12px; font-size: 0.9rem; font-weight: 600; }
+.decision.actuar { background: var(--coral-soft); color: var(--coral); }
+.decision.no { background: var(--track); color: var(--muted); }
 .clasificador { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; }
 textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); resize: vertical; }
 .ejemplos-btn { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -136,7 +151,8 @@ textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-
 .metodo b { color: var(--ink); }
 
 @media (max-width: 860px) {
-  .prioridades, .detalle, .clasificador { grid-template-columns: minmax(0, 1fr); }
+  .prioridades, .detalle, .clasificador, .calc { grid-template-columns: minmax(0, 1fr); }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .relleno { transition: width 0.4s ease; }
@@ -231,6 +247,39 @@ textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-
     </div>
   </section>
 
+  <section class="seccion" aria-labelledby="t-calc">
+    <header>
+      <span class="eyebrow">Modelo de valor</span>
+      <h2 id="t-calc">¿Cuánto dinero deja el modelo y cuándo conviene actuar?</h2>
+      <p class="muted">Cuando el modelo marca un mensaje como queja, se dispara una acción de recuperación: un agente contacta al cliente y le ofrece un cupón. Si era una queja, se recupera al cliente con cierta probabilidad; si no, se gastó el cupón en alguien que ya estaba contento. Cambiá los supuestos y el umbral óptimo se recalcula.</p>
+    </header>
+    <div class="calc">
+      <div class="panel">
+        <h3>Supuestos</h3>
+        <div class="supuestos">
+          <label for="s-gasto">Gasto anual del cliente (US$)<input id="s-gasto" type="number" min="0" step="10"><span class="fuente-sup">CIRP 2024, cliente sin Prime</span></label>
+          <label for="s-margen">Margen (%)<input id="s-margen" type="number" min="0" max="100" step="1"><span class="fuente-sup">Supuesto conservador</span></label>
+          <label for="s-recup">Tasa de recuperación (%)<input id="s-recup" type="number" min="0" max="100" step="1"><span class="fuente-sup">Kotler: 54-70 % vuelve si se resuelve</span></label>
+          <label for="s-cupon">Cupón (US$)<input id="s-cupon" type="number" min="0" step="1"><span class="fuente-sup">Supuesto</span></label>
+          <label for="s-min">Minutos del agente por caso<input id="s-min" type="number" min="0" step="1"><span class="fuente-sup">Supuesto</span></label>
+          <label for="s-sal">Salario del agente (US$/hora)<input id="s-sal" type="number" min="0" step="0.5"><span class="fuente-sup">BLS mayo 2024, mediana</span></label>
+          <label for="s-mensajes">Mensajes de clientes al mes<input id="s-mensajes" type="number" min="0" step="1000"><span class="fuente-sup">Tamaño de la tienda</span></label>
+        </div>
+        <button type="button" class="boton-sec" id="s-reset">Restablecer supuestos</button>
+      </div>
+      <div class="panel">
+        <div class="kpis">
+          <div class="kpi destacado"><b id="k-umbral"></b><span>umbral óptimo por valor</span></div>
+          <div class="kpi"><b id="k-mes"></b><span>valor por mes</span></div>
+          <div class="kpi"><b id="k-anio"></b><span>valor por año</span></div>
+          <div class="kpi"><b id="k-equilibrio"></b><span>actuar solo si P(queja) supera</span></div>
+        </div>
+        <div id="curva-valor"></div>
+        <p class="muted" style="font-size:.82rem" id="calc-nota"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="seccion" aria-labelledby="t-modelo">
     <header>
       <span class="eyebrow">Clasificador de sentimiento</span>
@@ -247,6 +296,7 @@ textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-
         <h3>Resultado</h3>
         <div class="veredicto" id="veredicto"></div>
         <div class="temas" id="probabilidades"></div>
+        <div class="decision" id="decision"></div>
         <h3 style="margin-top:6px">Palabras que más influyeron</h3>
         <div class="terminos" id="terminos"></div>
       </div>
@@ -266,6 +316,7 @@ textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-
   const fmt = (n, d = 1) => n.toLocaleString("es-GT", { minimumFractionDigits: d, maximumFractionDigits: d });
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const cats = D.categorias;
+  let umbralActual = D.valor.umbral_valor;
   const porId = Object.fromEntries(cats.map((c) => [c.id, c]));
   const millones = (m) => m >= 1 ? `${fmt(m, 1)} M` : `${fmt(m * 1000, 0)} mil`;
 
@@ -409,13 +460,18 @@ textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-
     const r = clasificar($("entrada").value);
     if (!r) {
       $("veredicto").textContent = "Escribí un comentario en inglés";
-      $("probabilidades").innerHTML = ""; $("terminos").innerHTML = "";
+      $("probabilidades").innerHTML = ""; $("terminos").innerHTML = ""; $("decision").textContent = ""; $("decision").className = "decision";
       return;
     }
     const k = r.prob.indexOf(Math.max(...r.prob));
     const clase = M.clases[k];
     $("veredicto").innerHTML = `<span style="color:var(--${CLASE_CSS[clase] === "gris" ? "neutral" : CLASE_CSS[clase]})">${NOMBRE[clase]}</span>`;
     $("probabilidades").innerHTML = M.clases.map((c, i) => `<div class="tema"><span>${NOMBRE[c]}</span>${barra(r.prob[i], 1, CLASE_CSS[c], fmt(r.prob[i] * 100, 0) + "%")}</div>`).join("");
+    const pq = r.prob[M.clases.indexOf("negativa")];
+    $("decision").className = "decision " + (pq >= umbralActual ? "actuar" : "no");
+    $("decision").textContent = pq >= umbralActual
+      ? `P(queja) = ${fmt(pq * 100, 0)}% ≥ umbral ${fmt(umbralActual, 2)} → activar la recuperación`
+      : `P(queja) = ${fmt(pq * 100, 0)}% < umbral ${fmt(umbralActual, 2)} → no actuar`;
     const top = r.aporte.map(([t, a]) => [t, a[k] - Math.max(...a.filter((_, j) => j !== k))])
       .filter((x) => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 8);
     const css = { negativa: "neg", neutra: "neu", positiva: "pos" }[clase];
@@ -437,6 +493,56 @@ textarea { width: 100%; min-height: 130px; font: inherit; padding: 12px; border-
   $("valor-sin-estrellas").innerHTML = [["Real (con estrellas)", real, "coral"], ["Modelo (solo texto)", mod, "teal"], ["Regla (solo texto)", reg, "gris"]]
     .map(([t, v, cl]) => `<div class="tema"><span>${t}</span>${barra(v, mx, cl, fmt(v, 1) + " M")}</div>`).join("");
   $("valor-conclusion").innerHTML = `En el total, el modelo se equivoca en <b>${fmt(Math.abs(mod / real - 1) * 100, 0)}%</b> y llega a las mismas 3 prioridades. La regla infla las quejas en <b>${fmt((reg / real - 1) * 100, 0)}%</b>: con ella el presupuesto se decidiría con números equivocados.`;
+
+  // Calculadora del modelo de valor
+  const V = D.valor, S0 = V.supuestos;
+  const campos = { "s-gasto": ["gasto_anual", 1], "s-margen": ["margen", 100], "s-recup": ["recuperacion", 100],
+    "s-cupon": ["cupon", 1], "s-min": ["minutos_agente", 1], "s-sal": ["salario_hora", 1] };
+  const usd = (v) => (v < 0 ? "−" : "") + "US$ " + Math.abs(v).toLocaleString("es-GT", { maximumFractionDigits: 0 });
+  function restablecer() {
+    for (const [id, [k, f]] of Object.entries(campos)) $(id).value = +(S0[k] * f).toFixed(2);
+    $("s-mensajes").value = 10000;
+    calcular();
+  }
+  function calcular() {
+    const s = {};
+    for (const [id, [k, f]] of Object.entries(campos)) s[k] = (parseFloat($(id).value) || 0) / f;
+    const mensajes = parseFloat($("s-mensajes").value) || 0;
+    const B = s.recuperacion * s.gasto_anual * s.margen, C = s.cupon + s.minutos_agente / 60 * s.salario_hora;
+    const curva = V.conteos.map((p) => ({ u: p.u, v: (p.vp * B - (p.vp + p.fp) * C) / V.n_prueba * mensajes }));
+    const mejor = curva.reduce((a, b) => (b.v > a.v ? b : a));
+    const actuar = mejor.v > 0;
+    umbralActual = actuar ? mejor.u : 1.01;
+    $("k-umbral").textContent = actuar ? fmt(mejor.u, 2) : "no actuar";
+    $("k-mes").textContent = usd(Math.max(mejor.v, 0));
+    $("k-anio").textContent = usd(Math.max(mejor.v, 0) * 12);
+    $("k-equilibrio").textContent = B > 0 ? fmt(Math.min(C / B, 9.99) * 100, 0) + "%" : "—";
+    // gráfica
+    const W = 620, H = 240, pl = 92, pr = 14, pt = 30, pb = 30;
+    const vs = curva.map((p) => p.v), lo = Math.min(0, ...vs), hi = Math.max(1, ...vs);
+    const x = (u) => pl + (u - 0.02) / 0.96 * (W - pl - pr), y = (v) => pt + (1 - (v - lo) / (hi - lo)) * (H - pt - pb);
+    const linea = curva.map((p, i) => `${i ? "L" : "M"}${x(p.u).toFixed(1)},${y(p.v).toFixed(1)}`).join("");
+    const ticks = [lo, (lo + hi) / 2, hi].map((v) => `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${usd(v)}</text>`).join("");
+    const ejeX = [0.1, 0.3, 0.5, 0.7, 0.9].map((u) => `<text x="${x(u)}" y="${H - 8}" text-anchor="middle">${u}</text>`).join("");
+    const f1 = V.umbral_f1;
+    $("curva-valor").innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Curva de valor según el umbral">
+      ${ticks}${ejeX}
+      <line x1="${pl}" x2="${W - pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--muted)" stroke-width="1"/>
+      <line x1="${x(f1)}" x2="${x(f1)}" y1="${pt}" y2="${H - pb}" stroke="var(--muted)" stroke-dasharray="3 3"/>
+      <text x="${x(f1) + 4}" y="${H - pb - 6}">umbral por F1 (${fmt(f1, 2)})</text>
+      <path d="${linea}" fill="none" stroke="var(--teal)" stroke-width="2.5"/>
+      ${actuar ? `<circle cx="${x(mejor.u)}" cy="${y(mejor.v)}" r="5" fill="var(--coral)"/>
+      <text x="${x(mejor.u)}" y="${y(mejor.v) - 10}" text-anchor="middle" style="fill:var(--ink);font-weight:600">óptimo ${fmt(mejor.u, 2)}</text>` : ""}
+    </svg>`;
+    const d = V.conteos.find((p) => p.u === mejor.u);
+    $("calc-nota").textContent = actuar
+      ? `Con el umbral ${fmt(mejor.u, 2)} se actúa sobre ${fmt((d.vp + d.fp) / V.n_prueba * 100, 1)}% de los mensajes, con precisión ${fmt(d.vp / Math.max(d.vp + d.fp, 1) * 100, 0)}% y recall ${fmt(d.vp / V.n_quejas * 100, 0)}%. Calculado sobre ${V.n_prueba.toLocaleString("es-GT")} reseñas de prueba.`
+      : "Con estos supuestos ninguna acción es rentable: la recuperación vale menos que el costo del cupón y del agente.";
+    mostrar();
+  }
+  Object.keys(campos).concat("s-mensajes").forEach((id) => $(id).addEventListener("input", calcular));
+  $("s-reset").onclick = restablecer;
+  restablecer();
 
   $("metodo").innerHTML = D.metodo.map((p) => `<p>${p}</p>`).join("");
 })();

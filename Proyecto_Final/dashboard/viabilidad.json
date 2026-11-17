@@ -1,0 +1,7 @@
+{
+ "entrenamiento_segundos": 5.1,
+ "latencia_ms_por_mensaje": 0.16,
+ "mensajes_por_segundo_en_lote": 53876,
+ "tamano_modelo_mb": 2.2,
+ "terminos_vocabulario": 50000
+}
