@@ -1,0 +1,733 @@
+<title>SAR · Presentación final</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Presentación para proyector: lienzo fijo de 1280x720 que se escala a la pantalla.
+   Portada y cierre en azul marino; diapositivas de contenido claras para que se lean bien proyectadas. */
+:root {
+  --navy: #14213D;
+  --navy-2: #1E2F52;
+  --paper: #F5F7FA;
+  --card: #FFFFFF;
+  --ink: #14213D;
+  --muted: #5B6578;
+  --line: #DCE1EA;
+  --track: #E9EDF3;
+  --teal: #0F766E;
+  --teal-soft: #E0F2EF;
+  --mint: #7FD6CB;
+  --coral: #D9481F;
+  --coral-soft: #FCE9E2;
+  --gray: #8A94A6;
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-body: "Public Sans", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: #0B1222; font-family: var(--font-body); color: var(--ink); overflow: hidden; }
+.escenario { position: fixed; inset: 0; display: grid; place-items: center; }
+.lienzo { width: 1280px; height: 720px; position: relative; transform-origin: center center; }
+.slide {
+  position: absolute; inset: 0; background: var(--paper); padding: 56px 72px 48px; display: none;
+  flex-direction: column; gap: 22px; overflow: hidden;
+}
+.slide.activa { display: flex; }
+.slide { display: flex; opacity: 0; visibility: hidden; transform: translateX(70px) scale(0.985);
+  transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.7s; }
+.slide.previa { transform: translateX(-70px) scale(0.985); }
+.slide.activa { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; z-index: 2; }
+
+/* Entrada escalonada de los elementos */
+@keyframes entrar { from { opacity: 0; transform: translateY(22px); } }
+@keyframes crecer { from { transform: scaleX(0); } }
+@keyframes subir { from { transform: scaleY(0); } }
+@keyframes dibujar { to { stroke-dashoffset: 0; } }
+@keyframes aparecer { from { opacity: 0; } }
+.slide.activa .anim { animation: entrar 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 85ms + 120ms); }
+.slide.activa .relleno { transform-origin: left center; animation: crecer 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both 0.45s; }
+.slide.activa svg .sube { transform-box: fill-box; transform-origin: bottom; animation: subir 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 110ms + 400ms); }
+.slide.activa svg .dibuja { stroke-dasharray: 1; stroke-dashoffset: 1; animation: dibujar 1.6s ease-out forwards 0.5s; }
+.slide.activa svg .aparece { animation: aparecer 0.6s ease both 1.2s; }
+
+/* Fondo animado de las diapositivas oscuras */
+@keyframes aurora { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(-6%, 4%) rotate(8deg); } }
+.oscura::before { content: ""; position: absolute; inset: -25%; pointer-events: none;
+  background: radial-gradient(38% 38% at 22% 28%, rgba(127, 214, 203, 0.20), transparent 70%),
+              radial-gradient(34% 34% at 82% 72%, rgba(217, 72, 31, 0.18), transparent 70%),
+              radial-gradient(30% 30% at 60% 15%, rgba(91, 124, 214, 0.18), transparent 70%);
+  animation: aurora 16s ease-in-out infinite alternate; }
+.oscura > * { position: relative; z-index: 1; }
+.oscura > canvas.estrellas-fondo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
+.oscura h2 { color: #fff; }
+.slide.oscura { background: var(--navy); color: #fff; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); text-wrap: balance; line-height: 1.1; }
+h2 { font-size: 40px; }
+h3 { font-size: 20px; font-family: var(--font-body); font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 14px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); }
+.oscura .eyebrow { color: var(--mint); }
+.muted { color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+.pie { position: absolute; left: 72px; right: 72px; bottom: 22px; display: flex; justify-content: space-between; font-size: 13px; color: var(--gray); }
+.cuerpo { flex: 1; min-height: 0; display: grid; gap: 24px; }
+.dos { grid-template-columns: 1fr 1fr; }
+.dos-a { grid-template-columns: 1.25fr 1fr; }
+.tres { grid-template-columns: repeat(3, 1fr); }
+.caja { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.caja.coral { background: var(--coral-soft); border-color: transparent; }
+.caja.teal { background: var(--teal-soft); border-color: transparent; }
+.grande { font-family: var(--font-display); font-size: 46px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 19px; line-height: 1.4; }
+.lista li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; }
+.lista li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-top: 10px; }
+.destacado { font-size: 21px; line-height: 1.45; }
+.chip { display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 14px; font-weight: 700; }
+.chip.coral { background: var(--coral-soft); color: var(--coral); }
+.chip.teal { background: var(--teal-soft); color: var(--teal); }
+
+/* Barras */
+.barras { display: grid; gap: 7px; }
+.barra { display: grid; grid-template-columns: var(--etq, 230px) 1fr 70px; align-items: center; gap: 12px; font-size: 15px; }
+.barra .pista { height: 14px; background: var(--track); border-radius: 7px; position: relative; overflow: hidden; }
+.barra .relleno { position: absolute; inset: 0 auto 0 0; border-radius: 7px; background: var(--gray); }
+.barra .relleno.coral { background: var(--coral); }
+.barra .relleno.teal { background: var(--teal); }
+.barra span:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.barra.top span:first-child { font-weight: 700; color: var(--coral); }
+svg text { font-family: var(--font-body); }
+
+/* Portada y cierre */
+.portada { justify-content: center; gap: 26px; padding-left: 96px; }
+.portada .sigla { font-family: var(--font-display); font-size: 150px; font-weight: 700; line-height: 0.9; letter-spacing: 0.02em; }
+.portada .sigla span { color: var(--mint); display: inline-block; animation: latido 2.4s ease-in-out infinite; }
+@keyframes latido { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: 0.7; } }
+.portada .nombre { font-size: 30px; font-weight: 600; color: #DCE6F5; }
+.portada .tesis { font-family: var(--font-display); font-size: 38px; max-width: 900px; line-height: 1.2; }
+.portada .autor { font-size: 18px; color: #A9B6CC; margin-top: 18px; }
+
+/* Flujo */
+.flujo { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: stretch; }
+.paso { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+.paso b { font-size: 17px; }
+.paso p { font-size: 15px; color: var(--muted); line-height: 1.4; }
+.paso .n { font-family: var(--font-display); font-size: 30px; color: var(--teal); font-weight: 700; line-height: 1; }
+.paso:not(:last-child)::after { content: "→"; position: absolute; right: -14px; top: 50%; transform: translate(50%, -50%); color: var(--gray); font-size: 20px; }
+
+/* Tabla */
+table { border-collapse: collapse; width: 100%; font-size: 18px; }
+th { text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 10px 14px; border-bottom: 2px solid var(--line); font-weight: 600; }
+td { padding: 13px 14px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+tr.gana td { background: var(--teal-soft); font-weight: 700; }
+
+.texto-ej { font-size: 16px; line-height: 1.5; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.etiqueta { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.palabras { display: flex; flex-wrap: wrap; gap: 8px; }
+.palabra { padding: 5px 12px; border-radius: 8px; font-size: 16px; font-weight: 600; }
+.palabra.neg { background: var(--coral-soft); color: var(--coral); }
+.palabra.neu { background: var(--track); color: var(--muted); }
+.palabra.pos { background: var(--teal-soft); color: var(--teal); }
+
+.ranking { display: grid; gap: 8px; }
+.rk { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 11px 16px; font-size: 18px; }
+.rk b:first-child { font-family: var(--font-display); font-size: 24px; color: var(--gray); }
+.rk.top b:first-child { color: var(--coral); }
+.rk.top { border-color: var(--coral); }
+
+.prio { display: flex; flex-direction: column; gap: 14px; }
+.prio .rango { font-family: var(--font-display); font-size: 54px; color: var(--coral); font-weight: 700; line-height: 0.9; }
+.prio h3 { font-family: var(--font-display); font-size: 26px; }
+.prio .problema { background: var(--coral-soft); border-radius: 8px; padding: 12px 14px; font-size: 16px; line-height: 1.4; }
+.prio .problema b { display: block; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); margin-bottom: 2px; }
+.prio .accion { font-size: 16px; line-height: 1.45; color: var(--muted); }
+
+.captura { border-radius: 12px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 18px 40px rgba(20, 33, 61, 0.18); }
+.captura img { display: block; width: 100%; }
+
+/* Controles */
+.barra-progreso { position: fixed; left: 0; bottom: 0; height: 4px; z-index: 5; transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  background: linear-gradient(90deg, var(--mint), #5B7CD6, var(--coral)); box-shadow: 0 0 12px rgba(127, 214, 203, 0.7); }
+.controles { position: fixed; right: 18px; bottom: 16px; z-index: 6; display: flex; gap: 4px; align-items: center; padding: 5px;
+  border-radius: 999px; background: rgba(20, 33, 61, 0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(127, 214, 203, 0.25); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); opacity: 0.45; transition: opacity 0.25s, transform 0.25s; }
+.controles:hover, .controles:focus-within { opacity: 1; transform: translateY(-2px); }
+.controles button { font: inherit; font-size: 14px; font-weight: 600; background: transparent; color: #fff; border: 0; border-radius: 999px; padding: 7px 13px; cursor: pointer; transition: background 0.2s; }
+.controles button:hover { background: rgba(127, 214, 203, 0.18); }
+.controles button:focus-visible { outline: 2px solid var(--mint); outline-offset: 1px; }
+.controles span { color: #CFE0F0; font-size: 13px; font-variant-numeric: tabular-nums; min-width: 54px; text-align: center; }
+.aviso { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 7; background: rgba(20, 33, 61, 0.85); color: #DCE6F5;
+  padding: 10px 18px; border-radius: 999px; font-size: 14px; border: 1px solid rgba(127, 214, 203, 0.3); transition: opacity 0.8s; pointer-events: none; }
+.aviso kbd { font: inherit; font-weight: 700; color: var(--mint); }
+.indice { position: fixed; inset: 0; z-index: 8; background: rgba(11, 18, 34, 0.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: grid; place-items: center; padding: 40px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.indice.abierto { opacity: 1; pointer-events: auto; }
+.indice-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; max-width: 1200px; width: 100%; }
+.indice button { font: inherit; text-align: left; background: #16213A; color: #fff; border: 1px solid #2A3754; border-radius: 12px; padding: 14px; cursor: pointer;
+  display: grid; gap: 6px; min-height: 104px; align-content: start; transition: transform 0.2s, border-color 0.2s; }
+.indice button:hover, .indice button:focus-visible { transform: translateY(-3px); border-color: var(--mint); outline: none; }
+.indice button.actual { border-color: var(--coral); }
+.indice button b { font-family: var(--font-display); font-size: 22px; color: var(--mint); }
+.indice button span { font-size: 13px; line-height: 1.35; color: #CFE0F0; }
+
+/* Demo en vivo */
+.demo { justify-content: center; }
+.demo-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; }
+.demo-texto { display: grid; gap: 18px; justify-items: start; }
+.demo h2 { font-size: 54px; }
+.en-vivo { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; letter-spacing: 0.18em; color: #FFB4A0;
+  background: rgba(217, 72, 31, 0.18); border: 1px solid rgba(217, 72, 31, 0.5); border-radius: 999px; padding: 6px 14px; }
+.en-vivo .punto { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); animation: pulso 1.4s ease-out infinite; }
+@keyframes pulso { 0% { box-shadow: 0 0 0 0 rgba(217, 72, 31, 0.7); } 100% { box-shadow: 0 0 0 14px rgba(217, 72, 31, 0); } }
+.demo-sub { font-size: 21px; color: #DCE6F5; line-height: 1.45; max-width: 520px; }
+.demo-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: paso; }
+.demo-pasos li { counter-increment: paso; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; font-size: 17px; color: #CFE0F0; }
+.demo-pasos li::before { content: counter(paso); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid rgba(127, 214, 203, 0.6); color: var(--mint); font-weight: 700; font-size: 14px; }
+.demo-pasos b { color: #fff; }
+.boton-demo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 18px; color: var(--navy);
+  background: linear-gradient(135deg, var(--mint), #A8E6DE); padding: 14px 26px; border-radius: 999px; margin-top: 6px;
+  box-shadow: 0 0 0 0 rgba(127, 214, 203, 0.6); animation: brillo 2.2s ease-out infinite; transition: transform 0.2s; }
+.boton-demo:hover { transform: translateY(-2px) scale(1.03); }
+.boton-demo:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@keyframes brillo { 0% { box-shadow: 0 0 0 0 rgba(127, 214, 203, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(127, 214, 203, 0); } }
+.demo-visual { perspective: 1400px; }
+.marco-3d { border-radius: 14px; overflow: hidden; border: 1px solid rgba(127, 214, 203, 0.35); transform: rotateY(-14deg) rotateX(6deg);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(127, 214, 203, 0.18); animation: flotar 6s ease-in-out infinite; }
+.marco-3d img { display: block; width: 100%; }
+@keyframes flotar { 0%, 100% { transform: rotateY(-14deg) rotateX(6deg) translateY(0); } 50% { transform: rotateY(-10deg) rotateX(4deg) translateY(-12px); } }
+
+/* Cierre */
+.final { justify-content: center; gap: 24px; padding-inline: 96px; }
+.final-titulo { font-size: 50px; max-width: 1000px; }
+.final-titulo em { font-style: normal; background: linear-gradient(90deg, var(--mint), #A8C4FF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.final-tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.final-tarjeta { position: relative; border-radius: 16px; padding: 20px 22px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(127, 214, 203, 0.28);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; gap: 6px; }
+.final-tarjeta .n { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--coral); line-height: 1; }
+.final-tarjeta .cat { font-size: 20px; font-weight: 700; color: #fff; }
+.final-tarjeta .clave { font-size: 15px; color: var(--mint); font-weight: 600; letter-spacing: 0.04em; }
+.final-tarjeta .cifra { font-size: 14px; color: #A9B6CC; }
+.slide.activa .final-tarjeta.anim { animation-name: saltar; }
+@keyframes saltar { 0% { opacity: 0; transform: translateY(30px) scale(0.92); } 70% { transform: translateY(-4px) scale(1.02); } 100% { opacity: 1; transform: none; } }
+.final-frase { font-size: 21px; color: #DCE6F5; max-width: 980px; line-height: 1.5; }
+.final-frase b { color: #fff; }
+.gracias { display: flex; align-items: baseline; gap: 22px; margin-top: 6px; }
+.gracias strong { font-family: var(--font-display); font-size: 72px; line-height: 1; font-weight: 700;
+  background: linear-gradient(90deg, #fff, var(--mint), #FFB4A0, #fff); background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: brilloTexto 6s linear infinite; }
+@keyframes brilloTexto { to { background-position: 300% 0; } }
+.gracias span { font-size: 26px; color: #CFE0F0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="escenario"><div class="lienzo" id="lienzo">
+
+<!-- 1. Portada -->
+<section class="slide oscura portada">
+  <div class="eyebrow">Proyecto final · Procesamiento de Lenguaje Natural</div>
+  <div class="sigla">SAR<span>.</span></div>
+  <div class="nombre">Sistema de Análisis de Reseñas</div>
+  <p class="tesis">De 300,000 reseñas a una decisión: qué categorías priorizar y qué problema atacar en cada una.</p>
+  <p class="autor">Luis Pedro González</p>
+</section>
+
+<!-- 2. Problema -->
+<section class="slide">
+  <div class="eyebrow">El problema</div>
+  <h2>Las estrellas dicen <em>cuánto</em> molesta algo. El texto dice <em>qué</em> molesta.</h2>
+  <div class="cuerpo dos" style="grid-template-rows:auto 1fr">
+    <div class="caja">
+      <span class="etiqueta muted">Usuario</span>
+      <p class="destacado">Gerente de categorías / equipo de experiencia del cliente de una tienda en línea.</p>
+      <span class="etiqueta muted" style="margin-top:6px">Por qué NLP</span>
+      <p class="destacado">Hay millones de reseñas y nadie puede leerlas a mano. La causa de cada queja está escrita en el texto.</p>
+    </div>
+    <div class="caja coral">
+      <span class="etiqueta" style="color:var(--coral)">La decisión</span>
+      <p style="font-family:var(--font-display);font-size:32px;line-height:1.25;font-weight:700">¿A qué 3 categorías les asigno primero el presupuesto de mejora, y qué problema ataco en cada una?</p>
+    </div>
+    <div class="flujo" style="grid-column:1/-1">
+      <div class="paso"><span class="n">1</span><b>Captura</b><p>Reseñas reales de Amazon</p></div>
+      <div class="paso"><span class="n">2</span><b>Limpieza</b><p>Normalizar y etiquetar</p></div>
+      <div class="paso"><span class="n">3</span><b>Modelo</b><p>TF-IDF + clasificador</p></div>
+      <div class="paso"><span class="n">4</span><b>Decisión</b><p>Prioridad y causas</p></div>
+      <div class="paso"><span class="n">5</span><b>Producto</b><p>Dashboard web</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Datos -->
+<section class="slide">
+  <div class="eyebrow">1 · Los datos</div>
+  <h2>Amazon Reviews 2023: reseñas reales con su distribución natural</h2>
+  <div class="cuerpo dos-a">
+    <div style="display:grid;gap:16px;align-content:start">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+        <div class="caja"><span class="grande" data-contar="571" data-suf=" M">571 M</span><span class="muted">reseñas en la fuente (UC San Diego)</span></div>
+        <div class="caja"><span class="grande" style="color:var(--teal)" data-contar="300000">300,000</span><span class="muted">reseñas capturadas al azar</span></div>
+        <div class="caja"><span class="grande" data-contar="15">15</span><span class="muted">categorías × 20,000 reseñas</span></div>
+        <div class="caja"><span class="grande">2019-23</span><span class="muted">periodo: la situación actual</span></div>
+      </div>
+      <p class="muted" style="font-size:16px">McAuley Lab, UC San Diego (Hou et al., 2024). Cada reseña trae estrellas, título, texto, producto, fecha, votos de "útil" y si la compra fue verificada. Los datos están en inglés; todo el análisis está en español.</p>
+    </div>
+    <div class="caja">
+      <h3>Distribución de estrellas</h3>
+      <div id="g-estrellas" style="flex:1"></div>
+      <p class="muted" style="font-size:15px">La forma de "J" típica de las reseñas en línea: dos de cada tres clientes dan 5★ y casi 1 de cada 5 deja una queja (1-2★).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Captura -->
+<section class="slide">
+  <div class="eyebrow">1 · Captura</div>
+  <h2>Cómo sacar una muestra representativa de 200 GB sin descargarlos</h2>
+  <div class="cuerpo" style="grid-template-rows:auto 1fr">
+    <div class="flujo" style="grid-template-columns:repeat(4,1fr)">
+      <div class="paso"><span class="n">200 GB</span><b>15 archivos originales</b><p>Uno por categoría, ordenado por cliente. Solo Electrónica pesa 22 GB.</p></div>
+      <div class="paso"><span class="n">1,000</span><b>trozos al azar por archivo</b><p>Se leen posiciones aleatorias con solicitudes por rango de bytes.</p></div>
+      <div class="paso"><span class="n">20,000</span><b>reseñas al azar por categoría</b><p>Solo de 2019 en adelante. 300,000 en total.</p></div>
+      <div class="paso"><span class="n">× vol.</span><b>Volumen real estimado</b><p>Total oficial de la categoría × proporción de reseñas desde 2019.</p></div>
+    </div>
+    <div class="cuerpo tres" style="gap:16px">
+      <div class="caja"><h3>¿Por qué al azar?</h3><p class="destacado" style="font-size:18px">Los archivos vienen agrupados por cliente. Tomar las primeras filas daría una muestra de pocos clientes. Resultado: 239,139 clientes distintos en 300,000 reseñas.</p></div>
+      <div class="caja"><h3>¿Por qué 20,000?</h3><p class="destacado" style="font-size:18px">Con 20,000 reseñas, el % de quejas de cada categoría tiene un margen de error de solo ±0.5 puntos.</p></div>
+      <div class="caja"><h3>Datos crudos guardados</h3><p class="destacado" style="font-size:18px">Un extracto de cada archivo original se guardó sin modificar, para poder revisar el formato tal como viene de la fuente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Exploración -->
+<section class="slide">
+  <div class="eyebrow">2 · Exploración</div>
+  <h2>1 de cada 6 reseñas es una queja, y cada año son más</h2>
+  <div class="cuerpo dos-a">
+    <div class="caja">
+      <h3>% de reseñas negativas (1-2★) por categoría</h3>
+      <div class="barras" id="g-pct" style="--etq:250px"></div>
+    </div>
+    <div style="display:grid;gap:14px;align-content:start">
+      <div class="caja coral"><span class="grande" style="color:var(--coral)" data-contar="17.8" data-dec="1" data-suf="%">17.8%</span><span id="t-rango">de las reseñas son negativas.</span></div>
+      <div class="caja"><span class="grande">26 <span style="font-size:22px;color:var(--muted)">vs</span> 17</span><span>palabras: mediana de una queja contra un elogio. El cliente molesto explica qué falló.</span></div>
+      <div class="caja"><span class="grande">14.1% → 20.5%</span><span>de reseñas negativas entre 2019 y 2022, en el total de categorías.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Limpieza -->
+<section class="slide">
+  <div class="eyebrow">3 · Limpieza y transformación</div>
+  <h2>Ocho decisiones, cada una documentada</h2>
+  <div class="cuerpo dos">
+    <ul class="lista" style="font-size:18px">
+      <li><span><b>Unir título y texto:</b> el título resume la opinión.</span></li>
+      <li><span><b>Quitar ruido:</b> HTML (<code>&lt;br /&gt;</code>), marcadores de video, enlaces y números.</span></li>
+      <li><span><b>Expandir negaciones:</b> "don't" → "do not".</span></li>
+      <li><span><b>Minúsculas y sin signos.</b></span></li>
+      <li><span><b>Stopwords, pero se conservan las negaciones:</b> "not good" ≠ "good".</span></li>
+      <li><span><b>Eliminar vacías y duplicadas:</b> 4,550 y 11 → quedan 295,439.</span></li>
+      <li><span><b>Etiquetar:</b> 1-2★ negativa · 3★ neutra · 4-5★ positiva.</span></li>
+      <li><span><b>TF-IDF</b> con palabras y pares de palabras (50,000 términos).</span></li>
+    </ul>
+    <div style="display:grid;gap:12px;align-content:start">
+      <span class="etiqueta muted">Antes</span>
+      <div class="texto-ej">keeping windshield&nbsp; Clear. The magnets <b style="color:var(--coral)">don't</b> hold on and wind justs flaps away. Have trouble when I take it off hard to fold during<b style="color:var(--coral)">&lt;br /&gt;</b>cold weather.<b style="color:var(--coral)">&lt;br /&gt;</b>Summer hoping will keep the inside cooler. Fits well.</div>
+      <span class="etiqueta" style="color:var(--teal)">Después</span>
+      <div class="texto-ej">keeping windshield clear the magnets <b style="color:var(--teal)">do not</b> hold on and wind justs flaps away have trouble when i take it off hard to fold during cold weather summer hoping will keep the inside cooler fits well</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Modelado -->
+<section class="slide">
+  <div class="eyebrow">4 · Modelado</div>
+  <h2>Naive Bayes contra Regresión Logística</h2>
+  <div class="cuerpo dos-a">
+    <div style="display:grid;gap:14px;align-content:start">
+      <table>
+        <thead><tr><th>Modelo</th><th>Accuracy</th><th>F1 macro</th><th>F1 quejas</th></tr></thead>
+        <tbody>
+          <tr><td>Línea base (siempre "positiva")</td><td>0.75</td><td>0.29</td><td>0.00</td></tr>
+          <tr><td>Naive Bayes</td><td>0.88</td><td>0.63</td><td>0.78</td></tr>
+          <tr class="gana"><td>Regresión Logística ✓</td><td>0.85</td><td>0.69</td><td>0.78</td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="font-size:16px">Entrenamiento 206,807 · validación 44,316 · prueba 44,316 reseñas (70/15/15). Hiperparámetros elegidos con validación; resultado final medido una sola vez en prueba.</p>
+    </div>
+    <div style="display:grid;gap:14px;align-content:start">
+      <div class="caja coral"><h3>La accuracy engaña</h3><p style="font-size:17px;line-height:1.45">Decir siempre "positiva" acierta el 75% y no detecta ni una queja. Por eso la métrica principal es el <b>F1 macro</b>.</p></div>
+      <div class="caja teal"><h3>Por qué gana la Regresión Logística</h3><p style="font-size:17px;line-height:1.45">Naive Bayes casi nunca predice "neutra" (F1 0.17). La Regresión Logística, con pesos balanceados, reconoce las tres clases.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Qué aprendió -->
+<section class="slide">
+  <div class="eyebrow">4 · Interpretación</div>
+  <h2>Lo que aprendió el modelo tiene sentido</h2>
+  <div class="cuerpo" style="grid-template-rows:auto 1fr">
+    <div class="cuerpo tres" style="gap:16px">
+      <div class="caja"><h3 style="color:var(--coral)">Empujan hacia negativa</h3><div class="palabras" id="w-neg"></div></div>
+      <div class="caja"><h3 style="color:var(--muted)">Empujan hacia neutra</h3><div class="palabras" id="w-neu"></div></div>
+      <div class="caja"><h3 style="color:var(--teal)">Empujan hacia positiva</h3><div class="palabras" id="w-pos"></div></div>
+    </div>
+    <div class="caja" style="flex-direction:row;align-items:center;gap:36px">
+      <div style="display:grid;gap:8px;flex:1">
+        <span class="etiqueta muted">Prueba de la decisión de conservar negaciones</span>
+        <p class="destacado">"<b>disappointed</b>" es de los términos más negativos, pero "<b>not disappointed</b>" es de los más positivos. Si se hubiera quitado "not" como stopword, el modelo leería esas reseñas al revés.</p>
+      </div>
+      <div style="display:grid;gap:10px;min-width:330px">
+        <div class="barra" style="--etq:150px"><span>disappointed</span><div class="pista"><div class="relleno coral" style="width:100%"></div></div><span>negativa</span></div>
+        <div class="barra" style="--etq:150px"><span>not disappointed</span><div class="pista"><div class="relleno teal" style="width:100%"></div></div><span>positiva</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. ¿Aporta? -->
+<section class="slide">
+  <div class="eyebrow">4 · Validación</div>
+  <h2>¿El modelo aporta, o cualquiera podría adivinarlo?</h2>
+  <div class="cuerpo tres" style="gap:16px">
+    <div class="caja">
+      <h3>Contra una regla de sentido común</h3>
+      <p class="muted" style="font-size:15px">Contar palabras negativas (bad, broke, waste…) y positivas (great, love…).</p>
+      <div class="barras" id="g-regla" style="--etq:90px"></div>
+      <p style="font-size:15px">La regla no entiende contexto: en "not bad" ve dos palabras negativas.</p>
+    </div>
+    <div class="caja">
+      <h3>Prueba sin estrellas</h3>
+      <p class="muted" style="font-size:15px">Quejas estimadas en las 15 categorías leyendo solo el texto, como en correos o redes.</p>
+      <div class="barras" id="g-sin" style="--etq:90px"></div>
+      <p style="font-size:15px" id="t-sin"></p>
+    </div>
+    <div class="caja">
+      <h3>¿Hacían falta más datos?</h3>
+      <p class="muted" style="font-size:15px">F1 macro según cuántas reseñas se usan para entrenar.</p>
+      <div id="g-curva" style="flex:1"></div>
+      <p style="font-size:15px">De 100 mil a 200 mil reseñas mejora solo 0.005: ya llegó a su techo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Hallazgo -->
+<section class="slide">
+  <div class="eyebrow">5 · Hallazgo clave</div>
+  <h2>El porcentaje solo no alcanza: hay que mirar cuántos clientes se quejan</h2>
+  <div class="cuerpo" style="grid-template-columns:1fr 1fr 0.9fr;gap:20px">
+    <div style="display:grid;gap:10px;align-content:start">
+      <span class="etiqueta muted">Si solo miro el % de quejas</span>
+      <div class="ranking" id="rk-pct"></div>
+    </div>
+    <div style="display:grid;gap:10px;align-content:start">
+      <span class="etiqueta" style="color:var(--coral)">Si miro clientes insatisfechos</span>
+      <div class="ranking" id="rk-vol"></div>
+    </div>
+    <div class="caja coral" style="justify-content:center">
+      <span class="grande" style="color:var(--coral);font-size:64px" data-contar="19" data-suf="×">19×</span>
+      <p class="destacado">Hogar y cocina está en el <b>puesto 11</b> por porcentaje, pero tiene <b>19 veces más</b> reseñas negativas que Videojuegos.</p>
+      <p style="font-size:16px">Prioridad = gravedad (%) × alcance (volumen).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Causas -->
+<section class="slide">
+  <div class="eyebrow">5 · Causas</div>
+  <h2>Cada categoría falla por una razón distinta</h2>
+  <div class="cuerpo tres" style="gap:16px" id="causas"></div>
+  <p class="muted" style="font-size:14px">% de reseñas negativas que mencionan cada tema (diccionario de expresiones) y frases distintivas por categoría (TF-IDF por clase). "Devolución o atención" se excluye porque es la consecuencia de los otros problemas.</p>
+</section>
+
+<!-- 12. Tendencia -->
+<section class="slide">
+  <div class="eyebrow">5 · Evolución por año</div>
+  <h2>Todas empeoran, y las 3 prioridades se repiten cada año</h2>
+  <div class="cuerpo dos-a">
+    <div class="caja">
+      <h3>% de reseñas negativas por año</h3>
+      <div id="g-anios" style="flex:1"></div>
+    </div>
+    <div style="display:grid;gap:14px;align-content:start">
+      <div class="caja"><h3>Top 3 por clientes insatisfechos</h3><div id="top-anios" style="display:grid;gap:6px;font-size:16px"></div></div>
+      <div class="caja teal"><p style="font-size:17px;line-height:1.45">Cada categoría tiene entre 3,200 y 5,400 reseñas por año: margen de error de ±1.1 puntos. Las subidas (de 13.7% a 19.5% en Hogar y cocina) son mucho mayores que el margen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. Recomendación -->
+<section class="slide">
+  <div class="eyebrow">6 · Recomendación</div>
+  <h2>Dónde invertir el presupuesto de mejora este trimestre</h2>
+  <div class="cuerpo tres" style="gap:16px" id="recomendacion"></div>
+  <p class="destacado" style="font-size:19px"><b>Juntas concentran 18.5 millones de reseñas negativas: el 45% de todas las quejas</b> de las 15 categorías. Empeoraron entre 4 y 5 puntos desde 2019.</p>
+</section>
+
+<!-- 14. Demo en vivo -->
+<section class="slide oscura demo">
+  <canvas class="estrellas-fondo"></canvas>
+  <div class="demo-grid">
+    <div class="demo-texto">
+      <div class="en-vivo"><span class="punto"></span>EN VIVO</div>
+      <div class="eyebrow">7 · Producto</div>
+      <h2>Demo en vivo del dashboard</h2>
+      <p class="demo-sub">Ahora les muestro cómo se ve y cómo funciona SAR con los datos reales.</p>
+      <ol class="demo-pasos">
+        <li><span><b>La decisión:</b> las 3 categorías y qué atacar</span></li>
+        <li><span><b>Ranking:</b> por clientes o por %, y por año</span></li>
+        <li><span><b>Causas y evidencia:</b> temas, frases y reseñas</span></li>
+        <li><span><b>Clasificador en vivo:</b> escribir una queja</span></li>
+      </ol>
+      <a class="boton-demo" href="__URL_DASHBOARD__" target="_blank" rel="noopener">Abrir el dashboard <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="demo-visual"><div class="marco-3d"><img src="dashboard.png" alt="Vista del dashboard de SAR"></div></div>
+  </div>
+</section>
+
+<!-- 15. Cierre -->
+<section class="slide oscura final">
+  <canvas class="estrellas-fondo"></canvas>
+  <div class="eyebrow">Conclusión</div>
+  <h2 class="final-titulo">Invertir primero donde <em>más clientes se quejan</em>, atacando la causa que ellos mismos escriben.</h2>
+  <div class="final-tarjetas" id="final-tarjetas"></div>
+  <p class="final-frase">El texto dice <b>qué</b> arreglar. El volumen dice <b>dónde</b>. Y el modelo permite repetirlo en cualquier canal, aunque no tenga estrellas.</p>
+  <div class="gracias"><strong>Gracias</strong><span>¿Preguntas?</span></div>
+</section>
+
+</div></div>
+
+<div class="barra-progreso" id="progreso"></div>
+<div class="controles" aria-label="Navegación">
+  <button type="button" id="ant" aria-label="Diapositiva anterior">‹</button>
+  <span id="contador"></span>
+  <button type="button" id="sig" aria-label="Diapositiva siguiente">›</button>
+  <button type="button" id="btn-indice" aria-label="Ver índice de diapositivas">☷ Índice</button>
+  <button type="button" id="pantalla" aria-label="Pantalla completa">⛶</button>
+</div>
+<div class="aviso" id="aviso">Presioná <kbd>F</kbd> para pantalla completa · <kbd>←</kbd> <kbd>→</kbd> para avanzar · <kbd>I</kbd> para el índice</div>
+<div class="indice" id="indice" role="dialog" aria-label="Índice de diapositivas"><div class="indice-grid" id="indice-grid"></div></div>
+
+<script id="datos" type="application/json">/*__DATOS__*/</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById("datos").textContent);
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n, d = 1) => n.toLocaleString("es-GT", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const cats = D.categorias;
+  const porId = Object.fromEntries(cats.map((c) => [c.id, c]));
+  const top = new Set(D.recomendacion.map((r) => r.id));
+  const barra = (etq, v, max, clase, txt, extra = "") =>
+    `<div class="barra${extra}"><span>${esc(etq)}</span><div class="pista"><div class="relleno ${clase}" style="width:${(v / max) * 100}%"></div></div><span>${txt}</span></div>`;
+
+  // Estrellas
+  const est = D.estrellas, W = 520, H = 330, base = 290, maxE = Math.max(...est);
+  $("g-estrellas").innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%">${est.map((v, i) => {
+    const bw = 70, x = 27 + i * 98, h = (v / maxE) * 240, col = i < 2 ? "var(--coral)" : i === 2 ? "var(--gray)" : "var(--teal)";
+    return `<rect class="sube" style="--i:${i}" x="${x}" y="${base - h}" width="${bw}" height="${h}" rx="6" fill="${col}"/>
+      <text class="aparece" x="${x + bw / 2}" y="${base - h - 10}" text-anchor="middle" font-size="19" font-weight="700" fill="var(--ink)">${fmt(v)}%</text>
+      <text x="${x + bw / 2}" y="${base + 26}" text-anchor="middle" font-size="17" fill="var(--muted)">${i + 1}★</text>`;
+  }).join("")}<line x1="20" x2="${W - 20}" y1="${base}" y2="${base}" stroke="var(--line)"/></svg>`;
+
+  // % negativas por categoría
+  const porPct = [...cats].sort((a, b) => b.pct_neg - a.pct_neg);
+  const maxP = porPct[0].pct_neg;
+  $("g-pct").innerHTML = porPct.map((c) => barra(c.nombre, c.pct_neg, maxP, "coral", fmt(c.pct_neg) + "%")).join("");
+  $("t-rango").textContent = `de las reseñas son negativas. Por categoría van de ${fmt(porPct[porPct.length - 1].pct_neg)}% a ${fmt(maxP)}%.`;
+
+  // Palabras del modelo
+  for (const [id, clase, lista] of [["w-neg", "neg", D.palabras.negativa], ["w-neu", "neu", D.palabras.neutra], ["w-pos", "pos", D.palabras.positiva]])
+    $(id).innerHTML = lista.map((w) => `<span class="palabra ${clase}">${esc(w)}</span>`).join("");
+
+  // Validación del modelo
+  const X = D.experimentos, [regla, modelo] = X.comparacion;
+  $("g-regla").innerHTML = [["Aciertos", "accuracy"], ["F1 quejas", "F1 negativa"]].map(([t, k]) =>
+    `<span style="font-size:14px;font-weight:600;margin-top:6px">${t}</span>` +
+    barra("Modelo", modelo[k], 1, "teal", fmt(modelo[k] * 100, 0) + "%") + barra("Regla", regla[k], 1, "", fmt(regla[k] * 100, 0) + "%")).join("");
+  const se = X.sin_estrellas, real = se["real (estrellas)"].total_m, mod = se["modelo (solo texto)"].total_m, reg = se["regla (solo texto)"].total_m;
+  $("g-sin").innerHTML = [["Real", real, "coral"], ["Modelo", mod, "teal"], ["Regla", reg, ""]].map(([t, v, cl]) => barra(t, v, reg, cl, fmt(v, 1) + " M")).join("");
+  $("t-sin").innerHTML = `El modelo se equivoca en <b>${fmt(Math.abs(mod / real - 1) * 100, 0)}%</b> y llega a las mismas 3 prioridades. La regla infla las quejas en <b>${fmt((reg / real - 1) * 100, 0)}%</b>.`;
+  const cv = X.curva, cw = 330, ch = 230, xl = (n) => 30 + (Math.log10(n) - 4) / (Math.log10(cv[cv.length - 1]["reseñas de entrenamiento"]) - 4) * (cw - 60),
+    yl = (f) => 185 - (f - 0.64) / 0.06 * 150;
+  $("g-curva").innerHTML = `<svg viewBox="0 0 ${cw} ${ch}" width="100%">
+    <polyline class="dibuja" pathLength="1" fill="none" stroke="var(--teal)" stroke-width="3" points="${cv.map((p) => `${xl(p["reseñas de entrenamiento"])},${yl(p["F1 macro"])}`).join(" ")}"/>
+    ${cv.map((p) => `<circle cx="${xl(p["reseñas de entrenamiento"])}" cy="${yl(p["F1 macro"])}" r="4.5" fill="var(--teal)"/>
+      <text x="${xl(p["reseñas de entrenamiento"])}" y="${yl(p["F1 macro"]) - 11}" text-anchor="middle" font-size="12" fill="var(--ink)">${p["F1 macro"].toFixed(3)}</text>
+      <text x="${xl(p["reseñas de entrenamiento"])}" y="${ch - 8}" text-anchor="middle" font-size="11" fill="var(--muted)">${Math.round(p["reseñas de entrenamiento"] / 1000)}k</text>`).join("")}
+  </svg>`;
+
+  // Hallazgo: dos rankings
+  const millones = (m) => m >= 1 ? `${fmt(m, 1)} M` : `${fmt(m * 1000, 0)} mil`;
+  const filaRk = (c, i, v) => `<div class="rk${top.has(c.id) ? " top" : ""}"><b>${i + 1}</b><span>${esc(c.nombre)}</span><b class="num">${v}</b></div>`;
+  $("rk-pct").innerHTML = porPct.slice(0, 5).map((c, i) => filaRk(c, i, fmt(c.pct_neg) + "%")).join("") +
+    `<div class="rk top" style="opacity:.85"><b>${porPct.findIndex((c) => c.id === "Home_and_Kitchen") + 1}</b><span>Hogar y cocina</span><b class="num">${fmt(porId.Home_and_Kitchen.pct_neg)}%</b></div>`;
+  const porVol = [...cats].sort((a, b) => b.negativas_m - a.negativas_m);
+  $("rk-vol").innerHTML = porVol.slice(0, 5).map((c, i) => filaRk(c, i, millones(c.negativas_m))).join("") +
+    `<div class="rk" style="opacity:.85"><b>${porVol.findIndex((c) => c.id === "Video_Games") + 1}</b><span>Videojuegos</span><b class="num">${millones(porId.Video_Games.negativas_m)}</b></div>`;
+
+  // Causas
+  $("causas").innerHTML = D.recomendacion.map((r) => {
+    const c = porId[r.id];
+    const temas = Object.entries(c.temas).filter(([t]) => t !== "Devolución o atención").sort((a, b) => b[1] - a[1]).slice(0, 4);
+    const mx = temas[0][1];
+    return `<div class="caja"><h3 style="font-family:var(--font-display);font-size:24px">${esc(c.nombre)}</h3>
+      <div class="barras" style="--etq:175px">${temas.map(([t, v], i) => barra(t, v, mx, i === 0 ? "coral" : "", fmt(v, 0) + "%")).join("")}</div>
+      <span class="etiqueta muted" style="margin-top:6px">Frases más propias</span>
+      <div class="palabras">${c.frases.slice(0, 4).map((f) => `<span class="palabra neu">${esc(f.es)}</span>`).join("")}</div></div>`;
+  }).join("");
+
+  // Años
+  const anios = D.anios, aw = 640, ah = 360, x0 = 60, x1 = aw - 150, y0 = 30, y1 = ah - 40, lo = 10, hi = 25;
+  const ax = (i) => x0 + (i / (anios.length - 1)) * (x1 - x0), ay = (v) => y1 - (v - lo) / (hi - lo) * (y1 - y0);
+  const lineas = [...cats].sort((a, b) => top.has(a.id) - top.has(b.id)).map((c) => {
+    const t = top.has(c.id), pts = c.anios.map((a, i) => `${ax(i)},${ay(a.pct)}`).join(" "), u = c.anios[c.anios.length - 1];
+    return `<polyline class="dibuja" pathLength="1" fill="none" stroke="${t ? "var(--coral)" : "var(--gray)"}" stroke-opacity="${t ? 1 : 0.35}" stroke-width="${t ? 3 : 1.5}" points="${pts}"/>` +
+      (t ? `<text x="${ax(anios.length - 1) + 10}" y="${ay(u.pct) + 5}" font-size="14" font-weight="700" fill="var(--coral)">${esc(c.nombre.split(",")[0])}</text>` : "");
+  }).join("");
+  const grid = [10, 15, 20, 25].map((v) => `<line x1="${x0}" x2="${x1}" y1="${ay(v)}" y2="${ay(v)}" stroke="var(--line)"/><text x="${x0 - 10}" y="${ay(v) + 5}" text-anchor="end" font-size="13" fill="var(--muted)">${v}%</text>`).join("");
+  const ejeX = anios.map((a, i) => `<text x="${ax(i)}" y="${ah - 12}" text-anchor="middle" font-size="14" fill="var(--muted)">${a === 2023 ? "2023*" : a}</text>`).join("");
+  $("g-anios").innerHTML = `<svg viewBox="0 0 ${aw} ${ah}" width="100%">${grid}${ejeX}${lineas}</svg><p class="muted" style="font-size:13px">Gris: las otras 12 categorías. *2023 llega hasta septiembre.</p>`;
+  $("top-anios").innerHTML = anios.map((a) => {
+    const t3 = [...cats].sort((x, y) => y.anios.find((z) => z.anio === a).negativas_m - x.anios.find((z) => z.anio === a).negativas_m).slice(0, 3);
+    return `<div style="display:grid;grid-template-columns:60px 1fr;gap:8px"><b class="num">${a === 2023 ? "2023*" : a}</b><span>${t3.map((c) => esc(c.nombre.split(",")[0])).join(" · ")}</span></div>`;
+  }).join("");
+
+  // Recomendación
+  $("recomendacion").innerHTML = D.recomendacion.map((r, i) => {
+    const c = porId[r.id];
+    return `<div class="caja prio"><span class="rango">${i + 1}</span><h3>${esc(c.nombre)}</h3>
+      <div style="display:flex;gap:22px"><div><span class="grande" style="font-size:34px" data-contar="${c.negativas_m}" data-dec="1" data-suf=" M">${millones(c.negativas_m)}</span><div class="muted" style="font-size:14px">reseñas negativas</div></div>
+      <div><span class="grande" style="font-size:34px" data-contar="${c.pct_neg}" data-dec="1" data-suf="%">${fmt(c.pct_neg)}%</span><div class="muted" style="font-size:14px">de sus reseñas</div></div></div>
+      <div class="problema"><b>Problema</b>${esc(r.problema)}</div><p class="accion">${esc(r.accion)}</p></div>`;
+  }).join("");
+
+  // Cierre: tarjetas de las 3 prioridades
+  const CLAVE = { Home_and_Kitchen: "Calidad del producto", Clothing_Shoes_and_Jewelry: "Talla que no corresponde", Electronics: "Fallas y batería" };
+  $("final-tarjetas").innerHTML = D.recomendacion.map((r, i) => {
+    const c = porId[r.id];
+    return `<div class="final-tarjeta"><span class="n">${i + 1}</span><span class="cat">${esc(c.nombre)}</span>
+      <span class="clave">${CLAVE[r.id] || ""}</span><span class="cifra">${millones(c.negativas_m)} de reseñas negativas</span></div>`;
+  }).join("");
+
+  // Pies de página
+  document.querySelectorAll(".slide:not(.oscura)").forEach((s) => {
+    s.insertAdjacentHTML("beforeend", `<div class="pie"><span>SAR · Sistema de Análisis de Reseñas</span></div>`);
+  });
+
+  // Elementos que entran de forma escalonada
+  const slides = [...document.querySelectorAll(".slide")];
+  const SEL = ".eyebrow, h2, .slide > p, .portada > *, .caja, .paso, .rk, .lista > li, table, .texto-ej, .etiqueta, .captura, .demo-texto > *, .demo-visual, .final-tarjeta, .gracias";
+  slides.forEach((sl) => {
+    let i = 0;
+    sl.querySelectorAll(SEL).forEach((el) => {
+      const padre = el.parentElement.closest(".caja, .paso, .rk, .demo-texto, .final-tarjeta");
+      if (padre && !el.matches(".demo-texto > *")) return;
+      el.classList.add("anim");
+      el.style.setProperty("--i", i++);
+    });
+  });
+
+  // Números que cuentan hacia arriba
+  const ANIMAR = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function contar(sl) {
+    sl.querySelectorAll("[data-contar]").forEach((el) => {
+      const fin = parseFloat(el.dataset.contar), dec = +(el.dataset.dec || 0), suf = el.dataset.suf || "";
+      const escribir = (v) => { el.textContent = v.toLocaleString("es-GT", { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf; };
+      if (!ANIMAR) return escribir(fin);
+      const t0 = performance.now(), dur = 1300;
+      const paso = (t) => { const k = Math.min(1, (t - t0) / dur); escribir(fin * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(paso); };
+      escribir(0); setTimeout(() => requestAnimationFrame(paso), 350);
+    });
+  }
+
+  // Estrellas flotando en las diapositivas oscuras
+  const fondos = new Map();
+  slides.forEach((sl) => {
+    const cv = sl.querySelector("canvas.estrellas-fondo");
+    if (!cv) return;
+    cv.width = 1280; cv.height = 720;
+    const COL = ["rgba(127,214,203,", "rgba(255,255,255,", "rgba(255,180,160,"];
+    const ps = Array.from({ length: 46 }, () => ({ x: Math.random() * 1280, y: Math.random() * 720, t: 8 + Math.random() * 16,
+      v: 0.15 + Math.random() * 0.45, a: 0.08 + Math.random() * 0.35, f: Math.random() * 6.28, c: COL[(Math.random() * 3) | 0] }));
+    fondos.set(sl, { ctx: cv.getContext("2d"), ps });
+  });
+  let animando = null;
+  function cuadro() {
+    const f = fondos.get(slides[actual]);
+    if (!f) { animando = null; return; }
+    const { ctx, ps } = f;
+    ctx.clearRect(0, 0, 1280, 720);
+    for (const p of ps) {
+      p.y -= p.v; p.f += 0.01;
+      if (p.y < -20) { p.y = 740; p.x = Math.random() * 1280; }
+      ctx.font = `${p.t}px serif`;
+      ctx.fillStyle = p.c + p.a + ")";
+      ctx.fillText("★", p.x + Math.sin(p.f) * 12, p.y);
+    }
+    animando = requestAnimationFrame(cuadro);
+  }
+
+  // Índice
+  $("indice-grid").innerHTML = slides.map((sl, i) => {
+    const titulo = (sl.querySelector("h2") || sl.querySelector(".nombre") || sl.querySelector(".tesis"))?.textContent.trim() || "";
+    const ceja = sl.querySelector(".eyebrow")?.textContent.trim() || "";
+    return `<button type="button" data-i="${i}"><b>${i + 1}</b><span>${esc(i === 0 ? "Portada" : ceja)}</span><span style="color:#fff;font-weight:600">${esc(titulo.slice(0, 70))}</span></button>`;
+  }).join("");
+  const indice = $("indice");
+  function abrirIndice(abrir) {
+    indice.classList.toggle("abierto", abrir);
+    indice.querySelectorAll("button").forEach((b) => b.classList.toggle("actual", +b.dataset.i === actual));
+    if (abrir) indice.querySelector("button.actual")?.focus();
+  }
+  $("indice-grid").onclick = (e) => { const b = e.target.closest("button"); if (b) { ir(+b.dataset.i); abrirIndice(false); } };
+  indice.onclick = (e) => { if (e.target === indice) abrirIndice(false); };
+  $("btn-indice").onclick = () => abrirIndice(!indice.classList.contains("abierto"));
+
+  // Navegación
+  let actual = 0;
+  function ir(n) {
+    const nuevo = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, i) => { s.classList.toggle("activa", i === nuevo); s.classList.toggle("previa", i < nuevo); });
+    const cambio = nuevo !== actual || !slides[nuevo].dataset.visto;
+    actual = nuevo;
+    slides[actual].dataset.visto = "1";
+    if (cambio) contar(slides[actual]);
+    $("contador").textContent = `${actual + 1} / ${slides.length}`;
+    $("progreso").style.width = `${((actual + 1) / slides.length) * 100}%`;
+    if (location.hash !== `#${actual + 1}`) history.replaceState(null, "", `#${actual + 1}`);
+    if (ANIMAR && fondos.has(slides[actual]) && !animando) animando = requestAnimationFrame(cuadro);
+  }
+  function escalar() {
+    const k = Math.min(innerWidth / 1280, innerHeight / 720);
+    $("lienzo").style.transform = `scale(${k})`;
+  }
+  addEventListener("resize", escalar);
+  addEventListener("keydown", (e) => {
+    const abierto = indice.classList.contains("abierto");
+    if (e.key === "Escape") return abrirIndice(false);
+    if (e.key.toLowerCase() === "i") return abrirIndice(!abierto);
+    if (abierto) return;
+    if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); ir(actual + 1); }
+    else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); ir(actual - 1); }
+    else if (e.key === "Home") ir(0);
+    else if (e.key === "End") ir(slides.length - 1);
+    else if (e.key.toLowerCase() === "f") pantallaCompleta();
+  });
+  function pantallaCompleta() {
+    const p = document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
+    p?.catch?.(() => {});
+  }
+  $("ant").onclick = () => ir(actual - 1);
+  $("sig").onclick = () => ir(actual + 1);
+  $("pantalla").onclick = pantallaCompleta;
+  $("lienzo").addEventListener("click", (e) => { if (!e.target.closest("button, a")) ir(actual + (e.clientX > innerWidth / 2 ? 1 : -1)); });
+  setTimeout(() => { $("aviso").style.opacity = "0"; }, 4500);
+  escalar();
+  ir((parseInt(location.hash.slice(1), 10) || 1) - 1);
+})();
+</script>

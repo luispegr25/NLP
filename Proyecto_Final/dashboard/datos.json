@@ -1,0 +1,2377 @@
+{
+ "meta": {
+  "resenas": 295439,
+  "categorias": 15,
+  "periodo": "2019 - 2023",
+  "accuracy": 0.85,
+  "f1_macro": 0.691
+ },
+ "categorias": [
+  {
+   "id": "Home_and_Kitchen",
+   "nombre": "Hogar y cocina",
+   "pct_neg": 16.93,
+   "margen": 0.52,
+   "volumen_m": 44.42,
+   "negativas_m": 7.521,
+   "cambio_pp": 5.28,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 7.2,
+    "Se rompe / mala calidad": 28.0,
+    "Talla o medidas": 11.1,
+    "No es lo que se anunciaba": 2.9,
+    "Envío, empaque o piezas faltantes": 12.2,
+    "Batería o carga": 2.0,
+    "Devolución o atención": 18.4,
+    "Precio / no vale lo que cuesta": 7.7,
+    "Olor, sabor o reacción": 5.8
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "king size",
+    "fitted sheet",
+    "air fryer",
+    "coffee pot",
+    "bed frame",
+    "mattress topper"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 13.27
+    },
+    {
+     "t": "2019Q2",
+     "v": 13.29
+    },
+    {
+     "t": "2019Q3",
+     "v": 13.72
+    },
+    {
+     "t": "2019Q4",
+     "v": 13.94
+    },
+    {
+     "t": "2020Q1",
+     "v": 13.25
+    },
+    {
+     "t": "2020Q2",
+     "v": 15.5
+    },
+    {
+     "t": "2020Q3",
+     "v": 17.57
+    },
+    {
+     "t": "2020Q4",
+     "v": 16.92
+    },
+    {
+     "t": "2021Q1",
+     "v": 16.33
+    },
+    {
+     "t": "2021Q2",
+     "v": 15.37
+    },
+    {
+     "t": "2021Q3",
+     "v": 16.98
+    },
+    {
+     "t": "2021Q4",
+     "v": 19.92
+    },
+    {
+     "t": "2022Q1",
+     "v": 20.53
+    },
+    {
+     "t": "2022Q2",
+     "v": 20.68
+    },
+    {
+     "t": "2022Q3",
+     "v": 20.42
+    },
+    {
+     "t": "2022Q4",
+     "v": 17.83
+    },
+    {
+     "t": "2023Q1",
+     "v": 17.59
+    },
+    {
+     "t": "2023Q2",
+     "v": 19.97
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 13.65,
+     "negativas_m": 1.125
+    },
+    {
+     "anio": 2020,
+     "pct": 16.06,
+     "negativas_m": 1.634
+    },
+    {
+     "anio": 2021,
+     "pct": 17.33,
+     "negativas_m": 2.099
+    },
+    {
+     "anio": 2022,
+     "pct": 19.04,
+     "negativas_m": 1.905
+    },
+    {
+     "anio": 2023,
+     "pct": 19.53,
+     "negativas_m": 0.758
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AFLW5CIHECFEA633HHJTATCUTPTQ-1615615962300",
+     "estrellas": 1,
+     "votos": 16,
+     "titulo": "Flimsy, they snap! Cheaply made",
+     "texto": "These are tempting to purchase because of the price, but don’t give in!!! Still not worth it!!! They are so cheap, thin, and flimsy. They break so easily. I have never had velvet hangers break like these do before."
+    },
+    {
+     "clave": "AELGCISMMC4K7E2L2GUFNVUTUU5Q-1626420891837",
+     "estrellas": 1,
+     "votos": 14,
+     "titulo": "Poor Quality",
+     "texto": "My significant other ordered a set of these for the living room and she has never been so frustrated building furniture. The parts are poor quality, the set screws are cheap, threads torn, if you drill them in they bust through the awful particle board. They give you a pack of white stickers to use to cover them up. On top of them being about 2 times more expensive then other similar sets, they are non-refundable.  Absolutely terrible quality."
+    },
+    {
+     "clave": "AF3XAKFLXYTVTIADPCOXQD56KRUA-1613247054034",
+     "estrellas": 1,
+     "votos": 9,
+     "titulo": "Sent us a used broken toaster",
+     "texto": "When I unpacked it, I noticed the lever in the front for adjusting the level was broken off. Then I noticed that the side of the toaster was dirty. I pulled out the crumb tray and there was actually crumbs!  Clearly not new! Disgusting.  We have a similar model in white plastic for 8 years, it works great but the plastic cracked and the crack keeps getting bigger every time we use it. We may just keep a little longer."
+    }
+   ]
+  },
+  {
+   "id": "Clothing_Shoes_and_Jewelry",
+   "nombre": "Ropa, zapatos y joyería",
+   "pct_neg": 16.15,
+   "margen": 0.51,
+   "volumen_m": 41.79,
+   "negativas_m": 6.75,
+   "cambio_pp": 4.03,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 1.7,
+    "Se rompe / mala calidad": 24.1,
+    "Talla o medidas": 35.9,
+    "No es lo que se anunciaba": 3.6,
+    "Envío, empaque o piezas faltantes": 6.1,
+    "Batería o carga": 0.7,
+    "Devolución o atención": 16.8,
+    "Precio / no vale lo que cuesta": 4.8,
+    "Olor, sabor o reacción": 3.2
+   },
+   "causa": "Talla o medidas",
+   "frases": [
+    "plus size",
+    "normally wear",
+    "arch support",
+    "wear size",
+    "order size up",
+    "size not true"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 13.3
+    },
+    {
+     "t": "2019Q2",
+     "v": 14.22
+    },
+    {
+     "t": "2019Q3",
+     "v": 14.15
+    },
+    {
+     "t": "2019Q4",
+     "v": 12.97
+    },
+    {
+     "t": "2020Q1",
+     "v": 13.36
+    },
+    {
+     "t": "2020Q2",
+     "v": 15.17
+    },
+    {
+     "t": "2020Q3",
+     "v": 15.58
+    },
+    {
+     "t": "2020Q4",
+     "v": 14.48
+    },
+    {
+     "t": "2021Q1",
+     "v": 15.01
+    },
+    {
+     "t": "2021Q2",
+     "v": 16.26
+    },
+    {
+     "t": "2021Q3",
+     "v": 18.33
+    },
+    {
+     "t": "2021Q4",
+     "v": 19.21
+    },
+    {
+     "t": "2022Q1",
+     "v": 18.83
+    },
+    {
+     "t": "2022Q2",
+     "v": 19.37
+    },
+    {
+     "t": "2022Q3",
+     "v": 18.9
+    },
+    {
+     "t": "2022Q4",
+     "v": 17.33
+    },
+    {
+     "t": "2023Q1",
+     "v": 15.99
+    },
+    {
+     "t": "2023Q2",
+     "v": 17.92
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 13.5,
+     "negativas_m": 1.249
+    },
+    {
+     "anio": 2020,
+     "pct": 14.65,
+     "negativas_m": 1.332
+    },
+    {
+     "anio": 2021,
+     "pct": 17.63,
+     "negativas_m": 1.846
+    },
+    {
+     "anio": 2022,
+     "pct": 18.25,
+     "negativas_m": 1.681
+    },
+    {
+     "anio": 2023,
+     "pct": 17.06,
+     "negativas_m": 0.642
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AHRBS7FO53WOG3YBK722GHRZYSVQ-1589923592805",
+     "estrellas": 2,
+     "votos": 15,
+     "titulo": "Not at all true to size and not plus-size friendly!",
+     "texto": "Not true to size! I wear a women's 2X in just about everything. These pants fit like they're a size and a half too small. Couldn't even button  them. It's a shame, they really are gorgeous pants, but buyer beware. Unless you're on the small end of plus-size, this won't fit you."
+    },
+    {
+     "clave": "AHV5BY3HKS2IEHRYCYMPPDUKW2MQ-1604108160515",
+     "estrellas": 2,
+     "votos": 14,
+     "titulo": "Too short",
+     "texto": "These are not long legs.  They are short.  Not sure what they consider long, but these are not long.  If you are expecting long,  be prepared for disappointment."
+    },
+    {
+     "clave": "AF55IGP3RHQFLP43AK36HTBLQKEQ-1610572512293",
+     "estrellas": 1,
+     "votos": 12,
+     "titulo": "Item doesn’t fit good it’s tight in some spots and more loose in others.",
+     "texto": "It’s a irregular fit doesn’t fit as it should just an overall uncomfortable fit and feel. But a very nice Color combination."
+    }
+   ]
+  },
+  {
+   "id": "Electronics",
+   "nombre": "Electrónica",
+   "pct_neg": 19.51,
+   "margen": 0.55,
+   "volumen_m": 21.63,
+   "negativas_m": 4.22,
+   "cambio_pp": 4.4,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 20.3,
+    "Se rompe / mala calidad": 17.9,
+    "Talla o medidas": 8.6,
+    "No es lo que se anunciaba": 1.9,
+    "Envío, empaque o piezas faltantes": 6.7,
+    "Batería o carga": 15.8,
+    "Devolución o atención": 20.5,
+    "Precio / no vale lo que cuesta": 6.8,
+    "Olor, sabor o reacción": 3.3
+   },
+   "causa": "Dejó de funcionar / defectuoso",
+   "frases": [
+    "macbook pro",
+    "sound quality",
+    "apple pencil",
+    "screen protector",
+    "hard drive",
+    "macbook air"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 15.55
+    },
+    {
+     "t": "2019Q2",
+     "v": 16.38
+    },
+    {
+     "t": "2019Q3",
+     "v": 17.18
+    },
+    {
+     "t": "2019Q4",
+     "v": 16.58
+    },
+    {
+     "t": "2020Q1",
+     "v": 15.42
+    },
+    {
+     "t": "2020Q2",
+     "v": 18.92
+    },
+    {
+     "t": "2020Q3",
+     "v": 20.4
+    },
+    {
+     "t": "2020Q4",
+     "v": 18.05
+    },
+    {
+     "t": "2021Q1",
+     "v": 19.07
+    },
+    {
+     "t": "2021Q2",
+     "v": 19.58
+    },
+    {
+     "t": "2021Q3",
+     "v": 21.99
+    },
+    {
+     "t": "2021Q4",
+     "v": 23.43
+    },
+    {
+     "t": "2022Q1",
+     "v": 23.25
+    },
+    {
+     "t": "2022Q2",
+     "v": 23.85
+    },
+    {
+     "t": "2022Q3",
+     "v": 22.9
+    },
+    {
+     "t": "2022Q4",
+     "v": 20.59
+    },
+    {
+     "t": "2023Q1",
+     "v": 19.04
+    },
+    {
+     "t": "2023Q2",
+     "v": 21.17
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 16.47,
+     "negativas_m": 0.787
+    },
+    {
+     "anio": 2020,
+     "pct": 18.07,
+     "negativas_m": 0.998
+    },
+    {
+     "anio": 2021,
+     "pct": 21.29,
+     "negativas_m": 1.088
+    },
+    {
+     "anio": 2022,
+     "pct": 22.08,
+     "negativas_m": 0.959
+    },
+    {
+     "anio": 2023,
+     "pct": 20.67,
+     "negativas_m": 0.388
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AFJYL7JUWIN72DNUILXXHHYGYGKQ-1643920293134",
+     "estrellas": 2,
+     "votos": 13,
+     "titulo": "Would not turn on!",
+     "texto": "The mother board would not turn on. ASUS tech said unit was defective and suggested return of the mother board for repair. I preferred to return for replacement! I am disappointed in the quality of the mother board, and the poor support from ASUS. Support from Amazon was good!"
+    },
+    {
+     "clave": "AEMG44OU3KG7KMCPKRRI5SRMZ6OA-1638477919467",
+     "estrellas": 1,
+     "votos": 12,
+     "titulo": "Are these a joke? Do not work.",
+     "texto": "These won't take a charge, they won't charge my airpods. The light doesn't come on when plugged in, I'm going to have to return them because they flat don't work."
+    },
+    {
+     "clave": "AGYBDHD5FBJTR3I3I24MLBRBSI6Q-1660958444143",
+     "estrellas": 2,
+     "votos": 10,
+     "titulo": "It does not work..",
+     "texto": "I downloaded the app on phone..three different ones and none of them worked.  They gave a refund and did not even attempt to help or figure out the problem"
+    }
+   ]
+  },
+  {
+   "id": "Tools_and_Home_Improvement",
+   "nombre": "Herramientas y mejoras del hogar",
+   "pct_neg": 17.95,
+   "margen": 0.54,
+   "volumen_m": 17.67,
+   "negativas_m": 3.173,
+   "cambio_pp": 4.59,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 14.5,
+    "Se rompe / mala calidad": 22.9,
+    "Talla o medidas": 8.9,
+    "No es lo que se anunciaba": 2.2,
+    "Envío, empaque o piezas faltantes": 8.7,
+    "Batería o carga": 7.4,
+    "Devolución o atención": 17.7,
+    "Precio / no vale lo que cuesta": 7.1,
+    "Olor, sabor o reacción": 4.1
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "shower head",
+    "light bulbs",
+    "motion sensor",
+    "string lights",
+    "garage door",
+    "smart home"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 14.38
+    },
+    {
+     "t": "2019Q2",
+     "v": 14.65
+    },
+    {
+     "t": "2019Q3",
+     "v": 13.68
+    },
+    {
+     "t": "2019Q4",
+     "v": 13.9
+    },
+    {
+     "t": "2020Q1",
+     "v": 14.5
+    },
+    {
+     "t": "2020Q2",
+     "v": 16.84
+    },
+    {
+     "t": "2020Q3",
+     "v": 19.47
+    },
+    {
+     "t": "2020Q4",
+     "v": 17.86
+    },
+    {
+     "t": "2021Q1",
+     "v": 16.34
+    },
+    {
+     "t": "2021Q2",
+     "v": 16.33
+    },
+    {
+     "t": "2021Q3",
+     "v": 19.15
+    },
+    {
+     "t": "2021Q4",
+     "v": 22.28
+    },
+    {
+     "t": "2022Q1",
+     "v": 23.24
+    },
+    {
+     "t": "2022Q2",
+     "v": 22.89
+    },
+    {
+     "t": "2022Q3",
+     "v": 21.7
+    },
+    {
+     "t": "2022Q4",
+     "v": 19.22
+    },
+    {
+     "t": "2023Q1",
+     "v": 16.94
+    },
+    {
+     "t": "2023Q2",
+     "v": 18.51
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 14.29,
+     "negativas_m": 0.476
+    },
+    {
+     "anio": 2020,
+     "pct": 17.23,
+     "negativas_m": 0.734
+    },
+    {
+     "anio": 2021,
+     "pct": 18.9,
+     "negativas_m": 0.846
+    },
+    {
+     "anio": 2022,
+     "pct": 20.77,
+     "negativas_m": 0.839
+    },
+    {
+     "anio": 2023,
+     "pct": 17.76,
+     "negativas_m": 0.277
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AFMJQVWRPS22MICR5GL377S7GLDA-1638814531836",
+     "estrellas": 1,
+     "votos": 30,
+     "titulo": "Save your money, Cheap quality",
+     "texto": "Interesting and lovely concept? YES! Well made? NO! Upon installation, which was easy as they claim, Instant leaking everywhere. It does NOT connect nicely to most third-party adapters. Plumbers tape and all. The water that did get through, pretty pattern as it stated. But as far as quality of the product \"Can NOT recommend\""
+    },
+    {
+     "clave": "AHROSP6KZBCL5O7X4FEOYQOUINDQ-1644288876738",
+     "estrellas": 1,
+     "votos": 14,
+     "titulo": "Broken after 3 uses",
+     "texto": "I bought this November and finally got a chance to use it this February 2022 and 1 of the LED is not working anymore. Will ask if Amazon can replace unit."
+    },
+    {
+     "clave": "AEAS5TGCP765BAFYKVVI4CDJD2YA-1635111065632",
+     "estrellas": 2,
+     "votos": 11,
+     "titulo": "Ripped, cheap zippers doesn’t keep you dry",
+     "texto": "Less than a solid five times of wearing this rain gear, it breaks, zipper on the leg which completely ruins the promise of staying dry. Seemingly cheaply made and extremely upset for spending this much on John Deere gear that can’t follow through on its advertising."
+    }
+   ]
+  },
+  {
+   "id": "Health_and_Household",
+   "nombre": "Salud y hogar",
+   "pct_neg": 17.89,
+   "margen": 0.54,
+   "volumen_m": 16.05,
+   "negativas_m": 2.871,
+   "cambio_pp": 7.14,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 8.2,
+    "Se rompe / mala calidad": 15.2,
+    "Talla o medidas": 7.3,
+    "No es lo que se anunciaba": 2.6,
+    "Envío, empaque o piezas faltantes": 9.0,
+    "Batería o carga": 5.9,
+    "Devolución o atención": 14.3,
+    "Precio / no vale lo que cuesta": 8.5,
+    "Olor, sabor o reacción": 15.6
+   },
+   "causa": "Olor, sabor o reacción",
+   "frases": [
+    "heating pad",
+    "pain relief",
+    "essential oil",
+    "car key",
+    "mop head",
+    "taste terrible"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 16.93
+    },
+    {
+     "t": "2019Q2",
+     "v": 15.51
+    },
+    {
+     "t": "2019Q3",
+     "v": 13.42
+    },
+    {
+     "t": "2019Q4",
+     "v": 12.54
+    },
+    {
+     "t": "2020Q1",
+     "v": 12.28
+    },
+    {
+     "t": "2020Q2",
+     "v": 14.33
+    },
+    {
+     "t": "2020Q3",
+     "v": 16.91
+    },
+    {
+     "t": "2020Q4",
+     "v": 16.75
+    },
+    {
+     "t": "2021Q1",
+     "v": 16.93
+    },
+    {
+     "t": "2021Q2",
+     "v": 18.35
+    },
+    {
+     "t": "2021Q3",
+     "v": 19.31
+    },
+    {
+     "t": "2021Q4",
+     "v": 20.14
+    },
+    {
+     "t": "2022Q1",
+     "v": 21.33
+    },
+    {
+     "t": "2022Q2",
+     "v": 20.62
+    },
+    {
+     "t": "2022Q3",
+     "v": 21.24
+    },
+    {
+     "t": "2022Q4",
+     "v": 21.03
+    },
+    {
+     "t": "2023Q1",
+     "v": 19.16
+    },
+    {
+     "t": "2023Q2",
+     "v": 21.3
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 13.83,
+     "negativas_m": 0.367
+    },
+    {
+     "anio": 2020,
+     "pct": 15.55,
+     "negativas_m": 0.612
+    },
+    {
+     "anio": 2021,
+     "pct": 19.12,
+     "negativas_m": 0.8
+    },
+    {
+     "anio": 2022,
+     "pct": 20.85,
+     "negativas_m": 0.788
+    },
+    {
+     "anio": 2023,
+     "pct": 20.28,
+     "negativas_m": 0.303
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AG6N7MNZYTVID3U2MKIMDFYN4TQA-1633055832731",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "Had an allergic reaction",
+     "texto": "I had high hopes for this product, but I had a severe allergic reaction.  It caused a lot of swelling and inflammation which I am still trying to get rid of after 4 months."
+    },
+    {
+     "clave": "AFKIG4CGQLG5EA4M23GJ2MCIGWZQ-1614438106614",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "this product is a scam no smell just oil and you cant return it",
+     "texto": "this musk oil perfume is a scam it has no smell both bottles then they tell you ..... you cant return it so you are out $32"
+    },
+    {
+     "clave": "AGVO6KIWNNHJR6TSG66MRMN44COA-1674824732183",
+     "estrellas": 1,
+     "votos": 5,
+     "titulo": "RASH",
+     "texto": "This product gave me a rash everywhere it touched exposed skin. I bought this because Ihave very sensitive skin. At most other products were itchy but this was horrible. Waste of money."
+    }
+   ]
+  },
+  {
+   "id": "Beauty_and_Personal_Care",
+   "nombre": "Belleza y cuidado personal",
+   "pct_neg": 18.66,
+   "margen": 0.54,
+   "volumen_m": 14.7,
+   "negativas_m": 2.742,
+   "cambio_pp": 4.93,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 6.5,
+    "Se rompe / mala calidad": 16.7,
+    "Talla o medidas": 5.2,
+    "No es lo que se anunciaba": 4.2,
+    "Envío, empaque o piezas faltantes": 8.0,
+    "Batería o carga": 2.0,
+    "Devolución o atención": 11.5,
+    "Precio / no vale lo que cuesta": 7.7,
+    "Olor, sabor o reacción": 15.2
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "makes hair",
+    "hair hair",
+    "dry hair",
+    "face wash",
+    "work hair",
+    "hair color"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 13.83
+    },
+    {
+     "t": "2019Q2",
+     "v": 14.48
+    },
+    {
+     "t": "2019Q3",
+     "v": 14.56
+    },
+    {
+     "t": "2019Q4",
+     "v": 15.23
+    },
+    {
+     "t": "2020Q1",
+     "v": 15.3
+    },
+    {
+     "t": "2020Q2",
+     "v": 17.02
+    },
+    {
+     "t": "2020Q3",
+     "v": 19.15
+    },
+    {
+     "t": "2020Q4",
+     "v": 16.78
+    },
+    {
+     "t": "2021Q1",
+     "v": 17.13
+    },
+    {
+     "t": "2021Q2",
+     "v": 19.34
+    },
+    {
+     "t": "2021Q3",
+     "v": 21.18
+    },
+    {
+     "t": "2021Q4",
+     "v": 23.19
+    },
+    {
+     "t": "2022Q1",
+     "v": 22.36
+    },
+    {
+     "t": "2022Q2",
+     "v": 20.97
+    },
+    {
+     "t": "2022Q3",
+     "v": 20.77
+    },
+    {
+     "t": "2022Q4",
+     "v": 19.63
+    },
+    {
+     "t": "2023Q1",
+     "v": 18.37
+    },
+    {
+     "t": "2023Q2",
+     "v": 19.92
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 14.91,
+     "negativas_m": 0.361
+    },
+    {
+     "anio": 2020,
+     "pct": 16.9,
+     "negativas_m": 0.584
+    },
+    {
+     "anio": 2021,
+     "pct": 21.01,
+     "negativas_m": 0.747
+    },
+    {
+     "anio": 2022,
+     "pct": 20.2,
+     "negativas_m": 0.729
+    },
+    {
+     "anio": 2023,
+     "pct": 19.35,
+     "negativas_m": 0.322
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AFA4GGFWOVNZIV4AEWNZCTHHUTDQ-1595435011131",
+     "estrellas": 1,
+     "votos": 39,
+     "titulo": "Poor quality.",
+     "texto": "Box arrived opened, product wasn’t sealed and half full, looks used. Not as described on the site. Very unhappy!"
+    },
+    {
+     "clave": "AEPBESEEDE7SKP3SE6VQCPEEERXA-1610165981570",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "Cheap",
+     "texto": "The file and case both were incredibly thin and cheap. Intended to use as a stocking suffer but I couldn't bring myself to actually gift it because the quality was just so bad. I returned this item."
+    },
+    {
+     "clave": "AFZMBFF4C55VJQY3X5NPKBVYA32A-1584058909219",
+     "estrellas": 2,
+     "votos": 7,
+     "titulo": "Pump is poorly designed and order came broken and leaking",
+     "texto": "One of the six I ordered came broken and was leaking. All the pump gets stuck on lock (somehow slides to pick position) and gets stuck when pressed down. The pressure is sometimes too much and the foam shoots further then you expect."
+    }
+   ]
+  },
+  {
+   "id": "Patio_Lawn_and_Garden",
+   "nombre": "Patio y jardín",
+   "pct_neg": 21.22,
+   "margen": 0.57,
+   "volumen_m": 11.26,
+   "negativas_m": 2.389,
+   "cambio_pp": 6.66,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 10.4,
+    "Se rompe / mala calidad": 24.8,
+    "Talla o medidas": 8.9,
+    "No es lo que se anunciaba": 2.6,
+    "Envío, empaque o piezas faltantes": 10.8,
+    "Batería o carga": 3.1,
+    "Devolución o atención": 16.3,
+    "Precio / no vale lo que cuesta": 8.1,
+    "Olor, sabor o reacción": 3.9
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "pressure washer",
+    "plants arrived",
+    "plant arrived",
+    "water plants",
+    "hot tub",
+    "did not kill"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 17.01
+    },
+    {
+     "t": "2019Q2",
+     "v": 17.49
+    },
+    {
+     "t": "2019Q3",
+     "v": 16.74
+    },
+    {
+     "t": "2019Q4",
+     "v": 16.23
+    },
+    {
+     "t": "2020Q1",
+     "v": 15.78
+    },
+    {
+     "t": "2020Q2",
+     "v": 18.52
+    },
+    {
+     "t": "2020Q3",
+     "v": 21.55
+    },
+    {
+     "t": "2020Q4",
+     "v": 20.1
+    },
+    {
+     "t": "2021Q1",
+     "v": 19.31
+    },
+    {
+     "t": "2021Q2",
+     "v": 19.92
+    },
+    {
+     "t": "2021Q3",
+     "v": 22.36
+    },
+    {
+     "t": "2021Q4",
+     "v": 23.2
+    },
+    {
+     "t": "2022Q1",
+     "v": 23.15
+    },
+    {
+     "t": "2022Q2",
+     "v": 24.34
+    },
+    {
+     "t": "2022Q3",
+     "v": 25.56
+    },
+    {
+     "t": "2022Q4",
+     "v": 22.55
+    },
+    {
+     "t": "2023Q1",
+     "v": 18.23
+    },
+    {
+     "t": "2023Q2",
+     "v": 24.48
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 16.73,
+     "negativas_m": 0.312
+    },
+    {
+     "anio": 2020,
+     "pct": 19.88,
+     "negativas_m": 0.493
+    },
+    {
+     "anio": 2021,
+     "pct": 21.68,
+     "negativas_m": 0.651
+    },
+    {
+     "anio": 2022,
+     "pct": 23.77,
+     "negativas_m": 0.688
+    },
+    {
+     "anio": 2023,
+     "pct": 24.1,
+     "negativas_m": 0.244
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AEQVTQUOCQBRCHHABC6DSWIXVCEA-1641340839026",
+     "estrellas": 2,
+     "votos": 33,
+     "titulo": "Overpriced and flimsy",
+     "texto": "These pots seem like they'll work okay, for a season or two, but they're so thin and flimsy. The drain holes require the bottom dishes to be removed, or the dish plugs the drain holes. For $20, I expected much higher quality."
+    },
+    {
+     "clave": "AFYDU7DFBQGDHVLGG6FZGZMIJXEQ-1655240204275",
+     "estrellas": 1,
+     "votos": 10,
+     "titulo": "CHEAPLY MADE!!!",
+     "texto": "They are so thin you can easily bend them. Came with no stick/rod, so not sure how they expect you to use them. Very cheaply made. Very disappointing as this was to be a Father’s Day gift."
+    },
+    {
+     "clave": "AHNGJN3TLBTB6YC7TMHPXWYUVUXA-1612570492665",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "bad quality",
+     "texto": "My first batch, some came scratched and one breaking from the tip. I gave it another shot and asked for exchange and this second batch came just as badly scratched up as the first. Save ur money, these are bad quality not like the picture. It's a waste of time to have to be going out of my way to return this to the post office."
+    }
+   ]
+  },
+  {
+   "id": "Cell_Phones_and_Accessories",
+   "nombre": "Celulares y accesorios",
+   "pct_neg": 20.26,
+   "margen": 0.56,
+   "volumen_m": 11.71,
+   "negativas_m": 2.372,
+   "cambio_pp": 5.36,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 10.2,
+    "Se rompe / mala calidad": 27.4,
+    "Talla o medidas": 14.1,
+    "No es lo que se anunciaba": 2.0,
+    "Envío, empaque o piezas faltantes": 5.8,
+    "Batería o carga": 16.5,
+    "Devolución o atención": 13.1,
+    "Precio / no vale lo que cuesta": 7.2,
+    "Olor, sabor o reacción": 2.3
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "screen protector",
+    "dropped phone",
+    "protect phone",
+    "finger print",
+    "fingerprint reader",
+    "fit phone"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 19.92
+    },
+    {
+     "t": "2019Q2",
+     "v": 18.26
+    },
+    {
+     "t": "2019Q3",
+     "v": 16.75
+    },
+    {
+     "t": "2019Q4",
+     "v": 16.42
+    },
+    {
+     "t": "2020Q1",
+     "v": 15.91
+    },
+    {
+     "t": "2020Q2",
+     "v": 17.99
+    },
+    {
+     "t": "2020Q3",
+     "v": 19.71
+    },
+    {
+     "t": "2020Q4",
+     "v": 17.77
+    },
+    {
+     "t": "2021Q1",
+     "v": 17.43
+    },
+    {
+     "t": "2021Q2",
+     "v": 19.82
+    },
+    {
+     "t": "2021Q3",
+     "v": 23.28
+    },
+    {
+     "t": "2021Q4",
+     "v": 25.88
+    },
+    {
+     "t": "2022Q1",
+     "v": 26.47
+    },
+    {
+     "t": "2022Q2",
+     "v": 25.32
+    },
+    {
+     "t": "2022Q3",
+     "v": 24.28
+    },
+    {
+     "t": "2022Q4",
+     "v": 22.37
+    },
+    {
+     "t": "2023Q1",
+     "v": 20.41
+    },
+    {
+     "t": "2023Q2",
+     "v": 23.02
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 17.21,
+     "negativas_m": 0.492
+    },
+    {
+     "anio": 2020,
+     "pct": 17.64,
+     "negativas_m": 0.488
+    },
+    {
+     "anio": 2021,
+     "pct": 22.24,
+     "negativas_m": 0.615
+    },
+    {
+     "anio": 2022,
+     "pct": 23.78,
+     "negativas_m": 0.569
+    },
+    {
+     "anio": 2023,
+     "pct": 22.49,
+     "negativas_m": 0.208
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AG25CEJXHSUOFST6NTVUA7P2N2EQ-1559091462611",
+     "estrellas": 1,
+     "votos": 12,
+     "titulo": "Case broke almost immediately",
+     "texto": "Have no idea if this really works or not. I plugged it into the wall and removed it a while later. The glue sealing the face plate to the body was not sufficient and the circuit board is falling out now."
+    },
+    {
+     "clave": "AHJBUHJCWBW2CZGPVEANV7RP35ZQ-1634255422102",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "Two cracked within two weeks.",
+     "texto": "This product was a waste of money. Used for less than two weeks and two lens protectors cracked. I keep my phone covered and protected at all times. I would not waste money purchasing this product."
+    },
+    {
+     "clave": "AEWGHYADBASZ25RW6XGBQ4GYKN2A-1611506618777",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "Cheap",
+     "texto": "Sadly today is the first day i took it out of the package, went to use it for first time and tge bottons do not work, the light keeps blinking . I got it a while ago but just opened the pack today now to late to return and the light does not work"
+    }
+   ]
+  },
+  {
+   "id": "Automotive",
+   "nombre": "Automotriz",
+   "pct_neg": 17.84,
+   "margen": 0.54,
+   "volumen_m": 11.94,
+   "negativas_m": 2.13,
+   "cambio_pp": 7.35,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 8.7,
+    "Se rompe / mala calidad": 20.6,
+    "Talla o medidas": 22.6,
+    "No es lo que se anunciaba": 2.6,
+    "Envío, empaque o piezas faltantes": 7.5,
+    "Batería o carga": 3.5,
+    "Devolución o atención": 16.7,
+    "Precio / no vale lo que cuesta": 6.0,
+    "Olor, sabor o reacción": 4.3
+   },
+   "causa": "Talla o medidas",
+   "frases": [
+    "fit vehicle",
+    "seat covers",
+    "fit jeep",
+    "fit car",
+    "parts store",
+    "tail light"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 14.89
+    },
+    {
+     "t": "2019Q2",
+     "v": 14.0
+    },
+    {
+     "t": "2019Q3",
+     "v": 14.34
+    },
+    {
+     "t": "2019Q4",
+     "v": 14.83
+    },
+    {
+     "t": "2020Q1",
+     "v": 13.17
+    },
+    {
+     "t": "2020Q2",
+     "v": 15.02
+    },
+    {
+     "t": "2020Q3",
+     "v": 17.83
+    },
+    {
+     "t": "2020Q4",
+     "v": 17.78
+    },
+    {
+     "t": "2021Q1",
+     "v": 17.66
+    },
+    {
+     "t": "2021Q2",
+     "v": 18.27
+    },
+    {
+     "t": "2021Q3",
+     "v": 19.62
+    },
+    {
+     "t": "2021Q4",
+     "v": 20.39
+    },
+    {
+     "t": "2022Q1",
+     "v": 20.14
+    },
+    {
+     "t": "2022Q2",
+     "v": 19.58
+    },
+    {
+     "t": "2022Q3",
+     "v": 20.88
+    },
+    {
+     "t": "2022Q4",
+     "v": 20.29
+    },
+    {
+     "t": "2023Q1",
+     "v": 18.91
+    },
+    {
+     "t": "2023Q2",
+     "v": 23.25
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 14.42,
+     "negativas_m": 0.404
+    },
+    {
+     "anio": 2020,
+     "pct": 16.11,
+     "negativas_m": 0.417
+    },
+    {
+     "anio": 2021,
+     "pct": 19.28,
+     "negativas_m": 0.556
+    },
+    {
+     "anio": 2022,
+     "pct": 20.01,
+     "negativas_m": 0.537
+    },
+    {
+     "anio": 2023,
+     "pct": 21.99,
+     "negativas_m": 0.217
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AFIBSLTZAWAH2K7VM7JWTU7UKPMA-1552959822330",
+     "estrellas": 1,
+     "votos": 15,
+     "titulo": "Too narrow, won’t fit around the seat belt strap",
+     "texto": "These seat belt covers are tiny; they might fit luggage straps, but not vehicle seat belts. What’s weird is there is plenty of fabric in the covers that was folded an stitched underneath. It’s as though the sweatshop workers didn’t know the width of of an average seatbelt. The seller does not allow returns. Don’t buy these for use in your vehicle, these covers won’t fit around the width to the seat belt strap."
+    },
+    {
+     "clave": "AEKYVHOGJUORYN3P7XSHNNLA56TQ-1555029604564",
+     "estrellas": 2,
+     "votos": 5,
+     "titulo": "It DONT FIT 2019 MAZDAS CX- 5 GRAND T",
+     "texto": "Waste of money if u hav a new 2019 mazda it dont work even tho they say it WILL FIT, IT DONT.  DISAPPOINTED :("
+    },
+    {
+     "clave": "AERG3AGSSZV53XTDFU4EM3CLJHSQ-1551040078389",
+     "estrellas": 1,
+     "votos": 5,
+     "titulo": "Don't buy for Promaster Cargo Van! Won't fit!",
+     "texto": "Big mistake! Does NOT fit Ram Promaster van! Unfortunately I missed my window to return. 80 dollars thrown away."
+    }
+   ]
+  },
+  {
+   "id": "Pet_Supplies",
+   "nombre": "Mascotas",
+   "pct_neg": 19.38,
+   "margen": 0.55,
+   "volumen_m": 10.59,
+   "negativas_m": 2.052,
+   "cambio_pp": 4.64,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 9.4,
+    "Se rompe / mala calidad": 20.8,
+    "Talla o medidas": 12.0,
+    "No es lo que se anunciaba": 2.8,
+    "Envío, empaque o piezas faltantes": 8.3,
+    "Batería o carga": 1.9,
+    "Devolución o atención": 12.5,
+    "Precio / no vale lo que cuesta": 8.8,
+    "Olor, sabor o reacción": 8.6
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "cat food",
+    "aggressive chewers",
+    "litter box",
+    "dog food",
+    "dog loves",
+    "dog destroyed"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 16.6
+    },
+    {
+     "t": "2019Q2",
+     "v": 15.79
+    },
+    {
+     "t": "2019Q3",
+     "v": 15.8
+    },
+    {
+     "t": "2019Q4",
+     "v": 16.42
+    },
+    {
+     "t": "2020Q1",
+     "v": 15.6
+    },
+    {
+     "t": "2020Q2",
+     "v": 17.28
+    },
+    {
+     "t": "2020Q3",
+     "v": 19.15
+    },
+    {
+     "t": "2020Q4",
+     "v": 18.45
+    },
+    {
+     "t": "2021Q1",
+     "v": 19.45
+    },
+    {
+     "t": "2021Q2",
+     "v": 21.5
+    },
+    {
+     "t": "2021Q3",
+     "v": 21.84
+    },
+    {
+     "t": "2021Q4",
+     "v": 22.12
+    },
+    {
+     "t": "2022Q1",
+     "v": 22.66
+    },
+    {
+     "t": "2022Q2",
+     "v": 21.57
+    },
+    {
+     "t": "2022Q3",
+     "v": 20.57
+    },
+    {
+     "t": "2022Q4",
+     "v": 19.93
+    },
+    {
+     "t": "2023Q1",
+     "v": 19.39
+    },
+    {
+     "t": "2023Q2",
+     "v": 21.56
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 16.13,
+     "negativas_m": 0.32
+    },
+    {
+     "anio": 2020,
+     "pct": 17.75,
+     "negativas_m": 0.448
+    },
+    {
+     "anio": 2021,
+     "pct": 21.76,
+     "negativas_m": 0.587
+    },
+    {
+     "anio": 2022,
+     "pct": 20.73,
+     "negativas_m": 0.496
+    },
+    {
+     "anio": 2023,
+     "pct": 20.3,
+     "negativas_m": 0.201
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AFZLNDS43AJYQOTPSGPHMX36THBA-1578697931791",
+     "estrellas": 1,
+     "votos": 20,
+     "titulo": "These are not what they are cracked up to be.",
+     "texto": "Terribly disappointed. Received these last night. I usually buy All Absorbent Training Pads and they are way more absorbent, thicker and bigger. Very disappointed in the quality of these pads. I have two chihuahua's and they did not make it through the night. They are thin, very thin, like tissue. Now I am stuck with a whole box of useless pads. Will go back to ordering the All Absorbent Training Pads."
+    },
+    {
+     "clave": "AF2DHBYL4ANQUT2IG5QODAXLT2MQ-1625167931362",
+     "estrellas": 1,
+     "votos": 13,
+     "titulo": "Very cheaply manufactured!",
+     "texto": "This item is a piece of junk. It’s  very good looking but extremely cheap. The top carrier the frame does not hold it correctly and it semi collapses. the bottom carrier whiz is the largest the frame is way too big for the carrier itself so it does not lock in place.  the wheels do not rotate very well. Is very cheaply manufactured!!!!!"
+    },
+    {
+     "clave": "AGK4P7EA4NHCGMOM7YLJ7OBNIS6Q-1614030849066",
+     "estrellas": 1,
+     "votos": 4,
+     "titulo": "Broke within 2 months of use.",
+     "texto": "The return window has closed so I can't return, of course and now it breaks. There is a metal rod coming out of the carrier and poked through the netting/webbing out the end. The metal rod appears to be there for structure but broke through. We used this for car transport and to safely set outside for fresh air, nothing crazy to make it break so quickly. Super disappointed."
+    }
+   ]
+  },
+  {
+   "id": "Sports_and_Outdoors",
+   "nombre": "Deportes y aire libre",
+   "pct_neg": 15.88,
+   "margen": 0.51,
+   "volumen_m": 10.33,
+   "negativas_m": 1.64,
+   "cambio_pp": 5.97,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 6.5,
+    "Se rompe / mala calidad": 30.5,
+    "Talla o medidas": 14.6,
+    "No es lo que se anunciaba": 2.9,
+    "Envío, empaque o piezas faltantes": 9.4,
+    "Batería o carga": 4.9,
+    "Devolución o atención": 17.5,
+    "Precio / no vale lo que cuesta": 7.5,
+    "Olor, sabor o reacción": 3.6
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "heart rate",
+    "yoga mat",
+    "hula hoop",
+    "bike shop",
+    "goes flat",
+    "fit bike"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 11.3
+    },
+    {
+     "t": "2019Q2",
+     "v": 11.53
+    },
+    {
+     "t": "2019Q3",
+     "v": 11.99
+    },
+    {
+     "t": "2019Q4",
+     "v": 12.8
+    },
+    {
+     "t": "2020Q1",
+     "v": 13.64
+    },
+    {
+     "t": "2020Q2",
+     "v": 14.92
+    },
+    {
+     "t": "2020Q3",
+     "v": 15.63
+    },
+    {
+     "t": "2020Q4",
+     "v": 14.45
+    },
+    {
+     "t": "2021Q1",
+     "v": 13.19
+    },
+    {
+     "t": "2021Q2",
+     "v": 15.94
+    },
+    {
+     "t": "2021Q3",
+     "v": 19.21
+    },
+    {
+     "t": "2021Q4",
+     "v": 18.29
+    },
+    {
+     "t": "2022Q1",
+     "v": 18.52
+    },
+    {
+     "t": "2022Q2",
+     "v": 19.95
+    },
+    {
+     "t": "2022Q3",
+     "v": 20.11
+    },
+    {
+     "t": "2022Q4",
+     "v": 17.62
+    },
+    {
+     "t": "2023Q1",
+     "v": 16.44
+    },
+    {
+     "t": "2023Q2",
+     "v": 18.64
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 12.24,
+     "negativas_m": 0.292
+    },
+    {
+     "anio": 2020,
+     "pct": 14.67,
+     "negativas_m": 0.376
+    },
+    {
+     "anio": 2021,
+     "pct": 17.19,
+     "negativas_m": 0.423
+    },
+    {
+     "anio": 2022,
+     "pct": 18.82,
+     "negativas_m": 0.391
+    },
+    {
+     "anio": 2023,
+     "pct": 18.77,
+     "negativas_m": 0.158
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AHLAWPDIKGO27UXAYLVA4SP2CP7A-1645592244103",
+     "estrellas": 1,
+     "votos": 29,
+     "titulo": "Item broke in a day and need to pay shipping",
+     "texto": "I really wanted to have a walking desk but this product broke just in a day. It was making some noise on the first day and then just broke entirely. Seller doesn’t cover return shipping even though the product is defective."
+    },
+    {
+     "clave": "AFKTRHWZIBQSTNGJD7BT26O6MDXA-1554407971209",
+     "estrellas": 1,
+     "votos": 26,
+     "titulo": "Cheaply made, it was defective before even I used it",
+     "texto": "Cheap quality. I didn’t even wear it once then look at the picture. It doesn’t worth 21$ also it smells chemicals"
+    },
+    {
+     "clave": "AHEGO3EQ32RRGAIRTO3Y6XAWMWNQ-1604163483972",
+     "estrellas": 1,
+     "votos": 15,
+     "titulo": "Poor quality - No stability and gauges don’t work/are inaccurate.",
+     "texto": "The bike has little stability. I’m 200 lb and the seat support bounces and sways as I pedal. I’m halfway expecting the bar to snap off at some point.  The bike also doesn’t support my height. I’m 5 11” and am unable to extend my legs appropriately.  Further, the heart beat sensor doesn’t work. The speedometer and and calorie burn gauges are very inaccurate. Expect to depend completely on a Fitbit or equivalent.  Assembly was easy."
+    }
+   ]
+  },
+  {
+   "id": "Toys_and_Games",
+   "nombre": "Juguetes y juegos",
+   "pct_neg": 17.21,
+   "margen": 0.53,
+   "volumen_m": 9.51,
+   "negativas_m": 1.637,
+   "cambio_pp": 5.34,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 7.2,
+    "Se rompe / mala calidad": 30.4,
+    "Talla o medidas": 8.1,
+    "No es lo que se anunciaba": 3.7,
+    "Envío, empaque o piezas faltantes": 15.8,
+    "Batería o carga": 6.1,
+    "Devolución o atención": 14.5,
+    "Precio / no vale lo que cuesta": 10.2,
+    "Olor, sabor o reacción": 2.8
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "puzzle missing",
+    "did not float",
+    "pok mon",
+    "older kids",
+    "blow bubbles",
+    "kids disappointed"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 11.73
+    },
+    {
+     "t": "2019Q2",
+     "v": 12.98
+    },
+    {
+     "t": "2019Q3",
+     "v": 13.04
+    },
+    {
+     "t": "2019Q4",
+     "v": 13.48
+    },
+    {
+     "t": "2020Q1",
+     "v": 13.41
+    },
+    {
+     "t": "2020Q2",
+     "v": 15.63
+    },
+    {
+     "t": "2020Q3",
+     "v": 18.49
+    },
+    {
+     "t": "2020Q4",
+     "v": 17.48
+    },
+    {
+     "t": "2021Q1",
+     "v": 17.23
+    },
+    {
+     "t": "2021Q2",
+     "v": 16.77
+    },
+    {
+     "t": "2021Q3",
+     "v": 18.39
+    },
+    {
+     "t": "2021Q4",
+     "v": 22.02
+    },
+    {
+     "t": "2022Q1",
+     "v": 22.97
+    },
+    {
+     "t": "2022Q2",
+     "v": 20.98
+    },
+    {
+     "t": "2022Q3",
+     "v": 19.84
+    },
+    {
+     "t": "2022Q4",
+     "v": 20.07
+    },
+    {
+     "t": "2023Q1",
+     "v": 19.04
+    },
+    {
+     "t": "2023Q2",
+     "v": 17.07
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 13.35,
+     "negativas_m": 0.265
+    },
+    {
+     "anio": 2020,
+     "pct": 15.91,
+     "negativas_m": 0.388
+    },
+    {
+     "anio": 2021,
+     "pct": 19.1,
+     "negativas_m": 0.409
+    },
+    {
+     "anio": 2022,
+     "pct": 20.51,
+     "negativas_m": 0.417
+    },
+    {
+     "anio": 2023,
+     "pct": 17.28,
+     "negativas_m": 0.158
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AGS66JUTDODWTZUQI6E4TQJIA3OA-1609195420254",
+     "estrellas": 1,
+     "votos": 11,
+     "titulo": "Absolutely disappointed! Missing everything and broken",
+     "texto": "Absolutely disappointed!! Mine arrived without the box, instructions, sand, stickers and basically EVERYTHING that is supposed to be included. On top of that, since there was zero padding whatsoever, its broken. Supposed to be a Christmas gift and now will be a return. The description is NOT at all what I received."
+    },
+    {
+     "clave": "AGGJL3WANH5D3RXXWCRU4RZMFD2Q-1555727202294",
+     "estrellas": 1,
+     "votos": 8,
+     "titulo": "After replacing broken frame an esc error pops up telling me a motor is bad and can’t fly.",
+     "texto": "After the body swap it pulls up an esc error code and won’t run the motors. Everything I have looked up says is a prop motor and this thing came with all new prop motors. Very disappointed."
+    },
+    {
+     "clave": "AEMSDCVQDKPFXBZNU44BLBMDOWOQ-1649120704704",
+     "estrellas": 1,
+     "votos": 7,
+     "titulo": "Very cheap. Not 3d",
+     "texto": "Gems are not fully 3d. They are flat on one side and on the flat part it's just white. Would be fine to glue onto something but not good for digging up in a sandbox."
+    }
+   ]
+  },
+  {
+   "id": "Office_Products",
+   "nombre": "Oficina",
+   "pct_neg": 15.47,
+   "margen": 0.5,
+   "volumen_m": 7.55,
+   "negativas_m": 1.168,
+   "cambio_pp": 4.88,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 9.1,
+    "Se rompe / mala calidad": 22.2,
+    "Talla o medidas": 8.4,
+    "No es lo que se anunciaba": 2.8,
+    "Envío, empaque o piezas faltantes": 11.8,
+    "Batería o carga": 1.5,
+    "Devolución o atención": 16.6,
+    "Precio / no vale lo que cuesta": 8.4,
+    "Olor, sabor o reacción": 2.8
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "hp printer",
+    "black cartridge",
+    "black ink",
+    "work hp",
+    "does not write",
+    "print quality"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 12.99
+    },
+    {
+     "t": "2019Q2",
+     "v": 12.64
+    },
+    {
+     "t": "2019Q3",
+     "v": 11.6
+    },
+    {
+     "t": "2019Q4",
+     "v": 12.47
+    },
+    {
+     "t": "2020Q1",
+     "v": 13.24
+    },
+    {
+     "t": "2020Q2",
+     "v": 13.89
+    },
+    {
+     "t": "2020Q3",
+     "v": 14.3
+    },
+    {
+     "t": "2020Q4",
+     "v": 13.8
+    },
+    {
+     "t": "2021Q1",
+     "v": 14.5
+    },
+    {
+     "t": "2021Q2",
+     "v": 15.46
+    },
+    {
+     "t": "2021Q3",
+     "v": 16.16
+    },
+    {
+     "t": "2021Q4",
+     "v": 18.26
+    },
+    {
+     "t": "2022Q1",
+     "v": 19.48
+    },
+    {
+     "t": "2022Q2",
+     "v": 20.15
+    },
+    {
+     "t": "2022Q3",
+     "v": 21.52
+    },
+    {
+     "t": "2022Q4",
+     "v": 18.2
+    },
+    {
+     "t": "2023Q1",
+     "v": 15.3
+    },
+    {
+     "t": "2023Q2",
+     "v": 16.66
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 12.59,
+     "negativas_m": 0.201
+    },
+    {
+     "anio": 2020,
+     "pct": 13.73,
+     "negativas_m": 0.26
+    },
+    {
+     "anio": 2021,
+     "pct": 16.53,
+     "negativas_m": 0.31
+    },
+    {
+     "anio": 2022,
+     "pct": 18.94,
+     "negativas_m": 0.288
+    },
+    {
+     "anio": 2023,
+     "pct": 16.43,
+     "negativas_m": 0.108
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AGCHRPXG3EEU54FN5DGJD4A3RK4Q-1581807455278",
+     "estrellas": 1,
+     "votos": 50,
+     "titulo": "Ripped after a day",
+     "texto": "Wanted to love it. I use a pretty big wallet so I wanted to downsize. However, I'm disappointed with the quality. After a day of use, the fabric around the rivets by the part that folds over ripped. Now it looks weird whenever I open it. I'm glad I can still return it, I guess I will look for a different brand to buy."
+    },
+    {
+     "clave": "AFY6T3X45UKT3Q35P4U3MGQVFQVQ-1578263014506",
+     "estrellas": 1,
+     "votos": 19,
+     "titulo": "Very poor quality",
+     "texto": "After only a couple of weeks of occasional use , the white seat leatherette turned gray, and armrests skin cracked. The metal piece from gold turned silver and is now silver. Very disappointed in the quality and look. Will never purchase from this seller/brand in the future, don't waste your money here. Quality is for DISPLAY ONLY not use."
+    },
+    {
+     "clave": "AEOKW5Q4R2OOWUKBTKCS4YVQU3UQ-1552400296119",
+     "estrellas": 2,
+     "votos": 18,
+     "titulo": "Low quality book with high quality content.",
+     "texto": "Content is very good and helpful.  The second time I opened it the spine broke away from the cover.  Not very good quality for something costing nearly $50.  Unfortunately, since I waited a bit to open it, I am outside the window to return it."
+    }
+   ]
+  },
+  {
+   "id": "Baby_Products",
+   "nombre": "Bebés",
+   "pct_neg": 16.12,
+   "margen": 0.51,
+   "volumen_m": 3.04,
+   "negativas_m": 0.49,
+   "cambio_pp": 7.15,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 7.6,
+    "Se rompe / mala calidad": 22.5,
+    "Talla o medidas": 10.8,
+    "No es lo que se anunciaba": 2.9,
+    "Envío, empaque o piezas faltantes": 8.0,
+    "Batería o carga": 4.2,
+    "Devolución o atención": 14.3,
+    "Precio / no vale lo que cuesta": 8.3,
+    "Olor, sabor o reacción": 7.4
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "car seat",
+    "diaper bag",
+    "diaper rash",
+    "car seats",
+    "high chair",
+    "sound machine"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 13.27
+    },
+    {
+     "t": "2019Q2",
+     "v": 12.61
+    },
+    {
+     "t": "2019Q3",
+     "v": 10.71
+    },
+    {
+     "t": "2019Q4",
+     "v": 10.36
+    },
+    {
+     "t": "2020Q1",
+     "v": 12.58
+    },
+    {
+     "t": "2020Q2",
+     "v": 15.34
+    },
+    {
+     "t": "2020Q3",
+     "v": 17.83
+    },
+    {
+     "t": "2020Q4",
+     "v": 18.69
+    },
+    {
+     "t": "2021Q1",
+     "v": 17.58
+    },
+    {
+     "t": "2021Q2",
+     "v": 16.43
+    },
+    {
+     "t": "2021Q3",
+     "v": 18.07
+    },
+    {
+     "t": "2021Q4",
+     "v": 21.35
+    },
+    {
+     "t": "2022Q1",
+     "v": 20.21
+    },
+    {
+     "t": "2022Q2",
+     "v": 16.93
+    },
+    {
+     "t": "2022Q3",
+     "v": 18.79
+    },
+    {
+     "t": "2022Q4",
+     "v": 18.38
+    },
+    {
+     "t": "2023Q1",
+     "v": 16.41
+    },
+    {
+     "t": "2023Q2",
+     "v": 18.88
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 11.38,
+     "negativas_m": 0.086
+    },
+    {
+     "anio": 2020,
+     "pct": 16.72,
+     "negativas_m": 0.13
+    },
+    {
+     "anio": 2021,
+     "pct": 18.5,
+     "negativas_m": 0.128
+    },
+    {
+     "anio": 2022,
+     "pct": 17.75,
+     "negativas_m": 0.099
+    },
+    {
+     "anio": 2023,
+     "pct": 18.26,
+     "negativas_m": 0.047
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AEKKB2QI2V65KMJR62ZEBO7GO3IQ-1597728445327",
+     "estrellas": 1,
+     "votos": 19,
+     "titulo": "Takes too long to arrive poor quality",
+     "texto": "My kids asked Me to to buy this. It took a few weeks to arrive and it had a crack in it. The beverage leaked. . Sad 😞. The new one we exchanged broke as well.  Poorly made. Poor quality."
+    },
+    {
+     "clave": "AETCNX6DRLAZ7PMWHD6ROK6ZFFKQ-1593867830826",
+     "estrellas": 1,
+     "votos": 10,
+     "titulo": "Poor quality",
+     "texto": "Did not come as described with batteries. With two new batteries the thermometer did not work accurately. After not even a days use of collecting temps the device failed to even turn on. Cheap, is exactly what this is. If you need a reliable product for collecting patients temperature, this device is a waste of time."
+    },
+    {
+     "clave": "AHZS67IAUPPPP7DS6JLRZQB5Y34A-1623370149368",
+     "estrellas": 1,
+     "votos": 10,
+     "titulo": "Styrofoam cracked in headrest",
+     "texto": "My daughters car seat needed to be washed so as I’m taking apart I notice 2 identical cracks on both sides of the styrofoam headrest. I’m not even sure if it’s safe for her at this point. It’s not even 2 years old never been in an accident. This is my first time taking it apart. Very disappointing GRACO."
+    }
+   ]
+  },
+  {
+   "id": "Video_Games",
+   "nombre": "Videojuegos",
+   "pct_neg": 20.39,
+   "margen": 0.56,
+   "volumen_m": 1.9,
+   "negativas_m": 0.387,
+   "cambio_pp": 6.97,
+   "temas": {
+    "Dejó de funcionar / defectuoso": 19.2,
+    "Se rompe / mala calidad": 21.6,
+    "Talla o medidas": 7.4,
+    "No es lo que se anunciaba": 2.2,
+    "Envío, empaque o piezas faltantes": 6.9,
+    "Batería o carga": 11.3,
+    "Devolución o atención": 18.0,
+    "Precio / no vale lo que cuesta": 7.6,
+    "Olor, sabor o reacción": 3.9
+   },
+   "causa": "Se rompe / mala calidad",
+   "frases": [
+    "nintendo switch",
+    "xbox controller",
+    "scroll wheel",
+    "mouse button",
+    "game play",
+    "double click"
+   ],
+   "tendencia": [
+    {
+     "t": "2019Q1",
+     "v": 14.11
+    },
+    {
+     "t": "2019Q2",
+     "v": 15.79
+    },
+    {
+     "t": "2019Q3",
+     "v": 17.13
+    },
+    {
+     "t": "2019Q4",
+     "v": 16.44
+    },
+    {
+     "t": "2020Q1",
+     "v": 15.9
+    },
+    {
+     "t": "2020Q2",
+     "v": 19.21
+    },
+    {
+     "t": "2020Q3",
+     "v": 21.59
+    },
+    {
+     "t": "2020Q4",
+     "v": 20.45
+    },
+    {
+     "t": "2021Q1",
+     "v": 20.54
+    },
+    {
+     "t": "2021Q2",
+     "v": 21.16
+    },
+    {
+     "t": "2021Q3",
+     "v": 23.52
+    },
+    {
+     "t": "2021Q4",
+     "v": 25.48
+    },
+    {
+     "t": "2022Q1",
+     "v": 24.19
+    },
+    {
+     "t": "2022Q2",
+     "v": 23.02
+    },
+    {
+     "t": "2022Q3",
+     "v": 24.62
+    },
+    {
+     "t": "2022Q4",
+     "v": 24.26
+    },
+    {
+     "t": "2023Q1",
+     "v": 21.27
+    },
+    {
+     "t": "2023Q2",
+     "v": 21.91
+    }
+   ],
+   "anios": [
+    {
+     "anio": 2019,
+     "pct": 15.94,
+     "negativas_m": 0.068
+    },
+    {
+     "anio": 2020,
+     "pct": 19.49,
+     "negativas_m": 0.099
+    },
+    {
+     "anio": 2021,
+     "pct": 22.86,
+     "negativas_m": 0.102
+    },
+    {
+     "anio": 2022,
+     "pct": 23.6,
+     "negativas_m": 0.086
+    },
+    {
+     "anio": 2023,
+     "pct": 20.99,
+     "negativas_m": 0.032
+    }
+   ],
+   "ejemplos": [
+    {
+     "clave": "AEUNKLMH4KTXGHIFA5R6MRYNUQFA-1569124729796",
+     "estrellas": 1,
+     "votos": 25,
+     "titulo": "DO NOT BUY ......THESE WILL BREAK",
+     "texto": "DO NOT BUY!  I am currently on my second set of these headphones.  The first set the plastic part holding the earphones on broke and the ear piece spun around and around.  I exchanged them for another pair and the new ones again broke.  The company will not respond to my attempts to contact them regarding these headphone. They are way to expensive to break this easily."
+    },
+    {
+     "clave": "AHWCM7LY6PHUQAQZWDHI67ZNXDWA-1592600137395",
+     "estrellas": 1,
+     "votos": 20,
+     "titulo": "Broken",
+     "texto": "The wifi on it keeps cutting off after about an hour of use I already contacted my internet provider and it not on their end so I think it was shipped to me broken"
+    },
+    {
+     "clave": "AGATXCBL2WWYPZSI225LWIUWAMYQ-1587412641006",
+     "estrellas": 1,
+     "votos": 8,
+     "titulo": "DO NOT BUY. This will break ur controllers",
+     "texto": "Do not buy!!!!!!! I purchased this thinking this would be an excellent accessory. But this ended up breaking my both controllers. I plugged it in gently to charge and they both never came back to life again. I tried calling customer service but no one will ever answer u. So upsetting. Don’t let the reviews and the price fool you. Do not buy this junk. It doesn’t even keep my ps4 cool."
+    }
+   ]
+  }
+ ],
+ "anios": [
+  2019,
+  2020,
+  2021,
+  2022,
+  2023
+ ],
+ "experimentos": {
+  "comparacion": [
+   {
+    "método": "Regla de sentido común",
+    "accuracy": 0.625,
+    "F1 macro": 0.503,
+    "F1 negativa": 0.632
+   },
+   {
+    "método": "Regresión Logística",
+    "accuracy": 0.85,
+    "F1 macro": 0.691,
+    "F1 negativa": 0.776
+   }
+  ],
+  "curva": [
+   {
+    "reseñas de entrenamiento": 10340,
+    "F1 macro": 0.66
+   },
+   {
+    "reseñas de entrenamiento": 20680,
+    "F1 macro": 0.67
+   },
+   {
+    "reseñas de entrenamiento": 51701,
+    "F1 macro": 0.68
+   },
+   {
+    "reseñas de entrenamiento": 103403,
+    "F1 macro": 0.686
+   },
+   {
+    "reseñas de entrenamiento": 206807,
+    "F1 macro": 0.691
+   }
+  ],
+  "sin_estrellas": {
+   "real (estrellas)": {
+    "top3": [
+     "Home_and_Kitchen",
+     "Clothing_Shoes_and_Jewelry",
+     "Electronics"
+    ],
+    "total_m": 41.69
+   },
+   "modelo (solo texto)": {
+    "top3": [
+     "Home_and_Kitchen",
+     "Clothing_Shoes_and_Jewelry",
+     "Electronics"
+    ],
+    "total_m": 42.12
+   },
+   "regla (solo texto)": {
+    "top3": [
+     "Home_and_Kitchen",
+     "Clothing_Shoes_and_Jewelry",
+     "Electronics"
+    ],
+    "total_m": 59.71
+   }
+  }
+ }
+}

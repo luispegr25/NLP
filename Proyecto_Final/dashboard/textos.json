@@ -1,0 +1,322 @@
+{
+ "recomendacion": [
+  {
+   "id": "Home_and_Kitchen",
+   "problema": "Productos que se rompen o son de mala calidad: 28 % de las quejas.",
+   "accion": "Auditar a los proveedores con más quejas de calidad en ropa de cama y pequeños electrodomésticos (sábanas, freidoras de aire, cafeteras)."
+  },
+  {
+   "id": "Clothing_Shoes_and_Jewelry",
+   "problema": "La talla no corresponde: 36 % de las quejas.",
+   "accion": "Guías de talla por marca y un aviso de “esta marca talla pequeño” calculado con las reseñas. Menos devoluciones."
+  },
+  {
+   "id": "Electronics",
+   "problema": "Deja de funcionar (20 %) y fallas de batería o carga (16 %).",
+   "accion": "Control de calidad y garantía visible en accesorios de computadora y almacenamiento (discos duros, tarjetas SD, accesorios de MacBook)."
+  }
+ ],
+ "hallazgo": "<b>El porcentaje solo no alcanza.</b> Si se ordenara por % de reseñas negativas, la prioridad sería Patio y jardín, Videojuegos y Celulares. Pero Hogar y cocina, que está en el puesto 11 por porcentaje, tiene 7.5 millones de reseñas negativas: 19 veces más que Videojuegos. Las tres prioridades concentran el 45 % de todas las quejas, empeoraron entre 4 y 5 puntos desde 2019 y <b>son las mismas 3 prioridades en cada año de 2019 a 2023</b>.",
+ "metodo": [
+  "<b>Datos:</b> 300,000 reseñas reales capturadas de Amazon Reviews 2023 (McAuley Lab, UC San Diego), 20,000 al azar por categoría, y 295,439 después de quitar reseñas vacías y duplicadas, de enero 2019 a septiembre 2023. El volumen real por categoría se estima con el total oficial de reseñas × la proporción de reseñas desde 2019.",
+  "<b>Clientes insatisfechos:</b> reseñas de 1 y 2 estrellas. Reseñas negativas estimadas = volumen real × % de reseñas negativas de la muestra (margen de error ±0.5 puntos). Por año: volumen real × proporción de la muestra en ese año × % negativo del año. 2023 llega hasta septiembre.",
+  "<b>Causas:</b> temas detectados con un diccionario de expresiones y frases distintivas por categoría con TF-IDF. “Devolución o atención” se muestra, pero no se usa como causa, porque es la consecuencia de los otros problemas.",
+  "<b>Modelo:</b> Regresión Logística con TF-IDF de palabras y pares de palabras. En el conjunto de prueba (44,316 reseñas): F1 macro 0.69, F1 de la clase negativa 0.78, accuracy 0.85. Superó a Naive Bayes (F1 macro 0.63).",
+  "Proyecto final de Procesamiento de Lenguaje Natural · Luis Pedro González"
+ ],
+ "ejemplos_modelo": [
+  {
+   "etiqueta": "Queja",
+   "texto": "The case looked nice but the screen protector cracked after two days and the seller never answered my emails. Waste of money."
+  },
+  {
+   "etiqueta": "Elogio",
+   "texto": "Love this air fryer! Easy to clean, heats up fast and the fries come out perfect every time."
+  },
+  {
+   "etiqueta": "Mixta",
+   "texto": "It's okay. The fabric is soft but it runs a little small, so order a size up."
+  },
+  {
+   "etiqueta": "“Not bad”",
+   "texto": "Not bad at all, works as described."
+  },
+  {
+   "etiqueta": "“Not good”",
+   "texto": "This is not good. The quality is not what I expected."
+  }
+ ],
+ "frases": {
+  "king size": "tamaño king",
+  "fitted sheet": "sábana ajustable",
+  "air fryer": "freidora de aire",
+  "coffee pot": "cafetera",
+  "bed frame": "base de cama",
+  "mattress topper": "colchoneta",
+  "plus size": "tallas grandes",
+  "normally wear": "talla que uso normalmente",
+  "arch support": "soporte del arco",
+  "wear size": "uso talla",
+  "order size up": "pedir una talla más",
+  "size not true": "la talla no es real",
+  "macbook pro": "MacBook Pro",
+  "sound quality": "calidad de sonido",
+  "apple pencil": "Apple Pencil",
+  "screen protector": "protector de pantalla",
+  "hard drive": "disco duro",
+  "macbook air": "MacBook Air",
+  "shower head": "regadera",
+  "light bulbs": "bombillas",
+  "motion sensor": "sensor de movimiento",
+  "string lights": "luces de cadena",
+  "garage door": "puerta de garaje",
+  "smart home": "casa inteligente",
+  "heating pad": "almohadilla térmica",
+  "pain relief": "alivio del dolor",
+  "essential oil": "aceite esencial",
+  "car key": "llave del carro",
+  "mop head": "cabeza del trapeador",
+  "taste terrible": "sabe terrible",
+  "makes hair": "deja el cabello",
+  "hair hair": "cabello",
+  "dry hair": "cabello seco",
+  "face wash": "limpiador facial",
+  "work hair": "funciona en el cabello",
+  "hair color": "tinte de cabello",
+  "pressure washer": "hidrolavadora",
+  "plants arrived": "las plantas llegaron",
+  "plant arrived": "la planta llegó",
+  "water plants": "regar plantas",
+  "hot tub": "jacuzzi",
+  "did not kill": "no mató (plagas)",
+  "dropped phone": "se me cayó el teléfono",
+  "protect phone": "proteger el teléfono",
+  "finger print": "huella digital",
+  "fingerprint reader": "lector de huella",
+  "fit phone": "le queda al teléfono",
+  "fit vehicle": "le queda al vehículo",
+  "seat covers": "fundas de asiento",
+  "fit jeep": "le queda al Jeep",
+  "fit car": "le queda al carro",
+  "parts store": "tienda de repuestos",
+  "tail light": "luz trasera",
+  "cat food": "comida para gato",
+  "aggressive chewers": "perros que muerden fuerte",
+  "litter box": "arenero",
+  "dog food": "comida para perro",
+  "dog loves": "al perro le encanta",
+  "dog destroyed": "el perro lo destruyó",
+  "heart rate": "ritmo cardíaco",
+  "yoga mat": "tapete de yoga",
+  "hula hoop": "hula hula",
+  "bike shop": "taller de bicicletas",
+  "goes flat": "se desinfla",
+  "fit bike": "le queda a la bicicleta",
+  "puzzle missing": "al rompecabezas le faltan",
+  "did not float": "no flotaba",
+  "pok mon": "Pokémon",
+  "older kids": "niños más grandes",
+  "blow bubbles": "hacer burbujas",
+  "kids disappointed": "niños decepcionados",
+  "hp printer": "impresora HP",
+  "black cartridge": "cartucho negro",
+  "black ink": "tinta negra",
+  "work hp": "funciona con HP",
+  "does not write": "no escribe",
+  "print quality": "calidad de impresión",
+  "car seat": "silla para carro",
+  "diaper bag": "pañalera",
+  "diaper rash": "rozadura de pañal",
+  "car seats": "sillas para carro",
+  "high chair": "silla alta para comer",
+  "sound machine": "máquina de sonido",
+  "nintendo switch": "Nintendo Switch",
+  "xbox controller": "control de Xbox",
+  "scroll wheel": "rueda del mouse",
+  "mouse button": "botón del mouse",
+  "game play": "jugabilidad",
+  "double click": "doble clic"
+ },
+ "ejemplos": {
+  "AFLW5CIHECFEA633HHJTATCUTPTQ-1615615962300": {
+   "titulo": "¡Frágiles, se quiebran! Mal hechos",
+   "texto": "Tientan por el precio, ¡pero no caigan! ¡Aun así no valen la pena! Son tan baratos, delgados y frágiles. Se rompen con muchísima facilidad. Nunca se me habían roto así unos ganchos de terciopelo."
+  },
+  "AELGCISMMC4K7E2L2GUFNVUTUU5Q-1626420891837": {
+   "titulo": "Mala calidad",
+   "texto": "Mi pareja pidió un juego de estos para la sala y nunca se había frustrado tanto armando un mueble. Las piezas son de mala calidad, los tornillos son baratos, las roscas se barren y si los atornillas atraviesan el horrible aglomerado. Te dan un paquete de calcomanías blancas para taparlos. Además cuestan como el doble que juegos similares y no tienen devolución. Calidad absolutamente terrible."
+  },
+  "AF3XAKFLXYTVTIADPCOXQD56KRUA-1613247054034": {
+   "titulo": "Nos mandaron una tostadora usada y rota",
+   "texto": "Al desempacarla vi que la palanca de enfrente para ajustar el nivel estaba quebrada. Luego vi que el costado estaba sucio. Saqué la bandeja de migas y ¡tenía migas! Claramente no era nueva. Asqueroso. Tenemos un modelo parecido de plástico blanco desde hace 8 años; funciona muy bien, pero el plástico se rajó y la grieta crece cada vez que la usamos."
+  },
+  "AHRBS7FO53WOG3YBK722GHRZYSVQ-1589923592805": {
+   "titulo": "Para nada fiel a la talla ni pensado para tallas grandes",
+   "texto": "¡No es fiel a la talla! Uso 2X de mujer en casi todo. Estos pantalones me quedan como talla y media más pequeños. Ni siquiera pude abotonarlos. Es una lástima porque son preciosos, pero cuidado: a menos que estés en el extremo pequeño de las tallas grandes, no te van a quedar."
+  },
+  "AHV5BY3HKS2IEHRYCYMPPDUKW2MQ-1604108160515": {
+   "titulo": "Demasiado cortos",
+   "texto": "No son de pierna larga. Son cortos. No sé qué consideran largo, pero estos no lo son. Si esperas que sean largos, prepárate para decepcionarte."
+  },
+  "AF55IGP3RHQFLP43AK36HTBLQKEQ-1610572512293": {
+   "titulo": "No queda bien: aprieta en unas partes y queda flojo en otras",
+   "texto": "El corte es irregular, no queda como debería y en general es incómodo. Pero la combinación de colores es muy bonita."
+  },
+  "AFJYL7JUWIN72DNUILXXHHYGYGKQ-1643920293134": {
+   "titulo": "¡No encendía!",
+   "texto": "La tarjeta madre no encendía. El técnico de ASUS dijo que la unidad estaba defectuosa y sugirió mandarla a reparar. ¡Preferí devolverla para que la cambiaran! Estoy decepcionado de la calidad de la tarjeta madre y del mal soporte de ASUS. El soporte de Amazon sí fue bueno."
+  },
+  "AEMG44OU3KG7KMCPKRRI5SRMZ6OA-1638477919467": {
+   "titulo": "¿Es una broma? No funcionan.",
+   "texto": "No agarran carga y no cargan mis AirPods. La luz no se enciende cuando están conectados. Voy a tener que devolverlos porque simplemente no funcionan."
+  },
+  "AGYBDHD5FBJTR3I3I24MLBRBSI6Q-1660958444143": {
+   "titulo": "No funciona",
+   "texto": "Descargué la app en el teléfono… tres distintas, y ninguna funcionó. Me devolvieron el dinero y ni siquiera intentaron ayudarme o averiguar el problema."
+  },
+  "AFMJQVWRPS22MICR5GL377S7GLDA-1638814531836": {
+   "titulo": "Ahorra tu dinero, calidad barata",
+   "texto": "¿Concepto interesante y bonito? ¡Sí! ¿Bien hecho? ¡NO! Al instalarlo, que fue fácil como dicen, empezó a gotear por todos lados. NO conecta bien con la mayoría de adaptadores de otras marcas, ni con cinta de plomería. El agua que sí salía hacía un patrón bonito, como decía. Pero en cuanto a la calidad del producto: no lo puedo recomendar."
+  },
+  "AHROSP6KZBCL5O7X4FEOYQOUINDQ-1644288876738": {
+   "titulo": "Se arruinó después de 3 usos",
+   "texto": "Lo compré en noviembre y por fin pude usarlo en febrero de 2022, y uno de los LED ya no funciona. Voy a preguntar si Amazon puede cambiar la unidad."
+  },
+  "AEAS5TGCP765BAFYKVVI4CDJD2YA-1635111065632": {
+   "titulo": "Se rompió, zippers baratos, no te mantiene seco",
+   "texto": "En menos de cinco usos este equipo para lluvia se rompe: el zipper de la pierna, lo que arruina por completo la promesa de mantenerte seco. Parece barato y estoy muy molesto por gastar tanto en ropa John Deere que no cumple lo que anuncia."
+  },
+  "AG6N7MNZYTVID3U2MKIMDFYN4TQA-1633055832731": {
+   "titulo": "Tuve una reacción alérgica",
+   "texto": "Tenía muchas esperanzas en este producto, pero tuve una reacción alérgica severa. Me causó mucha hinchazón e inflamación que todavía estoy tratando de quitarme después de 4 meses."
+  },
+  "AFKIG4CGQLG5EA4M23GJ2MCIGWZQ-1614438106614": {
+   "titulo": "Este producto es una estafa: no huele, es solo aceite y no se puede devolver",
+   "texto": "Este perfume de aceite de almizcle es una estafa: ninguno de los dos frascos huele a nada, y luego te dicen que no lo puedes devolver, así que pierdes 32 dólares."
+  },
+  "AGVO6KIWNNHJR6TSG66MRMN44COA-1674824732183": {
+   "titulo": "SARPULLIDO",
+   "texto": "Este producto me dio sarpullido en toda la piel expuesta que tocó. Lo compré porque tengo la piel muy sensible. Otros productos me daban picazón, pero este fue horrible. Una pérdida de dinero."
+  },
+  "AFA4GGFWOVNZIV4AEWNZCTHHUTDQ-1595435011131": {
+   "titulo": "Mala calidad",
+   "texto": "La caja llegó abierta, el producto no estaba sellado y estaba a la mitad, parece usado. No es como lo describen en el sitio. ¡Muy insatisfecho!"
+  },
+  "AEPBESEEDE7SKP3SE6VQCPEEERXA-1610165981570": {
+   "titulo": "Barato",
+   "texto": "La lima y el estuche eran increíblemente delgados y baratos. Era para regalo de Navidad, pero no me atreví a regalarlo porque la calidad era malísima. Lo devolví."
+  },
+  "AFZMBFF4C55VJQY3X5NPKBVYA32A-1584058909219": {
+   "titulo": "La bomba está mal diseñada y el pedido llegó roto y goteando",
+   "texto": "Uno de los seis que pedí llegó roto y goteando. Todas las bombas se traban en la posición de cierre y se atoran al presionarlas. A veces la presión es demasiada y la espuma sale disparada más lejos de lo esperado."
+  },
+  "AEQVTQUOCQBRCHHABC6DSWIXVCEA-1641340839026": {
+   "titulo": "Caras y frágiles",
+   "texto": "Estas macetas parece que funcionarán bien una temporada o dos, pero son muy delgadas y frágiles. Para drenar hay que quitar los platos de abajo, o el plato tapa los agujeros. Por 20 dólares esperaba mucha más calidad."
+  },
+  "AFYDU7DFBQGDHVLGG6FZGZMIJXEQ-1655240204275": {
+   "titulo": "¡¡¡MUY MAL HECHAS!!!",
+   "texto": "Son tan delgadas que se doblan fácilmente. No traían la varilla, así que no sé cómo esperan que se usen. Muy mal hechas. Muy decepcionante, porque eran un regalo del Día del Padre."
+  },
+  "AHNGJN3TLBTB6YC7TMHPXWYUVUXA-1612570492665": {
+   "titulo": "Mala calidad",
+   "texto": "En el primer lote algunas llegaron rayadas y una quebrada de la punta. Le di otra oportunidad y pedí un cambio, y el segundo lote llegó igual de rayado. Ahorra tu dinero: son de mala calidad, no como en la foto. Es una pérdida de tiempo tener que ir al correo a devolverlas."
+  },
+  "AG25CEJXHSUOFST6NTVUA7P2N2EQ-1559091462611": {
+   "titulo": "La carcasa se rompió casi de inmediato",
+   "texto": "No sé si de verdad funciona o no. Lo conecté a la pared y lo quité un rato después. El pegamento que sella la tapa al cuerpo no era suficiente y ahora la tarjeta del circuito se está saliendo."
+  },
+  "AHJBUHJCWBW2CZGPVEANV7RP35ZQ-1634255422102": {
+   "titulo": "Dos se rajaron en dos semanas",
+   "texto": "Este producto fue una pérdida de dinero. Lo usé menos de dos semanas y dos protectores de lente se rajaron. Siempre tengo el teléfono cubierto y protegido. No gastaría dinero en este producto."
+  },
+  "AEWGHYADBASZ25RW6XGBQ4GYKN2A-1611506618777": {
+   "titulo": "Barato",
+   "texto": "Hoy lo saqué del paquete por primera vez para usarlo y los botones no funcionan, la luz sigue parpadeando. Lo compré hace tiempo pero apenas lo abrí hoy, y ya es tarde para devolverlo."
+  },
+  "AFIBSLTZAWAH2K7VM7JWTU7UKPMA-1552959822330": {
+   "titulo": "Demasiado angostas, no le quedan a la correa del cinturón",
+   "texto": "Estas fundas para cinturón de seguridad son diminutas; quizás le queden a correas de maletas, pero no a cinturones de un vehículo. Lo raro es que tienen mucha tela doblada y cosida por debajo. El vendedor no acepta devoluciones. No las compres para tu vehículo: no le quedan al ancho del cinturón."
+  },
+  "AEKYVHOGJUORYN3P7XSHNNLA56TQ-1555029604564": {
+   "titulo": "NO LE QUEDA A LA MAZDA CX-5 GRAND T 2019",
+   "texto": "Una pérdida de dinero si tienes una Mazda 2019 nueva: no funciona aunque dicen que SÍ LE QUEDA, Y NO LE QUEDA. DECEPCIONADO :("
+  },
+  "AERG3AGSSZV53XTDFU4EM3CLJHSQ-1551040078389": {
+   "titulo": "¡No lo compres para la Promaster Cargo Van! ¡No le queda!",
+   "texto": "¡Gran error! ¡NO le queda a la Ram Promaster! Por desgracia se me pasó el plazo para devolverlo. 80 dólares tirados a la basura."
+  },
+  "AFZLNDS43AJYQOTPSGPHMX36THBA-1578697931791": {
+   "titulo": "No son lo que prometen",
+   "texto": "Terriblemente decepcionada. Llegaron anoche. Normalmente compro otros pañales de entrenamiento que son mucho más absorbentes, gruesos y grandes. Muy decepcionada con la calidad. Tengo dos chihuahuas y no aguantaron la noche. Son delgados, muy delgados, como papel de seda. Ahora tengo una caja entera de pañales inservibles."
+  },
+  "AF2DHBYL4ANQUT2IG5QODAXLT2MQ-1625167931362": {
+   "titulo": "¡Muy mal fabricado!",
+   "texto": "Este artículo es basura. Se ve muy bien pero es extremadamente barato. El marco no sostiene bien el transportador de arriba y se medio colapsa. El de abajo, que es el más grande, no entra bien en el marco y no se asegura. Las ruedas giran mal. ¡¡Muy mal fabricado!!"
+  },
+  "AGK4P7EA4NHCGMOM7YLJ7OBNIS6Q-1614030849066": {
+   "titulo": "Se rompió a los 2 meses de uso",
+   "texto": "El plazo de devolución ya cerró, claro, y ahora se rompe. Una varilla de metal se salió del transportador y atravesó la malla. Parece que la varilla está para dar estructura, pero se salió. Lo usábamos para transportarlo en el carro y sacarlo a tomar aire, nada exagerado como para que se rompa tan rápido. Súper decepcionados."
+  },
+  "AHLAWPDIKGO27UXAYLVA4SP2CP7A-1645592244103": {
+   "titulo": "Se rompió en un día y hay que pagar el envío",
+   "texto": "Tenía muchas ganas de un escritorio para caminar, pero este producto se rompió en un solo día. El primer día hacía ruido y luego se rompió por completo. El vendedor no cubre el envío de devolución aunque el producto venga defectuoso."
+  },
+  "AFKTRHWZIBQSTNGJD7BT26O6MDXA-1554407971209": {
+   "titulo": "Mal hecho, venía defectuoso antes de usarlo",
+   "texto": "Calidad barata. Ni siquiera me lo puse una vez y mira la foto. No vale los 21 dólares y además huele a químicos."
+  },
+  "AHEGO3EQ32RRGAIRTO3Y6XAWMWNQ-1604163483972": {
+   "titulo": "Mala calidad: sin estabilidad y los medidores no funcionan o fallan",
+   "texto": "La bicicleta tiene poca estabilidad. Peso 200 libras y el soporte del asiento rebota y se mece al pedalear. Medio espero que la barra se quiebre en algún momento. Tampoco sirve para mi estatura: mido 5'11\" y no puedo estirar bien las piernas. Además, el sensor de pulso no funciona y los medidores de velocidad y calorías son muy imprecisos. El armado fue fácil."
+  },
+  "AGS66JUTDODWTZUQI6E4TQJIA3OA-1609195420254": {
+   "titulo": "¡Absolutamente decepcionada! Le faltaba todo y venía roto",
+   "texto": "¡¡Absolutamente decepcionada!! Llegó sin caja, sin instrucciones, sin arena, sin calcomanías y básicamente sin NADA de lo que debería traer. Además, como no tenía ningún tipo de relleno, venía roto. Era un regalo de Navidad y ahora será una devolución. La descripción NO se parece en nada a lo que recibí."
+  },
+  "AGGJL3WANH5D3RXXWCRU4RZMFD2Q-1555727202294": {
+   "titulo": "Después de cambiar el marco roto sale un error que dice que un motor está malo y no puede volar",
+   "texto": "Después de cambiar el cuerpo aparece un código de error del controlador y los motores no arrancan. Todo lo que busqué dice que es un motor de hélice, y esto venía con todos los motores nuevos. Muy decepcionado."
+  },
+  "AEMSDCVQDKPFXBZNU44BLBMDOWOQ-1649120704704": {
+   "titulo": "Muy baratas. No son 3D",
+   "texto": "Las gemas no son completamente 3D. Son planas de un lado y esa parte es solo blanca. Servirían para pegarlas en algo, pero no para buscarlas en un arenero."
+  },
+  "AGCHRPXG3EEU54FN5DGJD4A3RK4Q-1581807455278": {
+   "titulo": "Se rompió después de un día",
+   "texto": "Quería que me encantara. Uso una billetera bastante grande y quería una más pequeña. Pero me decepcionó la calidad: después de un día de uso, la tela alrededor de los remaches, en la parte que se dobla, se rompió. Ahora se ve rara cada vez que la abro. Qué bueno que todavía la puedo devolver; buscaré otra marca."
+  },
+  "AFY6T3X45UKT3Q35P4U3MGQVFQVQ-1578263014506": {
+   "titulo": "Muy mala calidad",
+   "texto": "Después de solo un par de semanas de uso ocasional, el cuero sintético blanco del asiento se puso gris y la piel de los descansabrazos se rajó. La pieza de metal dorada ahora es plateada. Muy decepcionado de la calidad y el aspecto. Nunca volveré a comprarle a este vendedor o marca; no desperdicies tu dinero. La calidad es SOLO PARA EXHIBIR, no para usar."
+  },
+  "AEOKW5Q4R2OOWUKBTKCS4YVQU3UQ-1552400296119": {
+   "titulo": "Libro de baja calidad con contenido de alta calidad",
+   "texto": "El contenido es muy bueno y útil. La segunda vez que lo abrí, el lomo se despegó de la portada. No es buena calidad para algo que cuesta casi 50 dólares. Por desgracia esperé un poco para abrirlo y ya pasó el plazo para devolverlo."
+  },
+  "AEKKB2QI2V65KMJR62ZEBO7GO3IQ-1597728445327": {
+   "titulo": "Tarda mucho en llegar, mala calidad",
+   "texto": "Mis hijos me pidieron que lo comprara. Tardó unas semanas en llegar y venía rajado. La bebida se salía. Triste 😞. El que nos dieron de cambio también se rompió. Mal hecho. Mala calidad."
+  },
+  "AETCNX6DRLAZ7PMWHD6ROK6ZFFKQ-1593867830826": {
+   "titulo": "Mala calidad",
+   "texto": "No traía las baterías como decía la descripción. Con dos baterías nuevas el termómetro no medía bien. Con menos de un día de uso tomando temperaturas, el aparato ya ni encendía. Es barato, eso es exactamente lo que es. Si necesitas un producto confiable para tomar la temperatura de pacientes, este aparato es una pérdida de tiempo."
+  },
+  "AHZS67IAUPPPP7DS6JLRZQB5Y34A-1623370149368": {
+   "titulo": "Se rajó el duroport del cabecero",
+   "texto": "Había que lavar la silla para carro de mi hija y, al desarmarla, vi dos grietas idénticas a los dos lados del duroport del cabecero. Ya ni sé si es segura para ella. No tiene ni 2 años y nunca ha estado en un accidente. Es la primera vez que la desarmo. Muy decepcionante, GRACO."
+  },
+  "AEUNKLMH4KTXGHIFA5R6MRYNUQFA-1569124729796": {
+   "titulo": "NO LOS COMPRES… SE VAN A ROMPER",
+   "texto": "¡NO LOS COMPRES! Voy por mi segundo par de estos audífonos. En el primero se rompió la pieza de plástico que sostiene los auriculares y el auricular daba vueltas y vueltas. Los cambié por otro par y los nuevos también se rompieron. La empresa no responde a mis intentos de contactarla. Son demasiado caros para romperse tan fácil."
+  },
+  "AHWCM7LY6PHUQAQZWDHI67ZNXDWA-1592600137395": {
+   "titulo": "Roto",
+   "texto": "El wifi se corta después de más o menos una hora de uso. Ya hablé con mi proveedor de internet y no es problema de ellos, así que creo que me lo mandaron roto."
+  },
+  "AGATXCBL2WWYPZSI225LWIUWAMYQ-1587412641006": {
+   "titulo": "NO LO COMPRES. Te va a arruinar los controles",
+   "texto": "¡¡No lo compres!! Lo compré pensando que sería un accesorio excelente, pero terminó arruinando mis dos controles. Lo conecté con cuidado para cargarlos y nunca volvieron a funcionar. Llamé a servicio al cliente, pero nadie contesta. Qué molestia. No te dejes engañar por las reseñas ni el precio. No compres esta basura. Ni siquiera mantiene fresco mi PS4."
+  }
+ }
+}

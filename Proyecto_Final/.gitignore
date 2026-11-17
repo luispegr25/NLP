@@ -1,0 +1,5 @@
+__pycache__/
+.DS_Store
+.ipynb_checkpoints/
+# se genera con: python exportar_csv.py (pesa ~90 MB, demasiado para GitHub)
+datos/muestra_completa.csv
